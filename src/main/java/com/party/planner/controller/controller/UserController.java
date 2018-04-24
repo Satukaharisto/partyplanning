@@ -20,9 +20,13 @@ public class UserController {
         return new ModelAndView("index");
     }
 
-//    HÄR ÄR DET NÅGOT TOKIGT SÅ INLOGG-LÄNKEN FUNGERAR INTE ALLS
-//    SANDRA, 2018-04-24, 15.35
+
     @GetMapping("/login")
+    public String showLoginSite () {
+        return "login";
+    }
+
+    @PostMapping("/login")
     public ModelAndView getInfoFromLoginForm(HttpSession session, @RequestParam String username, @RequestParam String password) {
         if (repository.checkLogin(username, password)) {
             session.setAttribute("user", username);
@@ -40,6 +44,16 @@ public class UserController {
         return "login";
     }
 
+    @PostMapping ("/usersite")
+    public String logoutUser () {
+        return "index";
+    }
+
+    @GetMapping("/logout")
+    public String showLogoutSite (HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
 
     // denna fungerar och kan skapa users till SQL från formulär
     @PostMapping("/register")
@@ -53,6 +67,7 @@ public class UserController {
     public String registerUserSite(){
         return "register";
     }
+
 
 
     //    @GetMapping("/addguesttest")

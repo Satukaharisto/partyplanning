@@ -6,11 +6,10 @@
 </head>
 <body>
 <h1>Jättehemligt</h1>
-<h2 th:text="'Inloggad som ' + ${#httpServletRequest.remoteUser}"></h2>
+<h2 th:text="'Inloggad som ' + ${session.user}"></h2>
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Logga ut"/>
-</form>
+<p><a th:href="@{/logout}">Logout</a></p>
+
 
 
 </body>
