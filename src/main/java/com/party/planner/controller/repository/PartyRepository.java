@@ -48,7 +48,7 @@ public class PartyRepository implements Repository {
     public boolean checkLogin(String username, String password) {
         try (Connection conn = dataSource.getConnection();
 
-             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] FROM  [dbo].[Users] WHERE ([UserName] = (?) AND [Password] = (?)")) {
+             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] FROM  [dbo].[Users] WHERE ([UserName] = (?) AND [Password] = (?)) ")) {
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet results = ps.executeQuery();
