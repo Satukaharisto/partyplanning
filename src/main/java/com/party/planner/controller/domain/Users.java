@@ -1,4 +1,4 @@
-package com.party.planner.controller;
+package com.party.planner.controller.domain;
 
 public class Users {
 
