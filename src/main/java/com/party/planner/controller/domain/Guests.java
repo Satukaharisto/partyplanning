@@ -1,4 +1,4 @@
-package com.party.planner.controller;
+package com.party.planner.controller.domain;
 
 public class Guests {
 
@@ -20,6 +20,7 @@ public class Guests {
 //    public void setId(int id) {
 //        this.id = id;
 //    }
+
     public String getFirstname() {
         return firstname;
     }
@@ -38,7 +39,5 @@ public class Guests {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
-
 
 }

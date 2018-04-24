@@ -1,4 +1,4 @@
-package com.party.planner.controller;
+package com.party.planner.controller.repository;
 
 public class RepositoryExceptions extends RuntimeException{
     public RepositoryExceptions(){
