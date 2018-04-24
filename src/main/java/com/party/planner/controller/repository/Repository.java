@@ -8,7 +8,7 @@ public interface Repository {
 
     void addGuest(String firstname, String lastname, String gender);
     int addUser(String username, String password);
-
+    boolean checkLogin(String username, String password);
 
 
 
