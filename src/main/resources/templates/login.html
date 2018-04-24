@@ -4,16 +4,30 @@
     <title>Spring Security Example </title>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
+
+<!--HÄR ÄR DET NÅGOT TOKIGT SÅ INLOGG-LÄNKEN FUNGERAR INTE ALLS-->
+<!--/SANDRA, 2018-04-24, 15.35-->
+
+<div id="login">
+    <div class="test">
+        <h1>user:</h1>
+        <form method="post" action="/login">
+            <!--här ovanför måste du ändra action till något vettigt-->
+
+            <p>Username: </p><input type="text" name="username"/>
+            <p>Password: </p><input type="text" name="password"/>
+            <input type="submit" value="logga in här"/>
+
+        </form>
+    </div>
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+
+
+<!--<form action="#" th:action="@{/login}" th:object="${user}" method="post">-->
+<!--Username: <input type="text" th:field="*{username}" />-->
+<!--Password: <input type="password" th:field="*{password}" />-->
+
 </form>
 </body>
 </html>
+

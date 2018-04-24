@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
     @Autowired
@@ -18,14 +20,24 @@ public class UserController {
         return new ModelAndView("index");
     }
 
+//    HÄR ÄR DET NÅGOT TOKIGT SÅ INLOGG-LÄNKEN FUNGERAR INTE ALLS
+//    SANDRA, 2018-04-24, 15.35
     @GetMapping("/login")
-    public String login() {
-        return "login";
+    public ModelAndView getInfoFromLoginForm(HttpSession session, @RequestParam String username, @RequestParam String password) {
+        if (repository.checkLogin(username, password)) {
+            session.setAttribute("user", username);
+            return new ModelAndView("usersite");
+        }
+        return new ModelAndView("login");
     }
 
     @GetMapping("/usersite")
-    public String usersite() {
-        return "usersite";
+    public String secret(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            String username = (String) session.getAttribute("user");
+            return "usersite";
+        }
+        return "login";
     }
 
 
