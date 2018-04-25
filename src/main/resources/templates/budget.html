@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Title</title>
 </head>
 <body>
-
+<h1>Budget Page</h1>
+<p><a th:href="@{/usersite}">usersite</a></p>
+<p><a th:href="@{/guestlist}">Guest List</a></p>
+<p><a th:href="@{/logout}">Log out</a></p>
+<p><a th:href="@{/checklist}">checklist</a></p>
 <!--en fin budget som förstår allt annat-->
+<div id="addGuest">
+    <div class="test">
+        <p>add guest:</p>
+        <form method="post" action="/budget">
+            <p>item: </p><input type="text" name="item"/>
+            <p>price: </p><input type="number" name="price"/>
 
+            <input type="submit" value="add new item"/>
+        </form>
+    </div>
+</div>
+
+<label class="wrapper" th:each="item : ${budgetList}">
+    <span th:text="${item.item}"/>
+    <span th:text="${item.price}"/>
+    <br/>
+    <!--Ändras sen när vi grejar med designen-->
+</label>
 </body>
 </html>

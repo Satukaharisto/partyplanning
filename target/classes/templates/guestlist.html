@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
-
-<div id="addguest">
+<h1>GuestList Page</h1>
+<p><a th:href="@{/usersite}">usersite</a></p>
+<p><a th:href="@{/budget}">budget</a></p>
+<p><a th:href="@{/logout}">Log out</a></p>
+<p><a th:href="@{/checklist}">checklist</a></p>
+<div id="addGuest">
     <div class="test">
-        <h1>Add guest:</h1>
-        <form method="post" action="/addguest">
-            <p>Firstname: </p><input type="text" name="firstname"/>
-            <p>Lastname: </p><input type="text" name="lastname"/>
+        <p>add guest:</p>
+        <form method="post" action="/guestlist">
+            <p>firstname: </p><input type="text" name="firstname"/>
+            <p>lastname: </p><input type="text" name="lastname"/>
             <p>Gender: </p><input type="text" name="gender"/>
-
-            <input type="submit" value="Submit tutorial"/>
-
+            <input type="submit" value="add new guest"/>
         </form>
     </div>
 </div>
 
-<br><br>
+<label class="wrapper" th:each="guest : ${guests}">
+    <span th:text="${guest.firstname}"/>
+    <span th:text="${guest.lastname}"/>
+    <span th:text="${guest.gender}"/>
+    <br/>
+    <!--Ändras sen när vi grejar med designen-->
+</label>
 
-<label class="wrapper" th:each="guest : ${guests}"> </label>
+<!--<label class="wrapper" th:each="guest : ${guests}"/>-->
 
 
 </body>
 </html>
-
-<!-- <p>Food preferences: </p><input type="text" name="food"/>
-<p>Allergies: </p><textarea name="allergies"></textarea>
-<p>Tags, separated by space: </p><input type="text" name="tag"/>
-  -->

@@ -1,17 +1,16 @@
 package com.party.planner.controller.domain;
 
-public class Users {
+public class User {
 
     private int userId;
     private String username;
     private String password;
 
-    public Users(int userId, String username, String password) {
+    public User(int userId, String username, String password) {
         this.userId = userId;
         this.username = username;
         this.password = password;
     }
-
 
     public int getUserId() {
         return userId;
@@ -20,7 +19,6 @@ public class Users {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
 
     public String getUsername() {
         return username;
@@ -37,6 +35,4 @@ public class Users {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }

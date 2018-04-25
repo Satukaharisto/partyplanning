@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Title</title>
 </head>
 <body>
@@ -9,6 +9,11 @@
 <h2 th:text="'Inloggad som ' + ${session.user}"></h2>
 
 <p><a th:href="@{/logout}">Logout</a></p>
+
+<h1>Usersite Page</h1>
+<p><a th:href="@{/guestlist}">Guest List</a></p>
+<p><a th:href="@{/budget}">Budget</a></p>
+<p><a th:href="@{/checklist}">checklist</a></p>
 
 
 
