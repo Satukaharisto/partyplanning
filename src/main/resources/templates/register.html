@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -8,16 +8,14 @@
 
 <div id="addUser">
     <div class="test">
-        <h1>user:</h1>
+        <h1>Register:</h1>
+        <span th:text="${InvalidInput}"></span>
         <form method="post" action="/register">
             <p>Username: </p><input type="text" name="username"/>
-            <p>Password: </p><input type="text" name="password"/>
+            <p>Password: </p><input type="password" name="password"/>
             <input type="submit" value="Create user"/>
-
         </form>
     </div>
 </div>
-
-
 </body>
 </html>

@@ -10,7 +10,6 @@
 <p><a th:href="@{/guestlist}">Guest List</a></p>
 <p><a th:href="@{/logout}">Log out</a></p>
 <p><a th:href="@{/checklist}">checklist</a></p>
-<!--en fin budget som förstår allt annat-->
 <div id="addGuest">
     <div class="test">
         <p>add guest:</p>
@@ -25,7 +24,7 @@
 
 <label class="wrapper" th:each="item : ${budgetList}">
     <span th:text="${item.item}"/>
-    <span th:text="${item.price}"/>
+    <span th:value="${item.price}"/>
     <br/>
     <!--Ändras sen när vi grejar med designen-->
 </label>
