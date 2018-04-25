@@ -11,8 +11,6 @@
         <h1>Login:</h1>
         <span th:text="${IncorrectPWorusername}"></span>
         <form method="post" action="/login">
-            <!--här ovanför måste du ändra action till något vettigt-->
-
             <p>Username: </p><input type="text" name="username"/>
             <p>Password: </p><input type="password" name="password"/>
             <input type="submit" value="logga in här"/>
@@ -21,13 +19,6 @@
         <a th:href="@{/register}">Don't have an account? Register here.</a>
     </div>
 </div>
-
-
-<!--<form action="#" th:action="@{/login}" th:object="${user}" method="post">-->
-<!--Username: <input type="text" th:field="*{username}" />-->
-<!--Password: <input type="password" th:field="*{password}" />-->
-
-<!--</form>-->
 </body>
 </html>
 
