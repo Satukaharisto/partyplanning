@@ -1,5 +1,6 @@
 package com.party.planner.controller.controller;
 
+import com.party.planner.controller.domain.Guest;
 import com.party.planner.controller.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -16,20 +18,21 @@ public class UserController {
     private Repository repository;
 
     @GetMapping("/")
-    public ModelAndView indexpage(){
+    public ModelAndView indexpage() {
         return new ModelAndView("index");
     }
 
-
     @GetMapping("/login")
-    public String showLoginSite () {
+    public String showLoginSite() {
         return "login";
     }
 
     @PostMapping("/login")
     public ModelAndView getInfoFromLoginForm(HttpSession session, @RequestParam String username, @RequestParam String password) {
-        if (repository.checkLogin(username, password)) {
+        Integer userId = repository.checkLogin(username, password);
+        if (userId != null) {
             session.setAttribute("user", username);
+            session.setAttribute("userId", userId);
             return new ModelAndView("usersite");
         }
         return new ModelAndView("login");
@@ -38,79 +41,51 @@ public class UserController {
     @GetMapping("/usersite")
     public String secret(HttpSession session) {
         if (session.getAttribute("user") != null) {
-            String username = (String) session.getAttribute("user");
+            session.getAttribute("user");
             return "usersite";
         }
         return "login";
     }
 
-    @PostMapping ("/usersite")
-    public String logoutUser () {
+    @PostMapping("/usersite")
+    public String logoutUser() {
         return "index";
     }
 
     @GetMapping("/logout")
-    public String showLogoutSite (HttpSession session) {
+    public String showLogoutSite(HttpSession session) {
         session.invalidate();
         return "index";
     }
 
     // denna fungerar och kan skapa users till SQL från formulär
     @PostMapping("/register")
-    public String getInfoFromUserForm (@RequestParam String username,
-                                        @RequestParam String password){
+    public String createUser(@RequestParam String username,
+                             @RequestParam String password) {
         repository.addUser(username, password);
         return "redirect:/usersite";                //Ska redirect till inloggat läge
     }
 
     @GetMapping("/register")
-    public String registerUserSite(){
+    public String registerUserSite() {
         return "register";
     }
 
+    @PostMapping("/guestlist")
+    public String createGuest(@RequestParam String firstname,
+                              @RequestParam String lastname,
+                              @RequestParam String gender,
+                              HttpSession session) {
+        repository.addGuest(firstname, lastname, gender, (int) session.getAttribute("userId"));
 
+        return "redirect:guestlist";                //Ska redirect till inloggat läge
+    }
 
-    //    @GetMapping("/addguesttest")
-//    @ResponseBody
-//    public int addUser2 (){
-//        int userId = repository.addUser("sandra", "hej");
-//        return userId;
-//    }
+    @GetMapping("/guestlist")
+    public ModelAndView newGuestToList(HttpSession session) {
 
-    // HÄR SKAPAR VI EN USER
-//    @GetMapping("/adduser")
-//    @ResponseBody
-//    public ModelAndView addUser(){
-//        int userId = repository.addUser();
-//        return new ModelAndView("adduser");
-//    }
+        List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
 
-
-
-
-
-
-//
-//
-//    // HÄR SKAPAR VI EN NY GÄST
-//    @GetMapping("/addguest")
-//    public ModelAndView addGuest(){
-//        List<Guests> firstname = repository.getfirstname();
-//        List<Guests> lastname = repository.getlastname();
-//        List<Guests> gender = repository.getgender();
-//
-//        return new ModelAndView("guestlist")
-//        .addObject("firstname", firstname)
-//        .addObject("lastname", lastname)
-//        .addObject("gender", lastname);
-//    }
-//
-//    @PostMapping("/addguest")
-//    public String getInfoFromGuestForm (@RequestParam String firstname,
-//                                        @RequestParam String lastname,
-//                                        @RequestParam String gender) {
-//        repository.addGuest(firstname, lastname, gender);
-//        return "redirect:/addguest";
-
-//    }
+        return new ModelAndView("guestlist").addObject("guests", guests);                //Ska redirect till inloggat läge
+    }
 }
