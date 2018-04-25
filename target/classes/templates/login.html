@@ -8,15 +8,17 @@
 
 <div id="login">
     <div class="test">
-        <h1>user:</h1>
+        <h1>Login:</h1>
+        <span th:text="${IncorrectPWorusername}"></span>
         <form method="post" action="/login">
             <!--här ovanför måste du ändra action till något vettigt-->
 
             <p>Username: </p><input type="text" name="username"/>
-            <p>Password: </p><input type="text" name="password"/>
+            <p>Password: </p><input type="password" name="password"/>
             <input type="submit" value="logga in här"/>
 
         </form>
+        <a th:href="@{/register}">Don't have an account? Register here.</a>
     </div>
 </div>
 
