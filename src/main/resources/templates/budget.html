@@ -15,7 +15,7 @@
         <p>add guest:</p>
         <form method="post" action="/budget">
             <p>item: </p><input type="text" name="item"/>
-            <p>price: </p><input type="number" name="price"/>
+            <p>price: </p><input type="text" name="price"/>
 
             <input type="submit" value="add new item"/>
         </form>
@@ -24,7 +24,7 @@
 
 <label class="wrapper" th:each="item : ${budgetList}">
     <span th:text="${item.item}"/>
-    <span th:value="${item.price}"/>
+    <span th:text="${item.price}"/>
     <br/>
     <!--Ändras sen när vi grejar med designen-->
 </label>
