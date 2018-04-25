@@ -35,7 +35,8 @@ public class UserController {
             session.setAttribute("userId", userId);
             return new ModelAndView("usersite");
         }
-        return new ModelAndView("login");
+        return new ModelAndView("login")
+                .addObject("IncorrectPWorusername", "Password or username incorrect. Please try again.");
     }
 
     @GetMapping("/usersite")
