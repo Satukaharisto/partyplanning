@@ -179,7 +179,7 @@ try (ResultSet rs = ps.executeQuery()) {
             ResultSet rs = ps.executeQuery();
             List<ToDo> checklist = new ArrayList<>();
             while (rs.next()) {
-                checklist.add(new ToDo(rs.getInt(""),
+                checklist.add(new ToDo(rs.getInt("ID"),
                         rs.getDate("Date"),
                         rs.getString("Todo"),
                         rs.getBoolean("Done")));
