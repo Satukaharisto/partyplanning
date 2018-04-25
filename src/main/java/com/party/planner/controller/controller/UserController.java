@@ -65,17 +65,17 @@ public class UserController {
     // denna fungerar och kan skapa users till SQL från formulär
     @PostMapping("/register")
     public ModelAndView createUser(HttpSession session, @RequestParam String username,
-                             @RequestParam String password) {
+                                   @RequestParam String password) {
         if (!repository.userAlreadyExists(username)) {
             return new ModelAndView("register")
                     .addObject("InvalidInput", "Username already taken");
         }
-            int userId = repository.addUser(username, password);
-            session.setAttribute("userId", userId);
-            session.setAttribute("user", username);
+        int userId = repository.addUser(username, password);
+        session.setAttribute("userId", userId);
+        session.setAttribute("user", username);
 
-            return new ModelAndView("redirect:usersite");
-        }
+        return new ModelAndView("redirect:usersite");
+    }
 
 
     @GetMapping("/register")
@@ -103,8 +103,8 @@ public class UserController {
 
     @PostMapping("/budget")
     public String createBudget(@RequestParam String item,
-                              @RequestParam int price,
-                              HttpSession session) {
+                               @RequestParam int price,
+                               HttpSession session) {
         repository.addBudgetItem(item, price, (int) session.getAttribute("userId"));
 
         return "redirect:budget";                //Ska redirect till inloggat läge
@@ -117,12 +117,17 @@ public class UserController {
 
         return new ModelAndView("budget").addObject("budgetList", budgetList);                //Ska redirect till inloggat läge
     }
+
     @PostMapping("/checklist")
     public String createToDo(@RequestParam java.sql.Date date,
-                              @RequestParam String toDo,
-                              @RequestParam boolean done,
-                              HttpSession session) {
-        repository.addToDo(date, toDo, done, (int) session.getAttribute("userId"));
+                             @RequestParam String toDo,
+                             @RequestParam(required = false) Boolean done,
+                             HttpSession session) {
+        boolean b = false;
+        if (done != null) {
+            b = done;
+        }
+        repository.addToDo(date, toDo, b, (int) session.getAttribute("userId"));
 
         return "redirect:checklist";                //Ska redirect till inloggat läge
     }
