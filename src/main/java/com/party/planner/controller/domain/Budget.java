@@ -6,6 +6,9 @@ public class Budget {
     private int price;
 
     public Budget(int id, String item, int price) {
+        this.id = id;
+        this.item = item;
+        this.price = price;
     }
 
     public void setId(int id) {
@@ -32,7 +35,4 @@ public class Budget {
         return price;
     }
 
-    public Budget(int id) {
-        this.id = id;
-    }
 }
