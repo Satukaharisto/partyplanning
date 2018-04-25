@@ -22,6 +22,7 @@ public class PartyRepository implements Repository {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Users]([UserName],[Password]) " +
                      "VALUES (?,?) ", Statement.RETURN_GENERATED_KEYS)) {
+
             ps.setString(1, userName);
             ps.setString(2, password);
             ps.executeUpdate();
@@ -36,6 +37,26 @@ public class PartyRepository implements Repository {
         }
     }
 
+public boolean userAlreadyExists(String username){
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement ps = conn.prepareStatement("SELECT  [UserName] FROM [dbo].[Users] WHERE [UserName] = ? " )) {
+        ps.setString(1, username);
+try (ResultSet rs = ps.executeQuery()) {
+    if (rs.next())
+        return false;
+}
+//        if (username != null){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+    }
+    catch (SQLException e) {
+        throw new RepositoryExceptions("tokigt");
+    }
+    return true;
+}
     @Override                   //GÄSTER    ------------- här kopplar vi ihop databasen med HTML filen
     public int addGuest(String firstname, String lastname, String gender, int userId) {
         try (Connection conn = dataSource.getConnection();
@@ -56,6 +77,7 @@ public class PartyRepository implements Repository {
             throw new RepositoryExceptions("Nu blev det supertokigt i addguest - partyrepo", e);
         }
     }
+
 
     public Integer checkLogin(String username, String password) {
         try (Connection conn = dataSource.getConnection();

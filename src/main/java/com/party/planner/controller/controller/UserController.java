@@ -60,13 +60,21 @@ public class UserController {
 
     // denna fungerar och kan skapa users till SQL från formulär
     @PostMapping("/register")
-    public String createUser(HttpSession session, @RequestParam String username,
+    public ModelAndView createUser(HttpSession session, @RequestParam String username,
                              @RequestParam String password) {
-        int userId = repository.addUser(username, password);
-        session.setAttribute("userId", userId);
-        session.setAttribute("user", username);
-        return "redirect:/usersite";                //Ska redirect till inloggat läge
-    }
+      //  boolean alreadyExists = repository.userAlreadyExists(username);
+        if (!repository.userAlreadyExists(username)) {
+            return new ModelAndView("register")
+                    .addObject("InvalidInput", "Username already taken");
+        }
+            int userId = repository.addUser(username, password);
+            session.setAttribute("userId", userId);
+            session.setAttribute("user", username);
+
+            return new ModelAndView("redirect:usersite");                //Ska redirect till inloggat läge
+        }
+
+
 
     @GetMapping("/register")
     public String registerUserSite() {
