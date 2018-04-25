@@ -14,6 +14,9 @@ public interface Repository {
 
     List<Guest> getGuestList(int userId);
 
+    boolean userAlreadyExists(String username);
+
+
 //    List<Guest> getGuest(List<String> firstname, List<String> lastname, List<String> gender);
 //
 //    List<Firstname> getFirstname;
