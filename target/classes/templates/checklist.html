@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>Checklist Page</h1>
+<p><a th:href="@{/usersite}">usersite</a></p>
+<p><a th:href="@{/budget}">budget</a></p>
+<p><a th:href="@{/guestlist}">guestlist</a></p>
+<p><a th:href="@{/logout}">Log out</a></p>
+<div id="addtoDo">
+    <div class="test">
+        <p>add guest:</p>
+        <form method="post" action="/checklist">
+            <p>date: </p><input type="date" name="date"/>
+            <p>toDo: </p><input type="text" name="toDo"/>
+            <p>done: </p><input type="checkbox" name="done"/>
+            <input type="submit" value="add new toDo"/>
+        </form>
+    </div>
+</div>
+
+<label class="wrapper" th:each="toDo : ${checklist}">
+    <span th:text="${toDo.date}"/>
+    <span th:text="${toDo.toDo}"/>
+    <span th:text="${toDo.done}"/>
+    <br/>
+    <!--Ändras sen när vi grejar med designen-->
+</label>
+
+<!--<label class="wrapper" th:each="guest : ${guests}"/>-->
+
+
+</body>
+</html>

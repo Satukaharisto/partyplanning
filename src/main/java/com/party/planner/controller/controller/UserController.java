@@ -1,6 +1,8 @@
 package com.party.planner.controller.controller;
 
+import com.party.planner.controller.domain.Budget;
 import com.party.planner.controller.domain.Guest;
+import com.party.planner.controller.domain.ToDo;
 import com.party.planner.controller.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -60,9 +63,11 @@ public class UserController {
 
     // denna fungerar och kan skapa users till SQL från formulär
     @PostMapping("/register")
-    public String createUser(@RequestParam String username,
+    public String createUser(HttpSession session, @RequestParam String username,
                              @RequestParam String password) {
-        repository.addUser(username, password);
+       int userId = repository.addUser(username, password);
+       session.setAttribute("userId", userId);
+       session.setAttribute("user", username);
         return "redirect:/usersite";                //Ska redirect till inloggat läge
     }
 
@@ -87,5 +92,39 @@ public class UserController {
         List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
 
         return new ModelAndView("guestlist").addObject("guests", guests);                //Ska redirect till inloggat läge
+    }
+
+    @PostMapping("/budget")
+    public String createBudget(@RequestParam String item,
+                              @RequestParam int price,
+                              HttpSession session) {
+        repository.addBudgetItem(item, price, (int) session.getAttribute("userId"));
+
+        return "redirect:budget";                //Ska redirect till inloggat läge
+    }
+
+    @GetMapping("/budget")
+    public ModelAndView newBudgetItemToList(HttpSession session) {
+
+        List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
+
+        return new ModelAndView("budget").addObject("budget", budgetList);                //Ska redirect till inloggat läge
+    }
+    @PostMapping("/checklist")
+    public String createToDo(@RequestParam java.sql.Date date,
+                              @RequestParam String toDo,
+                              @RequestParam boolean done,
+                              HttpSession session) {
+        repository.addToDo(date, toDo, done, (int) session.getAttribute("userId"));
+
+        return "redirect:checklist";                //Ska redirect till inloggat läge
+    }
+
+    @GetMapping("/checklist")
+    public ModelAndView newToDoToList(HttpSession session) {
+
+        List<ToDo> checklist = repository.getChecklist((int) session.getAttribute("userId"));
+
+        return new ModelAndView("checklist").addObject("checklist", checklist);                //Ska redirect till inloggat läge
     }
 }

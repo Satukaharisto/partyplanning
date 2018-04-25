@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Title</title>
 </head>
 <body>
@@ -10,22 +10,11 @@
 
 <p><a th:href="@{/logout}">Logout</a></p>
 
+<h1>Usersite Page</h1>
+<p><a th:href="@{/guestlist}">Guest List</a></p>
+<p><a th:href="@{/budget}">Budget</a></p>
+<p><a th:href="@{/checklist}">Guest List</a></p>
 
-<div id="addGuest">
-    <div class="test">
-        <p>add guest:</p>
-        <form method="post" action="/guestlist">
-            <p>firstname: </p><input type="text" name="firstname"/>
-            <p>lastname: </p><input type="text" name="lastname"/>
-            <p>Gender: </p><input type="text" name="gender"/>
-
-
-
-            <input type="submit" value="add new guest"/>
-
-        </form>
-    </div>
-</div>
 
 
 </body>
