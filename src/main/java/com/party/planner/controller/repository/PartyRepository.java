@@ -17,9 +17,7 @@ public class PartyRepository implements Repository {
     @Autowired
     private DataSource dataSource;
 
-// TODO: QUERYS FROM SQL here
-
-    @Override                   //USERS    ------------- här kopplar vi ihop databasen med HTML filen
+    @Override
     public int addUser(String userName, String password) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Users]([UserName],[Password]) " +
@@ -38,7 +36,21 @@ public class PartyRepository implements Repository {
         }
     }
 
-    @Override                   //GÄSTER    ------------- här kopplar vi ihop databasen med HTML filen
+public boolean userAlreadyExists(String username){
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement ps = conn.prepareStatement("SELECT  [UserName] FROM [dbo].[Users] WHERE [UserName] = ? " )) {
+        ps.setString(1, username);
+try (ResultSet rs = ps.executeQuery()) {
+    if (rs.next())
+        return false;
+}
+    }
+    catch (SQLException e) {
+        throw new RepositoryExceptions("tokigt");
+    }
+    return true;
+}
+    @Override
     public int addGuest(String firstname, String lastname, String gender, int userId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Guests]([FirstName],[LastName],[Gender], [User_ID]) " +
@@ -137,7 +149,7 @@ public class PartyRepository implements Repository {
             throw new RepositoryExceptions("Nu blev det supertokigt i checklogin - PartyRepo", e);
         }
     }
-    @Override                   //GÄSTER    ------------- här kopplar vi ihop databasen med HTML filen
+    @Override
     public int addToDo(Date date, String toDo, boolean done, int userId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Checklist]([Date],[Todo],[Done], [User_ID]) " +

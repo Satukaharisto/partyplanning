@@ -38,13 +38,14 @@ public class UserController {
             session.setAttribute("userId", userId);
             return new ModelAndView("usersite");
         }
-        return new ModelAndView("login");
+        return new ModelAndView("login")
+                .addObject("IncorrectPWorusername", "Password or username incorrect. Please try again.");
     }
 
     @GetMapping("/usersite")
     public String secret(HttpSession session) {
         if (session.getAttribute("user") != null) {
-            session.getAttribute("user");
+            //session.getAttribute("user");
             return "usersite";
         }
         return "login";
@@ -63,13 +64,19 @@ public class UserController {
 
     // denna fungerar och kan skapa users till SQL från formulär
     @PostMapping("/register")
-    public String createUser(HttpSession session, @RequestParam String username,
+    public ModelAndView createUser(HttpSession session, @RequestParam String username,
                              @RequestParam String password) {
-       int userId = repository.addUser(username, password);
-       session.setAttribute("userId", userId);
-       session.setAttribute("user", username);
-        return "redirect:/usersite";                //Ska redirect till inloggat läge
-    }
+        if (!repository.userAlreadyExists(username)) {
+            return new ModelAndView("register")
+                    .addObject("InvalidInput", "Username already taken");
+        }
+            int userId = repository.addUser(username, password);
+            session.setAttribute("userId", userId);
+            session.setAttribute("user", username);
+
+            return new ModelAndView("redirect:usersite");
+        }
+
 
     @GetMapping("/register")
     public String registerUserSite() {
@@ -83,7 +90,7 @@ public class UserController {
                               HttpSession session) {
         repository.addGuest(firstname, lastname, gender, (int) session.getAttribute("userId"));
 
-        return "redirect:guestlist";                //Ska redirect till inloggat läge
+        return "redirect:guestlist";
     }
 
     @GetMapping("/guestlist")
@@ -108,7 +115,7 @@ public class UserController {
 
         List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
 
-        return new ModelAndView("budget").addObject("budget", budgetList);                //Ska redirect till inloggat läge
+        return new ModelAndView("budget").addObject("budgetList", budgetList);                //Ska redirect till inloggat läge
     }
     @PostMapping("/checklist")
     public String createToDo(@RequestParam java.sql.Date date,
