@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping("/usersite")
     public String secret(HttpSession session) {
         if (session.getAttribute("user") != null) {
-            session.getAttribute("user");
+            //session.getAttribute("user");
             return "usersite";
         }
         return "login";
@@ -60,9 +60,11 @@ public class UserController {
 
     // denna fungerar och kan skapa users till SQL från formulär
     @PostMapping("/register")
-    public String createUser(@RequestParam String username,
+    public String createUser(HttpSession session, @RequestParam String username,
                              @RequestParam String password) {
-        repository.addUser(username, password);
+        int userId = repository.addUser(username, password);
+        session.setAttribute("userId", userId);
+        session.setAttribute("user", username);
         return "redirect:/usersite";                //Ska redirect till inloggat läge
     }
 
