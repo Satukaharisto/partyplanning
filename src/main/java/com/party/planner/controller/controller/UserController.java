@@ -102,19 +102,25 @@ public class UserController {
     }
 
     @PostMapping("/budget")
-    public String createBudget(@RequestParam String item,
+    public ModelAndView createBudget(@RequestParam String item,
                                @RequestParam int price,
                                HttpSession session) {
+        if (!repository.budgetItemAlreadyExists(item)) {
+            List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
+            int total = repository.budgetSum((int)session.getAttribute("userId"));
+            return new ModelAndView("budget").addObject("InvalidInput", "Budget item already exists")
+                    .addObject("budgetList", budgetList).addObject("total", total);
+        }
         repository.addBudgetItem(item, price, (int) session.getAttribute("userId"));
 
-        return "redirect:budget";                //Ska redirect till inloggat läge
+        return new ModelAndView("redirect:budget");
     }
 
     @GetMapping("/budget")
     public ModelAndView newBudgetItemToList(HttpSession session) {
 
         List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-int total = repository.budgetSum((int)session.getAttribute("userId"));
+        int total = repository.budgetSum((int)session.getAttribute("userId"));
         return new ModelAndView("budget").addObject("budgetList", budgetList)
                 .addObject("total", total);                //Ska redirect till inloggat läge
     }
