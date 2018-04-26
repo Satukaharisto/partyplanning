@@ -111,11 +111,12 @@ public class UserController {
     }
 
     @GetMapping("/budget")
-    public ModelAndView newBudgetItemToList(HttpSession session) {
+    public ModelAndView newBudgetItemToList(HttpSession session, int userId) {
 
         List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-
-        return new ModelAndView("budget").addObject("budgetList", budgetList);                //Ska redirect till inloggat läge
+int total = repository.budgetSum((int)session.getAttribute("userId"));
+        return new ModelAndView("budget").addObject("budgetList", budgetList)
+                .addObject("total", total);                //Ska redirect till inloggat läge
     }
 
     @PostMapping("/checklist")
