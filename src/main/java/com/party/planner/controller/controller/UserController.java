@@ -111,7 +111,7 @@ public class UserController {
     }
 
     @GetMapping("/budget")
-    public ModelAndView newBudgetItemToList(HttpSession session, int userId) {
+    public ModelAndView newBudgetItemToList(HttpSession session) {
 
         List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
 int total = repository.budgetSum((int)session.getAttribute("userId"));
