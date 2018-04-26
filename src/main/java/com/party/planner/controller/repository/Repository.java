@@ -28,6 +28,8 @@ public interface Repository {
     boolean userAlreadyExists(String username);
 
     int budgetSum(int userId);
+    boolean budgetItemAlreadyExists(String username);
+    int changeBudgetItemPrice (int userId, int itemId, int price);
 }
 
 

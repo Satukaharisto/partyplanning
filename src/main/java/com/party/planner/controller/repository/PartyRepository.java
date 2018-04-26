@@ -116,7 +116,6 @@ try (ResultSet rs = ps.executeQuery()) {
                      "VALUES (?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item);
             ps.setInt(2, price);
-
             ps.setInt(3, userId);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -128,6 +127,20 @@ try (ResultSet rs = ps.executeQuery()) {
         } catch (SQLException e) {
             throw new RepositoryExceptions("Nu blev det supertokigt i addbudget- partyrepo", e);
         }
+    }
+    public boolean budgetItemAlreadyExists(String username){
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT  [Item] FROM [dbo].[Budget] WHERE [Item] = ? " )) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next())
+                    return false;
+            }
+        }
+        catch (SQLException e) {
+            throw new RepositoryExceptions("tokigt");
+        }
+        return true;
     }
     @Override
     public List<Budget> getBudgetList(int userId) {
@@ -142,7 +155,6 @@ try (ResultSet rs = ps.executeQuery()) {
                 budgetList.add(new Budget(rs.getInt("ID"),
                         rs.getString ("item"),
                         rs.getInt("price")));
-            System.out.println("fungerar detta i budgetlist ");
             }
             return budgetList;
         } catch (SQLException e) {
@@ -160,13 +172,30 @@ try (ResultSet rs = ps.executeQuery()) {
             int total = 0;
             while (rs.next()) {
                 total = total + rs.getInt("Price");
-                System.out.println("Fungerar detta för att få ut summa?");
             }
             return total;
 
 
         } catch (SQLException e) {
             throw new RepositoryExceptions("Nu blev det supertokigt i checklogin - PartyRepo", e);
+        }
+    }
+    public int changeBudgetItemPrice (int userId, int itemId, int price) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("UPDATE [dbo].[Budget]\n " +
+                     "SET [Price] = (?) \n " +
+                     "WHERE ID = (?) AND User_ID = (?) ")) {
+            ps.setInt(1,userId);
+            ps.setInt(2, itemId);
+            ps.setInt(3, price);
+            ResultSet rs = ps.executeQuery();
+            int id = -1;
+            while (rs.next()) {
+                id = rs.getInt(id);
+            }
+            return id;
+        } catch (SQLException e) {
+            throw new RepositoryExceptions ("Couldn't update");
         }
     }
     @Override
