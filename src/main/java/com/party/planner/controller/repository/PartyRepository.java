@@ -149,6 +149,26 @@ try (ResultSet rs = ps.executeQuery()) {
             throw new RepositoryExceptions("Nu blev det supertokigt i checklogin - PartyRepo", e);
         }
     }
+
+    public int budgetSum(int userId){
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT [Price] from [dbo].[Budget]\n " +
+                     "WHERE User_ID = (?) ")) {
+
+        ps.setInt(1,userId);
+        ResultSet rs = ps.executeQuery();
+            int total = 0;
+            while (rs.next()) {
+                total = total + rs.getInt("Price");
+                System.out.println("Fungerar detta för att få ut summa?");
+            }
+            return total;
+
+
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Nu blev det supertokigt i checklogin - PartyRepo", e);
+        }
+    }
     @Override
     public int addToDo(Date date, String toDo, boolean done, int userId) {
         try (Connection conn = dataSource.getConnection();

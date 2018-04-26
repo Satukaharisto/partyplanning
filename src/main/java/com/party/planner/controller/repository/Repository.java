@@ -26,6 +26,8 @@ public interface Repository {
     List<ToDo> getChecklist(int userId);
 
     boolean userAlreadyExists(String username);
+
+    int budgetSum(int userId);
 }
 
 
