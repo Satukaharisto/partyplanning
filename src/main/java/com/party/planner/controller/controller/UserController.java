@@ -146,4 +146,11 @@ public class UserController {
 
         return new ModelAndView("checklist").addObject("checklist", checklist);                //Ska redirect till inloggat läge
     }
+    @PostMapping("/edit")
+    public ModelAndView editItem(@RequestParam String item, @RequestParam int price, HttpSession session) {
+      repository.changeBudgetItemPrice((int) session.getAttribute("userId"), item, price);
+     List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
+    return new ModelAndView("budget").addObject("budgetList", budgetList);
+    }
+
 }

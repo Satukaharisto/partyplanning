@@ -180,20 +180,20 @@ try (ResultSet rs = ps.executeQuery()) {
             throw new RepositoryExceptions("Nu blev det supertokigt i checklogin - PartyRepo", e);
         }
     }
-    public int changeBudgetItemPrice (int userId, int itemId, int price) {
+    public void changeBudgetItemPrice (int userId, String item, int price) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("UPDATE [dbo].[Budget]\n " +
                      "SET [Price] = (?) \n " +
-                     "WHERE ID = (?) AND User_ID = (?) ")) {
+                     "WHERE Item = (?) AND User_ID = (?) ")) {
             ps.setInt(1,userId);
-            ps.setInt(2, itemId);
+            ps.setString(2, item);
             ps.setInt(3, price);
-            ResultSet rs = ps.executeQuery();
-            int id = -1;
-            while (rs.next()) {
-                id = rs.getInt(id);
-            }
-            return id;
+            ps.executeQuery();
+//            int id = -1;
+//            while (rs.next()) {
+//                id = rs.getInt(id);
+//            }
+//            return id;
         } catch (SQLException e) {
             throw new RepositoryExceptions ("Couldn't update");
         }
