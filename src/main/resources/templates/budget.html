@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 
-<body lang="en">
 
 <head>
     <title>Event planner</title>
@@ -132,8 +131,8 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:href="@{/usersite}">Home</a></li>
-                <li class="active"><a th:href="@{/guestlist}">Guestlist</a></li>
-                <li><a th:href="@{/budget}">Budget</a></li>
+                <li><a th:href="@{/guestlist}">Guestlist</a></li>
+                <li class="active"><a th:href="@{/budget}">Budget</a></li>
                 <li><a th:href="@{/checklist}">Checklist</a></li>
                 <li><a th:href="@{/logout}">Logout</a></li>
             </ul>
@@ -153,6 +152,7 @@
                     <input type="text" name="price" placeholder="100...."/>
                     <p></p>
                     <input class="button" type="submit" value="add new item" />
+                    <p> </p> <span th:text="${InvalidInput}"></span>
                 </form>
             </ul>
         </div>
@@ -183,8 +183,23 @@
         </div>
     </div>
 </div>
+<!--<<<<<<< Updated upstream-->
 
-</body>
+<!--=======-->
+<!--<span th:text="${InvalidInput}"></span>-->
+<!--<br/>-->
+<!--<form method="post" action="/edit">-->
+
+<!--<label class="wrapper" th:each="item : ${budgetList}">-->
+    <!--<span th:text="${item.item}"/>-->
+    <!--<span th:text="${item.price}"/>-->
+    <!--<br/>-->
+    <!--&lt;!&ndash;<p><a th:href="@{/budget/update{id}"</p>&ndash;&gt;-->
+<!--</label>-->
+<!--</form>-->
+<!--<p>Total: <span th:text="${total}"/></p>-->
+<!--&gt;>>>>>> Stashed changes-->
+
 <footer class="container-fluid text-center">
     <div class="row">
         <div class="col-sm-4">

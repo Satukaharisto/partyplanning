@@ -29,7 +29,7 @@ public interface Repository {
 
     int budgetSum(int userId);
     boolean budgetItemAlreadyExists(String username);
-    int changeBudgetItemPrice (int userId, int itemId, int price);
+    void changeBudgetItemPrice (int userId, String item, int price);
 }
 
 
