@@ -1,18 +1,17 @@
 package com.party.planner.controller.controller;
 
-import com.party.planner.controller.domain.Budget;
-import com.party.planner.controller.domain.Guest;
-import com.party.planner.controller.domain.ToDo;
+import com.party.planner.controller.domain.*;
 import com.party.planner.controller.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,7 +25,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView getInfoFromLoginForm(HttpSession session, @RequestParam String username, @RequestParam String password) {
+    public ModelAndView getInfoFromLoginForm(
+            HttpSession session,
+            @RequestParam String username,
+            @RequestParam String password) {
         Integer userId = repository.checkLogin(username, password);
         if (userId != null) {
             session.setAttribute("user", username);
@@ -59,8 +61,10 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ModelAndView createUser(HttpSession session, @RequestParam String username,
-                                   @RequestParam String password) {
+    public ModelAndView createUser(
+            HttpSession session,
+            @RequestParam String username,
+            @RequestParam String password) {
         if (!repository.userAlreadyExists(username)) {
             return new ModelAndView("index")
                     .addObject("InvalidInput", "Username already taken");
@@ -77,27 +81,44 @@ public class UserController {
     public String createGuest(@RequestParam String firstname,
                               @RequestParam String lastname,
                               @RequestParam String gender,
+                              @RequestParam(required = false) String allergy,
+                              @RequestParam(required = false) String foodPreference,
+                              @RequestParam(required = false) String alcohol,
                               HttpSession session) {
-        repository.addGuest(firstname, lastname, gender, (int) session.getAttribute("userId"));
+        int guestId = repository.addGuest(firstname, lastname, gender, (int) session.getAttribute("userId"));
+        repository.addFoodPreference(guestId, allergy, foodPreference, alcohol);
 
         return "redirect:guestlist";
     }
 
+    @PostMapping("/food")
+    public String addFoodPreference(@RequestParam int guestId,
+                                    @RequestParam String allergie,
+                                    @RequestParam String foodPreference,
+                                    @RequestParam String alcohol) {
+        repository.addFoodPreference(guestId, allergie, foodPreference, alcohol);
+        return "redirect:guestlist";
+    }
+
+
     @GetMapping("/guestlist")
     public ModelAndView newGuestToList(HttpSession session) {
-
         List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
-
-        return new ModelAndView("guestlist").addObject("guests", guests);                //Ska redirect till inloggat läge
+        List<GuestListModel> guestList = new ArrayList<>();
+        for (Guest guest : guests) {
+            Food food = repository.getFoodPreference(guest.getId());
+            guestList.add(GuestListModelMapper.map(guest, food));
+        }
+        return new ModelAndView("guestlist").addObject("guestList", guestList);
     }
 
     @PostMapping("/budget")
     public ModelAndView createBudget(@RequestParam String item,
-                               @RequestParam int price,
-                               HttpSession session) {
-        if (!repository.budgetItemAlreadyExists(item)) {
+                                     @RequestParam int price,
+                                     HttpSession session) {
+        if (repository.budgetItemAlreadyExists(item, (int) session.getAttribute("userId"))) {
             List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-            int total = repository.budgetSum((int)session.getAttribute("userId"));
+            int total = repository.budgetSum((int) session.getAttribute("userId"));
             return new ModelAndView("budget").addObject("InvalidInput", "Budget item already exists")
                     .addObject("budgetList", budgetList).addObject("total", total);
         }
@@ -108,9 +129,8 @@ public class UserController {
 
     @GetMapping("/budget")
     public ModelAndView newBudgetItemToList(HttpSession session) {
-
         List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-        int total = repository.budgetSum((int)session.getAttribute("userId"));
+        int total = repository.budgetSum((int) session.getAttribute("userId"));
         return new ModelAndView("budget").addObject("budgetList", budgetList)
                 .addObject("total", total);                //Ska redirect till inloggat läge
     }
@@ -125,22 +145,32 @@ public class UserController {
             b = done;
         }
         repository.addToDo(date, toDo, b, (int) session.getAttribute("userId"));
-
         return "redirect:checklist";                //Ska redirect till inloggat läge
     }
 
     @GetMapping("/checklist")
     public ModelAndView newToDoToList(HttpSession session) {
-
         List<ToDo> checklist = repository.getChecklist((int) session.getAttribute("userId"));
-
         return new ModelAndView("checklist").addObject("checklist", checklist);                //Ska redirect till inloggat läge
     }
-    @PostMapping("/edit")
-    public ModelAndView editItem(@RequestParam String item, @RequestParam int price, HttpSession session) {
-      repository.changeBudgetItemPrice((int) session.getAttribute("userId"), item, price);
-     List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-    return new ModelAndView("budget").addObject("budgetList", budgetList);
+
+    @PutMapping("/updateGuest")
+    public ModelAndView updateGuest(
+            @RequestParam int guestId,
+            @RequestParam String firstname,
+            @RequestParam String lastname,
+            @RequestParam String gender,
+            @RequestParam int foodId,
+            @RequestParam(required = false) String allergy,
+            @RequestParam(required = false) String foodPreference,
+            @RequestParam(required = false) String alcohol,
+            HttpSession session) {
+
+        repository.updateGuest(guestId, (int) session.getAttribute("userId"), firstname, lastname, gender);
+        repository.updateFoodPreference(foodId, guestId, allergy, foodPreference, alcohol);
+        return new ModelAndView("redirect:guestlist");
+//        repository.changeBudgetItemPrice((int) session.getAttribute("userId"), item, price);
+//        List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
     }
 
 }
