@@ -1,17 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
-
-<body lang="en">
-
 <head>
+
     <title>Event planner</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8" colTestEdit="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
     <style>
+        .colTest {
+            background-color: #adc7c8;
+            color: black;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .colTest:hover {
+            background-color: #f0ad97;
+        }
+
+        .colTest:after {
+            colTestEdit: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            colTestEdit: "\2212";
+        }
+
+        .colTestEdit {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
@@ -20,6 +61,10 @@
             padding: 1% 0;
             font-size: 1.2em;
             border: 0;
+        }
+
+        .navbar-nav {
+            flex-direction: row !important
         }
 
         .navbar-brand {
@@ -97,7 +142,6 @@
             font-family: 'Catamaran', sans-serif;
         }
 
-
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
@@ -110,51 +154,85 @@
                     height: auto;
                     padding: 15px;
                 }
+
                 .row.content {
                     height: auto;
                 }
             }
         }
+
+        .div1 {
+            width: 500px;
+            height: 200px;
+            position: center;
+        }
+
+        div2 {
+            width: 500px;
+            height: 200px;
+            position: relative;
+            background-color: #A5C663;
+        }
+
+        #budgetBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+
+        #guestBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+
     </style>
 </head>
 
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <img src="eventerlogga.png"/>
+        <div class="navbar-header logga">
+            <img class="logga" src="eventerlogga.png"/>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:href="@{/usersite}">Home</a></li>
-                <li class="active"><a th:href="@{/guestlist}">Guestlist</a></li>
-                <li><a th:href="@{/budget}">Budget</a></li>
-                <li><a th:href="@{/checklist}">Checklist</a></li>
-                <li><a th:href="@{/logout}">Logout</a></li>
+                <li class="active">
+                    <a th:href="@{/usersite}">Home</a>
+                </li>
+                <li>
+                    <a th:href="@{/guestlist}">Guestlist</a>
+                </li>
+                <li>
+                    <a th:href="@{/budget}">Budget</a>
+                </li>
+                <li>
+                    <a th:href="@{/checklist}">Checklist</a>
+                </li>
+                <li>
+                    <a th:href="@{/logout}">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-<!--NAV SLUTAR-->
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
-            <h4>Add guest</h4>
+            <h1>Välkommen</h1>
+            <h3 th:text="'Inloggad som ' + ${session.user}"></h3>
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/guestlist">
-                    <p>Firstname: </p>
+                    <p>Firstname:</p>
                     <input type="text" name="firstname" placeholder="Firstname.."/>
                     <p>Lastname: </p>
                     <input type="text" name="lastname" placeholder="Lastname.."/>
                     <p>Gender: </p>
                     <input type="text" name="gender" placeholder="Gender.."/>
-                    <p></p>
-                    <input class="button" type="submit" value="Add new guest" />
                     <p></p>
                     <p>allergy: </p>
                     <input type="text" name="allergy" placeholder="allergy.."/>
@@ -162,38 +240,58 @@
                     <input type="text" name="foodPreference" placeholder="foodpref.."/>
                     <p>alcohol: </p>
                     <input type="text" name="alcohol" placeholder="alcohol.."/>
+                    <p></p>
+                    <input class="button" type="submit" value="Add new guest"/>
                 </form>
             </ul>
         </div>
         <div class="col-sm-9">
             <div class="container">
                 <h2>Guestlist</h2>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Gender</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="guest : ${guestList}">
-                        <td th:text="${guest.firstname}"></td>
-                        <td th:text="${guest.lastname}"></td>
-                        <td th:text="${guest.gender}"></td>
-                        <td th:text="${guest.foodPreference}"></td>
-                        <td th:text="${guest.allergy}"></td>
-                        <td th:text="${guest.alcohol}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <p></p>
 
+                <div th:each="guest : ${guestList}">
+                    <button class="colTest">
+                        <span th:text="${guest.firstname}"></span>
+                        <span th:text="${guest.lastname}"></span>
+                        <span th:text="${guest.gender}"></span>
+                        <span th:text="${guest.foodPreference}"></span>
+                        <span th:text="${guest.allergy}"></span>
+                        <span th:text="${guest.alcohol}"></span>
+                    </button>
+                    <div class="colTestEdit">
+                        <p>some edit shit here</p>
+
+                        <form method="post" action="/updateGuest">
+                            <input type="hidden" name="guestId" th:value="${guest.id}"/>
+                            <p>Firstname:</p>
+                            <input type="text" name="firstname" placeholder="Firstname.."/>
+                            <p>Lastname: </p>
+                            <input type="text" name="lastname" placeholder="Lastname.."/>
+                            <p>Gender: </p>
+                            <input type="text" name="gender" placeholder="Gender.."/>
+                            <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
+                            <p></p>
+                            <p>allergy: </p>
+                            <input type="text" name="allergy" placeholder="allergy.."/>
+                            <p>foodpref: </p>
+                            <input type="text" name="foodPreference" placeholder="foodpref.."/>
+                            <p>alcohol: </p>
+                            <input type="text" name="alcohol" placeholder="alcohol.."/>
+                            <p></p>
+                            <input class="button" type="submit" value="Add new guest"/>
+                        </form>
+
+
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-</body>
 <footer class="container-fluid text-center">
     <div class="row">
         <div class="col-sm-4">
@@ -211,6 +309,6 @@
         </div>
     </div>
 </footer>
+<script src="guestscript.js"></script>
 </body>
-
 </html>

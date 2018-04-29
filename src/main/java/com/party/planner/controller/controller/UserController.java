@@ -154,7 +154,7 @@ public class UserController {
         return new ModelAndView("checklist").addObject("checklist", checklist);                //Ska redirect till inloggat läge
     }
 
-    @PutMapping("/updateGuest")
+    @PostMapping("/updateGuest")
     public ModelAndView updateGuest(
             @RequestParam int guestId,
             @RequestParam String firstname,
@@ -165,7 +165,8 @@ public class UserController {
             @RequestParam(required = false) String foodPreference,
             @RequestParam(required = false) String alcohol,
             HttpSession session) {
-
+        System.out.println(guestId);
+        System.out.println(foodId);
         repository.updateGuest(guestId, (int) session.getAttribute("userId"), firstname, lastname, gender);
         repository.updateFoodPreference(foodId, guestId, allergy, foodPreference, alcohol);
         return new ModelAndView("redirect:guestlist");
