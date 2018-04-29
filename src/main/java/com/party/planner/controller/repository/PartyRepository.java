@@ -20,12 +20,13 @@ public class PartyRepository implements Repository {
 
     // ADD
     @Override
-    public int addUser(String userName, String password) {
+    public int addUser(String userName, String password, String email) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Users]([UserName],[Password]) " +
-                     "VALUES (?,?) ", Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Users]([UserName],[Password], [Email]) " +
+                     "VALUES (?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, userName);
             ps.setString(2, password);
+            ps.setString(3, email);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             int userId = -1;
