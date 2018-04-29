@@ -20,7 +20,7 @@
             font-size: 1.2em;
             border: 0;
         }
-        .navbar-brand {
+         .navbar-brand {
             float: left;
             min-height: 55px;
             padding: 0 15px 5px;
@@ -318,7 +318,7 @@
             <div class="carousel-caption">
                 <h1>Event Planner</h1>
                 <br/>
-                <button type="button" class="btn bt-default">Get Started</button>
+                <a class="scroll" href="#scrollhere">Get started</a>
             </div>
         </div><!---End Active-->
         <div class="item">
@@ -328,6 +328,34 @@
             <img src="/pict3.png"  />
         </div>
     </div>
+    <style>
+        .scroll {
+            background: #ddd;
+            color: #444;
+            font-family: sans-serif;
+            text-align: center;
+            text-decoration: none;
+            padding: 5px;
+            width: 150px;
+            align-content: center;
+        }
+
+    </style>
+
+    <script>
+        $('a[href^="#"]').on('click', function(event) {
+
+            var target = $(this.getAttribute('href'));
+
+            if( target.length ) {
+                event.preventDefault();
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+            }
+
+        });
+    </script>
     <!---Start Slider Controls-->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" >
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -339,8 +367,64 @@
     </a>
 </div><!---End Slider -->
 
+<!--working on instruction section here -->
+<div class="instruction" id="scrollhere">
+    <div class="row">
+        <div class="col-sm-6 instructionbox">
+            <div>
+
+                <img class="instructionpic" src="/checklistpic.png"  />
+            </div>
+        </div>
+        <div class="col-sm-6 instructionbox">
+            <p class="instructiontext">Create a checklist</p>
+        </div>
+    </div>
+</div>
+<div class="instruction">
+    <div class="row">
+        <div class="col-sm-6 instructionbox">
+            <div>
+                <p class="instructiontext">Create a guestlist</p>
+            </div>
+        </div>
+        <div class="col-sm-6 instructionbox">
+            <img class="instructionpic" src="/friends2.png"/>
+        </div>
+    </div>
+</div>
+
+<style>
+    .instruction {
+        margin-top: 10px;
+
+    }
+    .instructionpic {
+        opacity: 0.5;
+        overflow: hidden;
+        width: 100%;
+    }
+    .instructionbox {
+        margin-bottom: 10px;
+    }
+    .instructiontext {
+        color: black;
+        position: absolute;
+        z-index: 1;
+    }
+    .row {
+        margin: 0;
+    }
+</style>
+<!--instruction section ends here-->
+
+
+
 <footer class="container-fluid text-center">
     <div class="row">
+        <div class="col-sm-2">
+
+        </div>
         <div class="col-sm-4">
             <h3>Contact Us</h3>
             <br/>

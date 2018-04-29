@@ -4,6 +4,7 @@ package com.party.planner.controller.domain;
 
         private String username;
         private String password;
+        private String email;
 
         public String getUsername() {
             return username;
@@ -17,6 +18,9 @@ package com.party.planner.controller.domain;
         public void setPassword(String password) {
             this.password = password;
         }
+        public void setEmail(String email) {this.email = email;}
+        public String getEmail() {return email;}
+
     }
 
 
