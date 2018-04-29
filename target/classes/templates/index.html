@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <style>
         .navbar {
             margin-bottom: 0;
@@ -82,27 +83,229 @@
                 font-size: 1.7em;
             }
         }
+        /*######################## LOGIN/SIGNUP PAGE START ##################################*/
+
+
+        .at-login-form .btn-lgin
+        {
+            display: inline-block;
+            padding: 18px 20px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid #eee;
+            border-radius: 0px;
+            background-color: #1DB9EC;
+            width: 100%;
+            margin-top: 10px;
+            color:#fff;
+        }
+
+
+        .at-login-form .h6 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #757575;
+            line-height: 1.1;
+            text-rendering: optimizelegibility;
+        }
+
+
+        .at-login-form .form-control-form {
+            display: block;
+            width: 100%;
+            height: 54px;
+            padding: 15px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            margin-top: 3px;
+        }
+        .at-login-form .frgt-pswd
+        {
+            margin: 5px 0 10px;
+            color: red;
+        }
+
+        .at-login-form .btn-gst
+        {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid #000;
+            border-radius: 0px;
+            background-color: transparent;
+        }
+
+        .at-login-form .ta-l
+        {
+            text-align:left;
+            margin-top: 5px;
+        }
+
+        .at-login-form .modal-dialog {
+            width: 500px;
+            margin: 30px auto;
+        }
+
+        .at-login-form .modal-content
+        {
+            padding: 0px 10px;
+        }
+
+        .at-login-form  .modal-header {
+            padding: 10px 10px;
+            border-bottom: 0px solid #e5e5e5;
+        }
+
+        /*######################## LOGIN/SIGNUP PAGE  END ##################################*/
     </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
-<div class="container-fluid">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <img src="eventerlogga.png"/>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img src="eventerlogga.png"/>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a  data-toggle="modal" data-target="#at-login">Login</a></li>
+                <li><a data-toggle="modal" data-target="#at-signup">Register</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav navbar-right">
-            <li><a th:href="@{/login}">Login</a></li>
-            <li><a th:href="@{/register}">Register</a></li>
-        </ul>
-    </div>
-</div>
 </nav>
+<section class="at-login-form">
+    <!-- MODAL LOGIN -->
+    <div class="modal fade" id="at-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <span th:text="${IncorrectPWorusername}"></span>
+                    <form method="post" action="/login">
+                        <div class="form-group">
+                            <p>Username: </p>
+                            <input type="text" class="form-control-form"  name="username"/>
+                        </div>
+                        <div class="form-group">
+                            <p>Password: </p>
+                            <input type="password" class="form-control-form"  name="password"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"/> Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-md-offset-2">
+                                <p class="frgt-pswd"   data-toggle="modal" data-dismiss="modal"  data-target="#at-reset-pswd">	Forgot Password ?</p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-lgin">Log in</button>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="ta-l">Don't have an account ? </p>
+                        </div>
+                        <div class="col-md-4 col-md-offset-2">
+                            <button class="btn-gst"  data-toggle="modal"  data-dismiss="modal" data-target="#at-signup" >Sign Up </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL LOGIN ENDS -->
+
+    <!-- MODAL SIGNUP FORM FILLING -->
+    <div class="modal fade" id="at-signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <span th:text="${InvalidInput}"></span>
+                    <form method="post" action="/register">
+                        <div class="form-group">
+                            <p>Username: </p>
+                            <input type="text" class="form-control-form "  name="username"/>
+                        </div>
+                        <p>E-mail: </p>
+                        <div class="form-group">
+                            <input type="email" class="form-control-form "  name="email"/>
+                        </div>
+                        <div class="form-group">
+                            <p>Password: </p>
+                            <input type="password" class="form-control-form "  name="password"/>
+                        </div>
+
+                        <button type="submit" class="btn-lgin">Register</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="ta-l">Already a Member? </p>
+                        </div>
+                        <div class="col-md-4 col-md-offset-2">
+                            <button class="btn-gst"  data-toggle="modal"  data-dismiss="modal" data-target="#at-login">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div id ="myCarousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -163,15 +366,3 @@
 
 
 
-<!--<!DOCTYPE HTML>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-    <!--<title>Index</title>-->
-    <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>Start page</h1>-->
-<!--<p><a th:href="@{/register}">Register a new user</a></p>-->
-<!--<p><a th:href="@{/login}">Login</a></p>-->
-<!--</body>-->
-<!--</html>-->

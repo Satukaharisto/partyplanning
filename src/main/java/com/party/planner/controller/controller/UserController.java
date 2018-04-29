@@ -25,11 +25,6 @@ public class UserController {
         return new ModelAndView("index");
     }
 
-    @GetMapping("/login")
-    public String showLoginSite() {
-        return "login";
-    }
-
     @PostMapping("/login")
     public ModelAndView getInfoFromLoginForm(HttpSession session, @RequestParam String username, @RequestParam String password) {
         Integer userId = repository.checkLogin(username, password);
@@ -38,7 +33,7 @@ public class UserController {
             session.setAttribute("userId", userId);
             return new ModelAndView("usersite");
         }
-        return new ModelAndView("login")
+        return new ModelAndView("index")
                 .addObject("IncorrectPWorusername", "Password or username incorrect. Please try again.");
     }
 
@@ -62,12 +57,12 @@ public class UserController {
         return "index";
     }
 
-    // denna fungerar och kan skapa users till SQL från formulär
+
     @PostMapping("/register")
     public ModelAndView createUser(HttpSession session, @RequestParam String username,
                                    @RequestParam String password) {
         if (!repository.userAlreadyExists(username)) {
-            return new ModelAndView("register")
+            return new ModelAndView("index")
                     .addObject("InvalidInput", "Username already taken");
         }
         int userId = repository.addUser(username, password);
@@ -77,11 +72,6 @@ public class UserController {
         return new ModelAndView("redirect:usersite");
     }
 
-
-    @GetMapping("/register")
-    public String registerUserSite() {
-        return "register";
-    }
 
     @PostMapping("/guestlist")
     public String createGuest(@RequestParam String firstname,
