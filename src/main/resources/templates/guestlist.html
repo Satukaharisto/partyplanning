@@ -154,7 +154,14 @@
                     <p>Gender: </p>
                     <input type="text" name="gender" placeholder="Gender.."/>
                     <p></p>
-                    <input class="button" type="submit" value="add new guest" />
+                    <input class="button" type="submit" value="Add new guest" />
+                    <p></p>
+                    <p>allergy: </p>
+                    <input type="text" name="allergy" placeholder="allergy.."/>
+                    <p>foodpref: </p>
+                    <input type="text" name="foodPreference" placeholder="foodpref.."/>
+                    <p>alcohol: </p>
+                    <input type="text" name="alcohol" placeholder="alcohol.."/>
                 </form>
             </ul>
         </div>
@@ -170,10 +177,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="guest : ${guests}">
+                    <tr th:each="guest : ${guestList}">
                         <td th:text="${guest.firstname}"></td>
                         <td th:text="${guest.lastname}"></td>
                         <td th:text="${guest.gender}"></td>
+                        <td th:text="${guest.foodPreference}"></td>
+                        <td th:text="${guest.allergy}"></td>
+                        <td th:text="${guest.alcohol}"></td>
                     </tr>
                     </tbody>
                 </table>
