@@ -61,17 +61,23 @@ public class UserController {
 
 
     @PostMapping("/register")
+<<<<<<< Updated upstream
     public ModelAndView createUser(
             HttpSession session,
             @RequestParam String username,
             @RequestParam String password) {
+=======
+    public ModelAndView createUser(HttpSession session, @RequestParam String username,
+                                   @RequestParam String password, @RequestParam String email) {
+>>>>>>> Stashed changes
         if (!repository.userAlreadyExists(username)) {
             return new ModelAndView("index")
                     .addObject("InvalidInput", "Username already taken");
         }
-        int userId = repository.addUser(username, password);
+        int userId = repository.addUser(username, password, email);
         session.setAttribute("userId", userId);
         session.setAttribute("user", username);
+        session.setAttribute("user", email);
 
         return new ModelAndView("redirect:usersite");
     }

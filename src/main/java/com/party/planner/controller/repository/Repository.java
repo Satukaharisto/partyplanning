@@ -11,7 +11,13 @@ import java.util.List;
 public interface Repository {
 
     int addGuest(String firstname, String lastname, String gender, int userId);
+<<<<<<< Updated upstream
     int addUser(String username, String password);
+=======
+
+    int addUser(String username, String password, String email);
+
+>>>>>>> Stashed changes
     int addBudgetItem(String item, int price, int userId);
     int addToDo(Date date, String toDo, boolean done, int userId);
 
