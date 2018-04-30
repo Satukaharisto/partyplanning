@@ -113,6 +113,17 @@ public class UserController {
         return new ModelAndView("guestlist").addObject("guestList", guestList);
     }
 
+    @GetMapping("/seatingarrangement")
+    public ModelAndView seatingarrangement (HttpSession session) {
+        List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
+//        List<GuestListModel> guestList = new ArrayList<>();
+//        for (Guest guest : guests) {
+//            Food food = repository.getFoodPreference(guest.getId());
+//            guestList.add(GuestListModelMapper.map(guest, food));
+//        }
+        return new ModelAndView("seatingarrangement").addObject("guestList", guests);
+    }
+
     @PostMapping("/budget")
     public ModelAndView createBudget(@RequestParam String item,
                                      @RequestParam int price,

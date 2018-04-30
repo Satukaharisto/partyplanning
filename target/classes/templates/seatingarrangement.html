@@ -1,60 +1,271 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" >
-    <script src="interact.min.js"></script>
-    <script src="Draggable.js"></script>
+    <title>Event planner</title>
+    <meta charset="utf-8" colTestEdit="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <style>
+        .colTest {
+            background-color: #adc7c8;
+            color: black;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .colTest:hover {
+            background-color: #f0ad97;
+        }
+
+        .colTest:after {
+            colTestEdit: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            colTestEdit: "\2212";
+        }
+
+        .colTestEdit {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: #adc7c8;
+            color: #FFF;
+            padding: 1% 0;
+            font-size: 1.2em;
+            border: 0;
+        }
+
+        .navbar-nav {
+            flex-direction: row !important
+        }
+
+        .navbar-brand {
+            float: left;
+            min-height: 55px;
+            padding: 0 15px 5px;
+        }
+
+        .navbar-inverse .navbar-nav .active a,
+        .navbar-inverse .navbar-nav .active a:focus,
+        .navbar-inverse .navbar-nav .active a:hover {
+            color: #FFF;
+            background-color: #adc7c8;
+        }
+
+        .navbar-inverse .navbar-nav li a {
+            color: #D5D5D5;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+
+        .row.content {
+            height: 1500px
+        }
+
+        /* Set gray background color and 100% height */
+
+        .sidenav {
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        footer {
+            width: 100%;
+            background-color: #adc7c8;
+            padding: 5%;
+            color: #FFF;
+        }
+
+        .fa {
+            padding: 15px;
+            font-size: 25px;
+            color: #FFF;
+        }
+
+        .fa:hover {
+            color: #D5D5D5;
+            text-decoration: none;
+        }
+
+        .button {
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            background-color: #adc7c8;
+            border: none;
+            color: black;
+            padding: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background-color: #665b53;
+            /* Green */
+            color: white;
+        }
+
+        input[type=text]:focus {
+            background-color: #adc7c8;
+            border: 1px solid #665b53;
+            font-size: 1.0em;
+            font-family: 'Catamaran', sans-serif;
+        }
+
+        @media (max-width: 900px) {
+            .fa {
+                font-size: 20px;
+                padding: 10px;
+            }
+
+            /* On small screens, set height to 'auto' for sidenav and grid */
+            @media screen and (max-width: 767px) {
+                .sidenav {
+                    height: auto;
+                    padding: 15px;
+                }
+
+                .row.content {
+                    height: auto;
+                }
+            }
+        }
+
+        .div1 {
+            width: 500px;
+            height: 200px;
+            position: center;
+        }
+
+        div2 {
+            width: 500px;
+            height: 200px;
+            position: relative;
+            background-color: #A5C663;
+        }
+
+        #budgetBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+
+        #guestBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+
+    </style>
 </head>
+
 <body>
-<div class="roundTable draggable drag-drop">
-    <div>Table1</div>
-</div>
-<div class="rectangleTable draggable drag-drop">
-    <div>Table2</div>
-</div>
-<div class="draggable drag-drop">
-    <div class="chair" style=" left: 69px; bottom: -140px; ">
-        <div>Guest</div>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header logga">
+            <img class="logga" src="eventerlogga.png"/>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a th:href="@{/usersite}">Home</a>
+                </li>
+                <li>
+                    <a th:href="@{/guestlist}">Guestlist</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/seatingarrangement}">Seating</a>
+                </li>
+                <li>
+                    <a th:href="@{/budget}">Budget</a>
+                </li>
+                <li>
+                    <a th:href="@{/checklist}">Checklist</a>
+                </li>
+                <li>
+                    <a th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="chair"  style="left: 120px; bottom: -50px;" >
-        <div>Guest2</div>
-    </div>
-    <div class="chair" style="left: 110px; bottom: -165px;">
-        <div>Guest3</div>
-    </div>
-    <div class="chair" style="left: 180px; bottom: 50px;">
-        <div>Guest4</div>
-    </div>
-    <div class="chair" style="left: 230px; bottom: 55px;">
-        <div>Guest5</div>
-    </div>
-    <div class="chair" style="left: 230px; bottom: 40px;">
-        <div>Guest6</div>
-    </div>
-    <div class="chair" style="left: 190px; bottom: 40px;">
-        <div>Guest7</div>
-    </div>
-    <div class="chair" style="left: 60px; bottom: 140px;">
-        <div>Guest8</div>
-    </div>
-    <div class="roundTable " style="position: absolute; left: 110px; top: 150px;" >
-        <div>Table2</div>
-    </div>
-</div>
+</nav>
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <h3>Your guests</h3>
+            <ul class="nav nav-pills nav-stacked" th:each="guest : ${guestList}">
+                <p><span th:text="${guest.firstname}"></span>
+                <span th:text="${guest.lastname}"></span></p>
+
+                <!--DIVS HÄR FÖR ATT KUNNA DRAG AND DROP-->
+
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            <div class="container">
+                <h2>Här vill vi ha drag and drop</h2>
 
 
 
-<!--<div id="no-drop" class="draggable drag-drop"> #no-drop </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!--<div id="yes-drop" class="draggable drag-drop"> #yes-drop </div>-->
+<footer class="container-fluid text-center">
+    <div class="row">
+        <div class="col-sm-2">
 
-<div id="outer-dropzone" class="dropzone" style="align-self: right;">
+        </div>
+        <div class="col-sm-4">
+            <h3>Contact Us</h3>
+            <br/>
+            <h4>Our address and contact info here.</h4>
+        </div>
+        <div class="col-sm-4">
+            <h3>Connect</h3>
+            <a href="#" class="fa fa-facebook"></a>
+            <a href="#" class="fa fa-twitter"></a>
+            <a href="#" class="fa fa-google"></a>
+            <a href="#" class="fa fa-linkedin"></a>
+            <a href="#" class="fa fa-youtube"></a>
+        </div>
 
-    <!-- <div id="inner-dropzone" class="dropzone">#inner-dropzone</div>-->
-</div>
+    </div>
+</footer>
+<script src="guestscript.js"></script>
 </body>
 </html>
