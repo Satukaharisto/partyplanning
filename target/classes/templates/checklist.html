@@ -166,16 +166,16 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Things to do</th>
+                        <th>Due date</th>
                         <th>Todo</th>
-                        <th>Done</th>
+                        <!--<th>Done</th>-->
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="toDo : ${checklist}">
                         <td th:text="${toDo.date}"></td>
                         <td th:text="${toDo.toDo}"></td>
-                        <td th:text="${toDo.done}"></td>
+                        <!--<td th:text="${toDo.done}"></td>-->
                     </tr>
                     </tbody>
                 </table>

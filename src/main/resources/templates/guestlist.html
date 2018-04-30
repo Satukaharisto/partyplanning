@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
-
     <title>Event planner</title>
     <meta charset="utf-8" colTestEdit="width=device-width, initial-scale=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -234,11 +233,11 @@
                     <p>Gender: </p>
                     <input type="text" name="gender" placeholder="Gender.."/>
                     <p></p>
-                    <p>allergy: </p>
+                    <p>Allergy: </p>
                     <input type="text" name="allergy" placeholder="allergy.."/>
-                    <p>foodpref: </p>
+                    <p>Foodpref: </p>
                     <input type="text" name="foodPreference" placeholder="foodpref.."/>
-                    <p>alcohol: </p>
+                    <p>Alcohol: </p>
                     <input type="text" name="alcohol" placeholder="alcohol.."/>
                     <p></p>
                     <input class="button" type="submit" value="Add new guest"/>
@@ -260,26 +259,24 @@
                         <span th:text="${guest.alcohol}"></span>
                     </button>
                     <div class="colTestEdit">
-                        <p>some edit shit here</p>
-
                         <form method="post" action="/updateGuest">          <!-- Ska snyggas till i designen -->
                             <input type="hidden" name="guestId" th:value="${guest.id}"/>
-                            <p>Firstname:</p>
-                            <input type="text" name="firstname" placeholder="Firstname.."/>
-                            <p>Lastname: </p>
-                            <input type="text" name="lastname" placeholder="Lastname.."/>
-                            <p>Gender: </p>
-                            <input type="text" name="gender" placeholder="Gender.."/>
+                            <p>Firstname:
+                            <input type="text" name="firstname" placeholder="Firstname.."/></p>
+                            <p>Lastname:
+                            <input type="text" name="lastname" placeholder="Lastname.."/></p>
+                            <p>Gender:
+                            <input type="text" name="gender" placeholder="Gender.."/></p>
                             <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
                             <p></p>
-                            <p>allergy: </p>
-                            <input type="text" name="allergy" placeholder="allergy.."/>
-                            <p>foodpref: </p>
-                            <input type="text" name="foodPreference" placeholder="foodpref.."/>
-                            <p>alcohol: </p>
-                            <input type="text" name="alcohol" placeholder="alcohol.."/>
+                            <p>Allergy:
+                            <input type="text" name="allergy" placeholder="Gluten.."/></p>
+                            <p>Foodpreference:
+                            <input type="text" name="foodPreference" placeholder="Vegan.."/></p>
+                            <p>Alcohol:
+                            <input type="text" name="alcohol" placeholder="Yes or No.."/></p>
                             <p></p>
-                            <input class="button" type="submit" value="Add new guest"/>
+                            <input class="button" type="submit" value="Edit Guest"/>
                         </form>
 
 
