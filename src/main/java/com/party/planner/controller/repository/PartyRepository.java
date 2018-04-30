@@ -178,13 +178,13 @@ public class PartyRepository implements Repository {
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE Guests " +
                              "SET User_ID = (?), FirstName = (?), LastName = (?), Gender = (?) " +
-                             "WHERE id = (?)")) {
+                             "WHERE GuestID = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, userId);
             ps.setString(2, firstname);
             ps.setString(3, lastname);
             ps.setString(4, gender);
             ps.setInt(5, id);
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryExceptions("something went wrong in updateGuest - PartyRepository", e);
         }
@@ -196,13 +196,13 @@ public class PartyRepository implements Repository {
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE FoodPreferences " +
                              "SET Guest_ID = (?), FoodPreference = (?), Alcohol = (?), Allergie = (?) " +
-                             "WHERE id = (?)")) {
+                             "WHERE id = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, guestId);
             ps.setString(2, foodPreference);
             ps.setString(3, alcohol);
             ps.setString(4, allergy);
             ps.setInt(5, id);
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryExceptions("something went wrong in updateGuest - PartyRepository", e);
         }
