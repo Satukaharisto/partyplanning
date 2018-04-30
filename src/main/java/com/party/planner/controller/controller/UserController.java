@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +34,30 @@ public class UserController {
         if (userId != null) {
             session.setAttribute("user", username);
             session.setAttribute("userId", userId);
-            return new ModelAndView("usersite");
+            return new ModelAndView("redirect:event");
         }
         return new ModelAndView("index")
                 .addObject("IncorrectPWorusername", "Password or username incorrect. Please try again.");
+    }
+
+    /*-----------------------------------------------------------*/
+    @PostMapping("/event")
+    public String createEvent(@RequestParam String name,
+                             @RequestParam java.sql.Date date,
+                             HttpSession session) {
+        repository.addEvent(name, date,(int) session.getAttribute("userId"));
+        return "redirect:event";                //Ska redirect till inloggat läge
+    }
+
+    @GetMapping("/event")
+    public ModelAndView newEventList(HttpSession session) {
+        List<Event> eventlist = repository.getEventList((int) session.getAttribute("userId"));
+        List<EventListModel> eventlist2 = new ArrayList<>();
+        for (Event event : eventlist) {
+            Guest guest = repository.getGuests(event.getId());
+            eventlist2.add(EventListModelMapper.map(event, guest));
+        }
+        return new ModelAndView("event").addObject("eventlist2", eventlist2);
     }
 
     @GetMapping("/usersite")
@@ -74,19 +95,19 @@ public class UserController {
         session.setAttribute("user", username);
         session.setAttribute("user", email);
 
-        return new ModelAndView("redirect:usersite");
+        return new ModelAndView("redirect:event");
     }
 
 
     @PostMapping("/guestlist")
-    public String createGuest(@RequestParam String firstname,
+    public String createGuest(@RequestParam int eventId,
+                              @RequestParam String firstname,
                               @RequestParam String lastname,
                               @RequestParam String gender,
                               @RequestParam(required = false) String allergy,
                               @RequestParam(required = false) String foodPreference,
-                              @RequestParam(required = false) String alcohol,
-                              HttpSession session) {
-        int guestId = repository.addGuest(firstname, lastname, gender, (int) session.getAttribute("userId"));
+                              @RequestParam(required = false) String alcohol) {
+        int guestId = repository.addGuest(eventId, firstname, lastname, gender);
         repository.addFoodPreference(guestId, allergy, foodPreference, alcohol);
 
         return "redirect:guestlist";
@@ -104,7 +125,7 @@ public class UserController {
 
     @GetMapping("/guestlist")
     public ModelAndView newGuestToList(HttpSession session) {
-        List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
+        List<Guest> guests = repository.getGuestList((int) session.getAttribute("eventId"));
         List<GuestListModel> guestList = new ArrayList<>();
         for (Guest guest : guests) {
             Food food = repository.getFoodPreference(guest.getId());
