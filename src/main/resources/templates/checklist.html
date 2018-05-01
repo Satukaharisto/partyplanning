@@ -1,17 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
-
-<body lang="en">
-
 <head>
     <title>Event planner</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8" colTestEdit="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <script src="guestscript.js"></script>
     <style>
+        .colTest {
+            background-color: #adc7c8;
+            color: black;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .colTest:hover {
+            background-color: #f0ad97;
+        }
+
+        .colTest:after {
+            colTestEdit: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            colTestEdit: "\2212";
+        }
+
+        .colTestEdit {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
@@ -20,6 +61,10 @@
             padding: 1% 0;
             font-size: 1.2em;
             border: 0;
+        }
+
+        .navbar-nav {
+            flex-direction: row !important
         }
 
         .navbar-brand {
@@ -97,7 +142,6 @@
             font-family: 'Catamaran', sans-serif;
         }
 
-
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
@@ -110,11 +154,42 @@
                     height: auto;
                     padding: 15px;
                 }
+
                 .row.content {
                     height: auto;
                 }
             }
         }
+
+        .div1 {
+            width: 500px;
+            height: 200px;
+            position: center;
+        }
+
+        div2 {
+            width: 500px;
+            height: 200px;
+            position: relative;
+            background-color: #A5C663;
+        }
+
+        #budgetBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+
+        #guestBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+
     </style>
 </head>
 
@@ -172,30 +247,36 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
-                <h2>Todo</h2>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Due date</th>
-                        <th>Todo</th>
-                        <!--<th>Done</th>-->
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="toDo : ${checklist}">
-                        <td th:text="${toDo.date}"></td>
-                        <td th:text="${toDo.toDo}"></td>
-                        <!--<td th:text="${toDo.done}"></td>-->
-                    </tr>
-                    </tbody>
-                </table>
+                <h2>Checklist</h2>
+                <p></p>
+                <p></p>
 
+                <div th:each="toDo : ${checklist}">                <!-- Ska snyggas till i designen -->
+                    <button class="colTest">
+                        <span th:text="${toDo.date}"> </span>
+                        <span th:text="${toDo.toDo}"> </span>
+                    </button>
+                    <div class="colTestEdit">
+                        <form method="post" action="/updateChecklist">          <!-- Ska snyggas till i designen -->
+                            <input type="hidden" name="id" th:value="${toDo.id}"/>
+                            <p>Edit Todo:
+                                <input type="date" name="date" placeholder="date.."/></p>
+                            <p>Edit Date:
+                                <input type="text" name="toDo" placeholder="todo.."/></p>
+                            <p></p>
+                            <input class="button" type="submit" value="Edit item"/>
+                            <p></p>
+                        </form>
+                        <form method="get" action="/deleteChecklist">
+                            <input type="hidden" name="id" th:value="${toDo.id}"/>
+                            <input class="button" type="submit" value="Delete item"/>
+                        </form>
             </div>
         </div>
     </div>
 </div>
-
-</body>
+    </div>
+</div>
 <footer class="container-fluid text-center">
     <div class="row">
         <div class="col-sm-2">
@@ -217,6 +298,6 @@
 
     </div>
 </footer>
+<script src="guestscript.js"></script>
 </body>
-
 </html>

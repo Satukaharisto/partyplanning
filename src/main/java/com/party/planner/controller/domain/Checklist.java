@@ -3,7 +3,7 @@ package com.party.planner.controller.domain;
 
 import java.util.Date;
 
-public class ToDo {
+public class Checklist {
     private int id;
     private Date date;
     private String toDo;
@@ -41,7 +41,7 @@ public class ToDo {
         return done;
     }
 
-    public ToDo(int id, Date date, String toDo, boolean done) {
+    public Checklist(int id, Date date, String toDo, boolean done) {
         this.id = id;
         this.date = date;
         this.toDo = toDo;
