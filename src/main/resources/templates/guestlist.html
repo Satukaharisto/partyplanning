@@ -236,14 +236,21 @@
                     <p>Lastname: </p>
                     <input type="text" name="lastname" placeholder="Lastname.."/>
                     <p>Gender: </p>
-                    <input type="text" name="gender" placeholder="Gender.."/>
+                    <select name="gender">
+                        <option th:text="Other"></option>
+                        <option th:text="Female"></option>
+                        <option th:text="Male"></option>
+                    </select>
                     <p></p>
                     <p>Allergy: </p>
                     <input type="text" name="allergy" placeholder="allergy.."/>
                     <p>Foodpref: </p>
                     <input type="text" name="foodPreference" placeholder="foodpref.."/>
                     <p>Alcohol: </p>
-                    <input type="text" name="alcohol" placeholder="alcohol.."/>
+                    <select name="alcohol">
+                        <option th:text="No"></option>
+                        <option th:text="Yes"></option>
+                    </select>
                     <p></p>
                     <input class="button" type="submit" value="Add new guest"/>
                 </form>
@@ -271,16 +278,23 @@
                             <input type="text" name="firstname" placeholder="Firstname.."/></p>
                             <p>Lastname:
                             <input type="text" name="lastname" placeholder="Lastname.."/></p>
-                            <p>Gender:
-                            <input type="text" name="gender" placeholder="Gender.."/></p>
+                            <p>Gender:</p>
+                            <select name="gender">
+                                <option th:text="Other"></option>
+                                <option th:text="Female"></option>
+                                <option th:text="Male"></option>
+                            </select>
                             <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
                             <p></p>
                             <p>Allergy:
                             <input type="text" name="allergy" placeholder="Allergy.."/></p>
                             <p>Foodpreference:
                             <input type="text" name="foodPreference" placeholder="Food preference.."/></p>
-                            <p>Alcohol:
-                            <input type="text" name="alcohol" placeholder="Yes or No.."/></p>
+                            <p>Alcohol:</p>
+                            <select name="alcohol">
+                                <option th:text="No"></option>
+                                <option th:text="Yes"></option>
+                            </select>
                             <p></p>
                             <input class="button" type="submit" value="Edit Guest"/>
                         </form>
