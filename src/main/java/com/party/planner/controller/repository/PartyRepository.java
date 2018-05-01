@@ -101,14 +101,14 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public int addToDo(Date date, String toDo, boolean done, int userId) {
+    public int addToDo(Date date, String toDo, boolean done, int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Checklist3]([Date],[Todo],[Done],[Event_ID]) " +
                      "VALUES (?,?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setDate(1, date);
             ps.setString(2, toDo);
             ps.setBoolean(3, done);
-            ps.setInt(4, userId);
+            ps.setInt(4, eventId);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             int id = -1;
@@ -268,11 +268,11 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public List<ToDo> getChecklist(int userId) {
+    public List<ToDo> getChecklist(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [ChecklistID], [Date], [Todo], [Done] from [dbo].[Checklist3]\n " +
                      "WHERE Event_ID = (?) ")) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
 
             ResultSet rs = ps.executeQuery();
             List<ToDo> checklist = new ArrayList<>();
@@ -345,7 +345,7 @@ public class PartyRepository implements Repository {
             }
             return eventId;
         } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in addguest - PartyRepository", e);
+            throw new RepositoryExceptions("something went wrong in addevent - PartyRepository", e);
         }
     }
     @Override
@@ -367,26 +367,6 @@ public class PartyRepository implements Repository {
             throw new RepositoryExceptions("something went wrong in eventlist - PartyRepository", e);
         }
     }
-    @Override
-    public Guest getGuests(int eventId) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT GuestID, FirstName, LastName, Gender" +
-                     " FROM Guest3 WHERE Event_ID = (?)")) {
-            ps.setInt(1, eventId);
-            ResultSet rs = ps.executeQuery();
-            Guest guest = null;
-            if (rs.next()) {
-                guest = new Guest(rs.getInt("id"),
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Gender"));
-            }
-            return guest;
-        } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in foodlist - partyrepo", e);
-        }
-    }
-
 
 }
 

@@ -237,15 +237,15 @@
         <div class="col-sm-9">
             <div class="container">
                 <h2>Events</h2>
-                    <div th:each="event : ${eventlist2}">
+                    <div th:each="event : ${eventlist}">
                         <button class="colTest">
                         <span th:text="${event.name}"></span>
                         <span th:text="${event.date}"></span>
                         </button>
                         <div class="colTestEdit">
-                            <a th:href="@{/guestlist}">Guestlist</a>
-                            <a th:href="@{/budget}">Budget</a>
-                            <a th:href="@{/checklist}">Checklist</a>
+                            <a th:href="@{guestlist}">Guestlist</a>
+                            <a th:href="@{budget}">Budget</a>
+                            <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
                         </div>
                     </div>
             </div>

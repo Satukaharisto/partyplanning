@@ -52,12 +52,12 @@ public class UserController {
     @GetMapping("/event")
     public ModelAndView newEventList(HttpSession session) {
         List<Event> eventlist = repository.getEventList((int) session.getAttribute("userId"));
-        List<EventListModel> eventlist2 = new ArrayList<>();
-        for (Event event : eventlist) {
-            Guest guest = repository.getGuests(event.getId());
-            eventlist2.add(EventListModelMapper.map(event, guest));
-        }
-        return new ModelAndView("event").addObject("eventlist2", eventlist2);
+//        List<EventListModel> eventlist2 = new ArrayList<>();
+//        for (Event event : eventlist) {
+//            Guest guest = repository.getGuests(event.getId());
+//            eventlist2.add(EventListModelMapper.map(event, guest));
+//        }
+        return new ModelAndView("event").addObject("eventlist", eventlist);
     }
 
     @GetMapping("/usersite")
@@ -158,22 +158,22 @@ public class UserController {
     }
 
     @PostMapping("/checklist")
-    public String createToDo(@RequestParam java.sql.Date date,
+    public ModelAndView createToDo(@RequestParam int eventId, @RequestParam java.sql.Date date,
                              @RequestParam String toDo,
-                             @RequestParam(required = false) Boolean done,
-                             HttpSession session) {
+                             @RequestParam(required = false) Boolean done) {
         boolean b = false;
         if (done != null) {
             b = done;
         }
-        repository.addToDo(date, toDo, b, (int) session.getAttribute("userId"));
-        return "redirect:checklist";                //Ska redirect till inloggat läge
+        repository.addToDo(date, toDo, b, eventId);
+        return new ModelAndView("redirect:checklist?eventId=" + eventId);                //Ska redirect till inloggat läge
     }
 
     @GetMapping("/checklist")
-    public ModelAndView newToDoToList(HttpSession session) {
-        List<ToDo> checklist = repository.getChecklist((int) session.getAttribute("userId"));
-        return new ModelAndView("checklist").addObject("checklist", checklist);                //Ska redirect till inloggat läge
+    public ModelAndView newToDoToList(@RequestParam int eventId) {
+        List<ToDo> checklist = repository.getChecklist(eventId);
+        return new ModelAndView("checklist").addObject("checklist", checklist).
+                addObject("eventId", eventId);                //Ska redirect till inloggat läge
     }
 
     @PostMapping("/updateGuest")

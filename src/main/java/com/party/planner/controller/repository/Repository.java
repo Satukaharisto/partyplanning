@@ -32,10 +32,10 @@ public interface Repository {
     List<Guest> getGuestList(int userId);
     Food getFoodPreference(int guestId);
     List<Budget> getBudgetList(int userId);
-    List<ToDo> getChecklist(int userId);
+    List<ToDo> getChecklist(int eventId);
     int addEvent(String name, Date date, int userId);
     List<Event> getEventList(int userId);
-    Guest getGuests(int eventId);
+//    Guest getGuests(int eventId);
 }
 
 
