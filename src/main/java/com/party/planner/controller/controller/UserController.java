@@ -122,7 +122,6 @@ public class UserController {
         return "redirect:guestlist";
     }
 
-
     @GetMapping("/guestlist")
     public ModelAndView newGuestToList(HttpSession session) {
         List<Guest> guests = repository.getGuestList((int) session.getAttribute("eventId"));
