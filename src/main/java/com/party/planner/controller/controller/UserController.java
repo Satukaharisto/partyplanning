@@ -126,7 +126,7 @@ public class UserController {
             Food food = repository.getFoodPreference(guest.getId());
             guestList.add(GuestListModelMapper.map(guest, food));
         }
-        return new ModelAndView("guestlist").addObject("guestList", guestList).addObject("eventId", eventId);
+        return new ModelAndView("guestlist").addObject("eventId", eventId).addObject("guestList", guestList);
     }
 
     @GetMapping("/seatingarrangement")
@@ -184,6 +184,7 @@ public class UserController {
 
     @PostMapping("/updateGuest")
     public ModelAndView updateGuest(
+            @RequestParam int eventId,
             @RequestParam int guestId,
             @RequestParam String firstname,
             @RequestParam String lastname,
@@ -191,11 +192,10 @@ public class UserController {
             @RequestParam int foodId,
             @RequestParam(required = false) String allergy,
             @RequestParam(required = false) String foodPreference,
-            @RequestParam(required = false) String alcohol,
-            HttpSession session) {
-        repository.updateGuest(guestId, (int) session.getAttribute("userId"), firstname, lastname, gender);
+            @RequestParam(required = false) String alcohol) {
+        repository.updateGuest(eventId, guestId, firstname, lastname, gender);
         repository.updateFoodPreference(foodId, guestId, allergy, foodPreference, alcohol);
-        return new ModelAndView("redirect:guestlist");
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
 }

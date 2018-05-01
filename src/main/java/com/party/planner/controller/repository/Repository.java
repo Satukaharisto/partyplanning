@@ -26,7 +26,7 @@ public interface Repository {
 
     int budgetSum(int userId);
 
-    void updateGuest(int id, int userId, String firstname, String lastname, String gender);
+    void updateGuest(int eventId, int id, String firstname, String lastname, String gender);
     void updateFoodPreference(int id, int guestId, String allergy, String foodPreference, String alcohol);
 
     List<Guest> getGuestList(int eventId);

@@ -170,13 +170,13 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public void updateGuest(int id, int userId, String firstname, String lastname, String gender) {
+    public void updateGuest(int eventId, int id, String firstname, String lastname, String gender) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE Guest3 " +
                              "SET Event_ID = (?), FirstName = (?), LastName = (?), Gender = (?) " +
                              "WHERE GuestID = (?)", Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
             ps.setString(2, firstname);
             ps.setString(3, lastname);
             ps.setString(4, gender);
@@ -193,7 +193,7 @@ public class PartyRepository implements Repository {
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE FoodPreference3 " +
                              "SET Guest_ID = (?), FoodPreference = (?), Alcohol = (?), Allergie = (?) " +
-                             "WHERE FoodPreferenceID = (?)", Statement.RETURN_GENERATED_KEYS)) {
+                             "WHERE RsvpID = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, guestId);
             ps.setString(2, foodPreference);
             ps.setString(3, alcohol);

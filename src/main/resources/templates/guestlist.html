@@ -265,6 +265,7 @@
                     </button>
                     <div class="colTestEdit">
                         <form method="post" action="/updateGuest">          <!-- Ska snyggas till i designen -->
+                            <input type="hidden" name="eventId" th:value="${eventId}"/>
                             <input type="hidden" name="guestId" th:value="${guest.id}"/>
                             <p>Firstname:
                             <input type="text" name="firstname" placeholder="Firstname.."/></p>
@@ -275,9 +276,9 @@
                             <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
                             <p></p>
                             <p>Allergy:
-                            <input type="text" name="allergy" placeholder="Gluten.."/></p>
+                            <input type="text" name="allergy" placeholder="Allergy.."/></p>
                             <p>Foodpreference:
-                            <input type="text" name="foodPreference" placeholder="Vegan.."/></p>
+                            <input type="text" name="foodPreference" placeholder="Food preference.."/></p>
                             <p>Alcohol:
                             <input type="text" name="alcohol" placeholder="Yes or No.."/></p>
                             <p></p>
