@@ -37,14 +37,15 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public int addGuest(int eventId, String firstname, String lastname, String gender) {
+    public int addGuest(int eventId, String firstname, String lastname, String email, String gender) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("INSERT [dbo].[Guest3]([FirstName],[LastName],[Gender], [Event_ID]) " +
-                     "VALUES (?,?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement("INSERT [dbo].[Guest3]([FirstName],[LastName],[Email], [Gender], [Event_ID]) " +
+                     "VALUES (?,?,?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, firstname);
             ps.setString(2, lastname);
-            ps.setString(3, gender);
-            ps.setInt(4, eventId);
+            ps.setString(3, email);
+            ps.setString(4, gender);
+            ps.setInt(5, eventId);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             int guestId = -1;
@@ -170,17 +171,18 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public void updateGuest(int eventId, int id, String firstname, String lastname, String gender) {
+    public void updateGuest(int eventId, int id, String firstname, String lastname, String email, String gender) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE Guest3 " +
-                             "SET Event_ID = (?), FirstName = (?), LastName = (?), Gender = (?) " +
+                             "SET Event_ID = (?), FirstName = (?), LastName = (?), Email = (?), Gender = (?) " +
                              "WHERE GuestID = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, eventId);
             ps.setString(2, firstname);
             ps.setString(3, lastname);
-            ps.setString(4, gender);
-            ps.setInt(5, id);
+            ps.setString(4, email);
+            ps.setString(5, gender);
+            ps.setInt(6, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryExceptions("something went wrong in updateGuest - PartyRepository", e);
@@ -209,7 +211,7 @@ public class PartyRepository implements Repository {
     @Override
     public List<Guest> getGuestList(int eventId) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT GuestId, FirstName, lastname, gender from Guest3\n " +
+             PreparedStatement ps = conn.prepareStatement("SELECT GuestId, FirstName, lastname, email, gender from Guest3\n " +
                      "WHERE Event_ID = (?) ")) {
             ps.setInt(1, eventId);
 
@@ -219,6 +221,7 @@ public class PartyRepository implements Repository {
                 guests.add(new Guest(rs.getInt("GuestId"),
                         rs.getString("FirstName"),
                         rs.getString("lastname"),
+                        rs.getString("email"),
                         rs.getString("gender")));
             }
             return guests;

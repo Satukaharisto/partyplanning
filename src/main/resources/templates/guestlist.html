@@ -235,6 +235,8 @@
                     <input type="text" name="firstname" placeholder="Firstname.."/>
                     <p>Lastname: </p>
                     <input type="text" name="lastname" placeholder="Lastname.."/>
+                    <p>Email: </p>
+                    <input type="text" name="email" placeholder="Email.."/>
                     <p>Gender: </p>
                     <select name="gender">
                         <option th:text="Other"></option>
@@ -265,6 +267,7 @@
                     <button class="colTest">
                         <span th:text="${guest.firstname}"></span>
                         <span th:text="${guest.lastname}"></span>
+                        <span th:text="${guest.email}"></span>
                         <span th:text="${guest.gender}"></span>
                         <span th:text="${guest.foodPreference}"></span>
                         <span th:text="${guest.allergy}"></span>
@@ -278,6 +281,8 @@
                             <input type="text" name="firstname" placeholder="Firstname.."/></p>
                             <p>Lastname:
                             <input type="text" name="lastname" placeholder="Lastname.."/></p>
+                            <p>Email:
+                            <input type="text" name="email" placeholder="Email.."/></p>
                             <p>Gender:</p>
                             <select name="gender">
                                 <option th:text="Other"></option>

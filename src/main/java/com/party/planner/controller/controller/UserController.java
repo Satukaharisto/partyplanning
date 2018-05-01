@@ -98,11 +98,12 @@ public class UserController {
     public ModelAndView createGuest(@RequestParam int eventId,
                               @RequestParam String firstname,
                               @RequestParam String lastname,
+                              @RequestParam String email,
                               @RequestParam String gender,
                               @RequestParam(required = false) String allergy,
                               @RequestParam(required = false) String foodPreference,
                               @RequestParam(required = false) String alcohol) {
-        int guestId = repository.addGuest(eventId, firstname, lastname, gender);
+        int guestId = repository.addGuest(eventId, firstname, lastname, email, gender);
         repository.addFoodPreference(guestId, allergy, foodPreference, alcohol);
 
         return new ModelAndView("redirect:guestlist?eventId=" + eventId);
@@ -188,12 +189,13 @@ public class UserController {
             @RequestParam int guestId,
             @RequestParam String firstname,
             @RequestParam String lastname,
+            @RequestParam String email,
             @RequestParam String gender,
             @RequestParam int foodId,
             @RequestParam(required = false) String allergy,
             @RequestParam(required = false) String foodPreference,
             @RequestParam(required = false) String alcohol) {
-        repository.updateGuest(eventId, guestId, firstname, lastname, gender);
+        repository.updateGuest(eventId, guestId, firstname, lastname, email, gender);
         repository.updateFoodPreference(foodId, guestId, allergy, foodPreference, alcohol);
         return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
