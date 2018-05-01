@@ -230,6 +230,7 @@
             <h3 th:text="'Inloggad som ' + ${session.user}"></h3>
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/guestlist">
+                    <input type="hidden" name="eventId" th:value="${eventId}"/>
                     <p>Firstname:</p>
                     <input type="text" name="firstname" placeholder="Firstname.."/>
                     <p>Lastname: </p>

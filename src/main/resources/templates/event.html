@@ -200,18 +200,6 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active">
-                    <a th:href="@{/usersite}">Home</a>
-                </li>
-                <li>
-                    <a th:href="@{/guestlist}">Guestlist</a>
-                </li>
-                <li>
-                    <a th:href="@{/budget}">Budget</a>
-                </li>
-                <li>
-                    <a th:href="@{/checklist}">Checklist</a>
-                </li>
                 <li>
                     <a th:href="@{/logout}">Logout</a>
                 </li>
@@ -243,7 +231,7 @@
                         <span th:text="${event.date}"></span>
                         </button>
                         <div class="colTestEdit">
-                            <a th:href="@{guestlist}">Guestlist</a>
+                            <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
                             <a th:href="@{budget}">Budget</a>
                             <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
                         </div>

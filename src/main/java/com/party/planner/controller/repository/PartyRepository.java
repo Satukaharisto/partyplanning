@@ -207,11 +207,11 @@ public class PartyRepository implements Repository {
 
     // LISTS
     @Override
-    public List<Guest> getGuestList(int userId) {
+    public List<Guest> getGuestList(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT GuestId, FirstName, lastname, gender from Guest3\n " +
                      "WHERE Event_ID = (?) ")) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
 
             ResultSet rs = ps.executeQuery();
             List<Guest> guests = new ArrayList<>();
@@ -230,13 +230,13 @@ public class PartyRepository implements Repository {
     @Override
     public Food getFoodPreference(int guestId) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT FoodPreferenceID, Guest_ID, FoodPreference, Alcohol, Allergie" +
+             PreparedStatement ps = conn.prepareStatement("SELECT RsvpID, Guest_ID, FoodPreference, Alcohol, Allergie" +
                      " FROM FoodPreference3 WHERE Guest_ID = (?)")) {
             ps.setInt(1, guestId);
             ResultSet rs = ps.executeQuery();
             Food food = null;
             if (rs.next()) {
-                food = new Food(rs.getInt("id"),
+                food = new Food(rs.getInt("RsvpID"),
                         rs.getString("FoodPreference"),
                         rs.getString("Alcohol"),
                         rs.getString("Allergie"));

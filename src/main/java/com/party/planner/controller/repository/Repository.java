@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface Repository {
 
-    int addGuest( int eventId, String firstname, String lastname, String gender);
+    int addGuest(int userId, String firstname, String lastname, String gender);
 
 
     int addUser(String username, String password, String email);
@@ -29,7 +29,7 @@ public interface Repository {
     void updateGuest(int id, int userId, String firstname, String lastname, String gender);
     void updateFoodPreference(int id, int guestId, String allergy, String foodPreference, String alcohol);
 
-    List<Guest> getGuestList(int userId);
+    List<Guest> getGuestList(int eventId);
     Food getFoodPreference(int guestId);
     List<Budget> getBudgetList(int userId);
     List<ToDo> getChecklist(int eventId);

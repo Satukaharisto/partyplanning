@@ -52,11 +52,6 @@ public class UserController {
     @GetMapping("/event")
     public ModelAndView newEventList(HttpSession session) {
         List<Event> eventlist = repository.getEventList((int) session.getAttribute("userId"));
-//        List<EventListModel> eventlist2 = new ArrayList<>();
-//        for (Event event : eventlist) {
-//            Guest guest = repository.getGuests(event.getId());
-//            eventlist2.add(EventListModelMapper.map(event, guest));
-//        }
         return new ModelAndView("event").addObject("eventlist", eventlist);
     }
 
@@ -100,7 +95,7 @@ public class UserController {
 
 
     @PostMapping("/guestlist")
-    public String createGuest(@RequestParam int eventId,
+    public ModelAndView createGuest(@RequestParam int eventId,
                               @RequestParam String firstname,
                               @RequestParam String lastname,
                               @RequestParam String gender,
@@ -110,27 +105,28 @@ public class UserController {
         int guestId = repository.addGuest(eventId, firstname, lastname, gender);
         repository.addFoodPreference(guestId, allergy, foodPreference, alcohol);
 
-        return "redirect:guestlist";
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
     @PostMapping("/food")
-    public String addFoodPreference(@RequestParam int guestId,
+    public ModelAndView addFoodPreference(@RequestParam int eventId,
+                                          @RequestParam int guestId,
                                     @RequestParam String allergie,
                                     @RequestParam String foodPreference,
                                     @RequestParam String alcohol) {
         repository.addFoodPreference(guestId, allergie, foodPreference, alcohol);
-        return "redirect:guestlist";
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
     @GetMapping("/guestlist")
-    public ModelAndView newGuestToList(HttpSession session) {
-        List<Guest> guests = repository.getGuestList((int) session.getAttribute("eventId"));
+    public ModelAndView newGuestToList(@RequestParam int eventId) {
+        List<Guest> guests = repository.getGuestList(eventId);
         List<GuestListModel> guestList = new ArrayList<>();
         for (Guest guest : guests) {
             Food food = repository.getFoodPreference(guest.getId());
             guestList.add(GuestListModelMapper.map(guest, food));
         }
-        return new ModelAndView("guestlist").addObject("guestList", guestList);
+        return new ModelAndView("guestlist").addObject("guestList", guestList).addObject("eventId", eventId);
     }
 
     @GetMapping("/seatingarrangement")
