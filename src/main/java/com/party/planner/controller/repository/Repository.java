@@ -1,16 +1,14 @@
 package com.party.planner.controller.repository;
 
-import com.party.planner.controller.domain.Budget;
-import com.party.planner.controller.domain.Food;
-import com.party.planner.controller.domain.Guest;
-import com.party.planner.controller.domain.ToDo;
+import com.party.planner.controller.domain.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface Repository {
 
-    int addGuest(String firstname, String lastname, String gender, int userId);
+    int addGuest( int eventId, String firstname, String lastname, String gender);
 
 
     int addUser(String username, String password, String email);
@@ -34,8 +32,10 @@ public interface Repository {
     List<Guest> getGuestList(int userId);
     Food getFoodPreference(int guestId);
     List<Budget> getBudgetList(int userId);
-    List<ToDo> getChecklist(int userId);
-
+    List<ToDo> getChecklist(int eventId);
+    int addEvent(String name, Date date, int userId);
+    List<Event> getEventList(int userId);
+//    Guest getGuests(int eventId);
 }
 
 
