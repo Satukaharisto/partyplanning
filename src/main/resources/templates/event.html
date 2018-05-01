@@ -232,7 +232,7 @@
                         </button>
                         <div class="colTestEdit">
                             <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
-                            <a th:href="@{budget}">Budget</a>
+                            <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
                             <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
                         </div>
                     </div>

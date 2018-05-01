@@ -12,7 +12,7 @@ public interface Repository {
 
 
     int addUser(String username, String password, String email);
-    int addBudgetItem(String item, int price, int userId);
+    int addBudgetItem(String item, int price, int eventId);
     int addToDo(Date date, String toDo, boolean done, int userId);
 
     int addFoodPreference(int guestId, String allergy, String foodPreference, String alcohol);
@@ -24,14 +24,14 @@ public interface Repository {
     boolean userAlreadyExists(String username);
     boolean budgetItemAlreadyExists(String item, int userId);
 
-    int budgetSum(int userId);
+    int budgetSum(int eventId);
 
     void updateGuest(int eventId, int id, String firstname, String lastname, String gender);
     void updateFoodPreference(int id, int guestId, String allergy, String foodPreference, String alcohol);
 
     List<Guest> getGuestList(int eventId);
     Food getFoodPreference(int guestId);
-    List<Budget> getBudgetList(int userId);
+    List<Budget> getBudgetList(int eventId);
     List<ToDo> getChecklist(int eventId);
     int addEvent(String name, Date date, int userId);
     List<Event> getEventList(int userId);

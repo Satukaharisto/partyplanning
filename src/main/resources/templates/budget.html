@@ -131,7 +131,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a th:href="@{/usersite}">Home</a>
+                    <a th:href="@{/event}">My events</a>
                 </li>
                 <li>
                     <a th:href="@{/guestlist}">Guestlist</a>
@@ -160,6 +160,7 @@
             <!--<h4>Vill vi ha text här?</h4>-->
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/budget">
+                    <input type="hidden" name="eventId" th:value="${eventId}"/>
                     <p>Add item to budget:</p>
                     <input type="text" name="item" placeholder="item.."/>
                     <p>Price:</p>

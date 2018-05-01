@@ -81,13 +81,13 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public int addBudgetItem(String item, int price, int userId) {
+    public int addBudgetItem(String item, int price, int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Budget3]([Item],[Price],[Event_ID]) " +
                      "VALUES (?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item);
             ps.setInt(2, price);
-            ps.setInt(3, userId);
+            ps.setInt(3, eventId);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             int id = -1;
@@ -137,11 +137,11 @@ public class PartyRepository implements Repository {
         return true;
     }
 
-    public boolean budgetItemAlreadyExists(String item, int userId) {
+    public boolean budgetItemAlreadyExists(String item, int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [Item] FROM [dbo].[Budget3] WHERE [item] = ? AND Event_Id = ?")) {
             ps.setString(1, item);
-            ps.setInt(2, userId);
+            ps.setInt(2, eventId);
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -248,16 +248,16 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public List<Budget> getBudgetList(int userId) {
+    public List<Budget> getBudgetList(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [BudgetID], [Item], [Price] from [dbo].[Budget3]\n " +
                      "WHERE Event_ID = (?) ")) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
 
             ResultSet rs = ps.executeQuery();
             List<Budget> budgetList = new ArrayList<>();
             while (rs.next()) {
-                budgetList.add(new Budget(rs.getInt("ID"),
+                budgetList.add(new Budget(rs.getInt("BudgetID"),
                         rs.getString("item"),
                         rs.getInt("price")));
             }
@@ -291,12 +291,12 @@ public class PartyRepository implements Repository {
 
 // BUDGET CALCULATOR
 
-    public int budgetSum(int userId) {
+    public int budgetSum(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [Price] from [dbo].[Budget3]\n " +
                      "WHERE Event_ID = (?) ")) {
 
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
             ResultSet rs = ps.executeQuery();
             int total = 0;
             while (rs.next()) {

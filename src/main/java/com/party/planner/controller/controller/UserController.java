@@ -141,26 +141,26 @@ public class UserController {
     }
 
     @PostMapping("/budget")
-    public ModelAndView createBudget(@RequestParam String item,
-                                     @RequestParam int price,
-                                     HttpSession session) {
-        if (repository.budgetItemAlreadyExists(item, (int) session.getAttribute("userId"))) {
-            List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-            int total = repository.budgetSum((int) session.getAttribute("userId"));
+    public ModelAndView createBudget(@RequestParam int eventId,
+                                     @RequestParam String item,
+                                     @RequestParam int price) {
+        if (repository.budgetItemAlreadyExists(item, eventId)) {
+            List<Budget> budgetList = repository.getBudgetList(eventId);
+            int total = repository.budgetSum(eventId);
             return new ModelAndView("budget").addObject("InvalidInput", "Budget item already exists")
-                    .addObject("budgetList", budgetList).addObject("total", total);
+                    .addObject("budgetList", budgetList).addObject("total", total).addObject("eventId", eventId);
         }
-        repository.addBudgetItem(item, price, (int) session.getAttribute("userId"));
+        repository.addBudgetItem(item, price, eventId);
 
-        return new ModelAndView("redirect:budget");
+        return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
     @GetMapping("/budget")
-    public ModelAndView newBudgetItemToList(HttpSession session) {
-        List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-        int total = repository.budgetSum((int) session.getAttribute("userId"));
+    public ModelAndView newBudgetItemToList(@RequestParam int eventId) {
+        List<Budget> budgetList = repository.getBudgetList(eventId);
+        int total = repository.budgetSum(eventId);
         return new ModelAndView("budget").addObject("budgetList", budgetList)
-                .addObject("total", total);                //Ska redirect till inloggat läge
+                .addObject("total", total).addObject("eventId", eventId);                //Ska redirect till inloggat läge
     }
 
     @PostMapping("/checklist")
