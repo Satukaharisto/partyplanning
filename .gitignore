@@ -116,5 +116,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+### Maven ###
+
+target/
 
 # End of https://www.gitignore.io/api/macos,windows,intellij+all
