@@ -436,5 +436,21 @@ public class PartyRepository implements Repository {
         }
     }
 
+    @Override
+   public List<Inspiration> listInspiration() {
+        try (Connection conn = dataSource.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT InspirationID, Categoty, InspirationName, InspirationText,InspirationLink, InspirationPicture FROM Inspiration3 ")) {
+            List<Inspiration> inspirationItems = new ArrayList<>();
+            while (rs.next()) inspirationItems.add(rsInspiration(rs));
+
+            return inspirationItems;
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong with Inspiration - PartyRepository", e);
+        }
+    }
+    private Inspiration rsInspiration(ResultSet rs) throws SQLException {
+        return new Inspiration (rs.getInt("InspirationID"), rs.getString("Categoty"), rs.getString("InspirationName"), rs.getString("InspirationText"), rs.getString("InspirationLink"), rs.getString("InspirationPicture"));
+    }
 }
 

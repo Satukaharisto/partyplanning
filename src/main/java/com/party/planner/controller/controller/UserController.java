@@ -1,16 +1,27 @@
 package com.party.planner.controller.controller;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.party.planner.controller.domain.*;
 import com.party.planner.controller.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +29,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private Repository repository;
+
 
     @GetMapping("/")
     public ModelAndView indexpage() {
@@ -49,6 +61,7 @@ public class UserController {
     }
 
     @GetMapping("/event")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     public ModelAndView newEventList(HttpSession session) {
         List<Event> eventlist = repository.getEventList((int) session.getAttribute("userId"));
         return new ModelAndView("event").addObject("eventlist", eventlist);
@@ -195,6 +208,11 @@ public class UserController {
         return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
+    @GetMapping("/inspiration")
+    public ModelAndView listInspirationItems() {
+        return new ModelAndView("inspiration")
+                .addObject("inspirationItems", repository.listInspiration());
+
     @GetMapping("/deleteBudget")
     public ModelAndView deleteBudget(@RequestParam int eventId, @RequestParam int id) {
         repository.deleteBudget(id);
@@ -229,5 +247,6 @@ public class UserController {
         }
         repository.updateChecklist(id, eventId, date, toDo, checked);
         return new ModelAndView("redirect:checklist?eventId=" + eventId);
+
     }
 }
