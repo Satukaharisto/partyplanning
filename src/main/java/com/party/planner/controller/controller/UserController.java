@@ -54,20 +54,6 @@ public class UserController {
         return new ModelAndView("event").addObject("eventlist", eventlist);
     }
 
-    @GetMapping("/usersite")
-    public String secret(HttpSession session) {
-        if (session.getAttribute("user") != null) {
-            //session.getAttribute("user");
-            return "usersite";
-        }
-        return "login";
-    }
-
-    @PostMapping("/usersite")
-    public String logoutUser() {
-        return "index";
-    }
-
     @GetMapping("/logout")
     public String showLogoutSite(HttpSession session) {
         session.invalidate();
@@ -130,8 +116,8 @@ public class UserController {
     }
 
     @GetMapping("/seatingarrangement")
-    public ModelAndView seatingarrangement(HttpSession session) {
-        List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
+    public ModelAndView seatingarrangement(@RequestParam int eventId) {
+        List<Guest> guests = repository.getGuestList(eventId);
 //        List<GuestListModel> guestList = new ArrayList<>();
 //        for (Guest guest : guests) {
 //            Food food = repository.getFoodPreference(guest.getId());
