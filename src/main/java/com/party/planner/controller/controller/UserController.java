@@ -1,28 +1,21 @@
 package com.party.planner.controller.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.party.planner.controller.domain.*;
 import com.party.planner.controller.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -54,14 +47,13 @@ public class UserController {
     /*-----------------------------------------------------------*/
     @PostMapping("/event")
     public String createEvent(@RequestParam String name,
-                             @RequestParam java.sql.Date date,
-                             HttpSession session) {
-        repository.addEvent(name, date,(int) session.getAttribute("userId"));
+                              @RequestParam java.sql.Date date,
+                              HttpSession session) {
+        repository.addEvent(name, date, (int) session.getAttribute("userId"));
         return "redirect:event";                //Ska redirect till inloggat läge
     }
 
     @GetMapping("/event")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     public ModelAndView newEventList(HttpSession session) {
         List<Event> eventlist = repository.getEventList((int) session.getAttribute("userId"));
         return new ModelAndView("event").addObject("eventlist", eventlist);
@@ -94,13 +86,13 @@ public class UserController {
 
     @PostMapping("/guestlist")
     public ModelAndView createGuest(@RequestParam int eventId,
-                              @RequestParam String firstname,
-                              @RequestParam String lastname,
-                              @RequestParam String email,
-                              @RequestParam String gender,
-                              @RequestParam(required = false) String allergy,
-                              @RequestParam(required = false) String foodPreference,
-                              @RequestParam(required = false) String alcohol) {
+                                    @RequestParam String firstname,
+                                    @RequestParam String lastname,
+                                    @RequestParam String email,
+                                    @RequestParam String gender,
+                                    @RequestParam(required = false) String allergy,
+                                    @RequestParam(required = false) String foodPreference,
+                                    @RequestParam(required = false) String alcohol) {
         int guestId = repository.addGuest(eventId, firstname, lastname, email, gender);
         repository.addFoodPreference(guestId, allergy, foodPreference, alcohol);
 
@@ -110,9 +102,9 @@ public class UserController {
     @PostMapping("/food")
     public ModelAndView addFoodPreference(@RequestParam int eventId,
                                           @RequestParam int guestId,
-                                    @RequestParam String allergie,
-                                    @RequestParam String foodPreference,
-                                    @RequestParam String alcohol) {
+                                          @RequestParam String allergie,
+                                          @RequestParam String foodPreference,
+                                          @RequestParam String alcohol) {
         repository.addFoodPreference(guestId, allergie, foodPreference, alcohol);
         return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
@@ -164,8 +156,8 @@ public class UserController {
 
     @PostMapping("/checklist")
     public ModelAndView createToDo(@RequestParam int eventId, @RequestParam java.sql.Date date,
-                             @RequestParam String toDo,
-                             @RequestParam(required = false) Boolean done) {
+                                   @RequestParam String toDo,
+                                   @RequestParam(required = false) Boolean done) {
         boolean b = false;
         if (done != null) {
             b = done;
@@ -212,41 +204,41 @@ public class UserController {
     public ModelAndView listInspirationItems() {
         return new ModelAndView("inspiration")
                 .addObject("inspirationItems", repository.listInspiration());
-
-    @GetMapping("/deleteBudget")
-    public ModelAndView deleteBudget(@RequestParam int eventId, @RequestParam int id) {
-        repository.deleteBudget(id);
-        return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
-
-    @GetMapping("/deleteGuest")
-    public ModelAndView deleteGuest(@RequestParam int eventId, @RequestParam int guestId) {
-        Food food = repository.getFoodPreference(guestId);
-        repository.deleteFoodPreference(food.getId());
-
-        repository.deleteGuest(guestId);
-        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
-    }
-
-    @GetMapping("/deleteChecklist")
-    public ModelAndView deleteChecklist (@RequestParam int eventId, @RequestParam int id) {
-        repository.deleteChecklist(id);
-        return new ModelAndView("redirect:checklist?eventId=" + eventId);
-    }
-
-    @PostMapping("/updateChecklist")
-    public ModelAndView updateChecklist(
-            @RequestParam int id,
-            @RequestParam Date date,
-            @RequestParam String toDo,
-            @RequestParam(required = false) Boolean done,
-            @RequestParam int eventId) {
-        boolean checked = false;
-        if (done != null){
-            checked = done;
+        @GetMapping("/deleteBudget")
+        public ModelAndView deleteBudget ( @RequestParam int eventId, @RequestParam int id){
+            repository.deleteBudget(id);
+            return new ModelAndView("redirect:budget?eventId=" + eventId);
         }
-        repository.updateChecklist(id, eventId, date, toDo, checked);
-        return new ModelAndView("redirect:checklist?eventId=" + eventId);
 
+        @GetMapping("/deleteGuest")
+        public ModelAndView deleteGuest ( @RequestParam int eventId, @RequestParam int guestId){
+            Food food = repository.getFoodPreference(guestId);
+            repository.deleteFoodPreference(food.getId());
+
+            repository.deleteGuest(guestId);
+            return new ModelAndView("redirect:guestlist?eventId=" + eventId);
+        }
+
+        @GetMapping("/deleteChecklist")
+        public ModelAndView deleteChecklist ( @RequestParam int eventId, @RequestParam int id){
+            repository.deleteChecklist(id);
+            return new ModelAndView("redirect:checklist?eventId=" + eventId);
+        }
+
+        @PostMapping("/updateChecklist")
+        public ModelAndView updateChecklist (
+        @RequestParam int id,
+        @RequestParam Date date,
+        @RequestParam String toDo,
+        @RequestParam(required = false) Boolean done,
+        @RequestParam int eventId){
+            boolean checked = false;
+            if (done != null) {
+                checked = done;
+            }
+            repository.updateChecklist(id, eventId, date, toDo, checked);
+            return new ModelAndView("redirect:checklist?eventId=" + eventId);
+
+        }
     }
-}
