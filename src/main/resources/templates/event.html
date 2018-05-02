@@ -27,11 +27,9 @@
             outline: none;
             font-size: 15px;
         }
-
         .active, .colTest:hover {
             background-color: #f0ad97;
         }
-
         .colTest:after {
             colTestEdit: '\002B';
             color: white;
@@ -39,11 +37,9 @@
             float: right;
             margin-left: 5px;
         }
-
         .active:after {
             colTestEdit: "\2212";
         }
-
         .colTestEdit {
             padding: 0 18px;
             max-height: 0;
@@ -51,7 +47,6 @@
             transition: max-height 0.2s ease-out;
             background-color: #f1f1f1;
         }
-
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
@@ -61,59 +56,47 @@
             font-size: 1.2em;
             border: 0;
         }
-
         .navbar-nav {
             flex-direction: row !important
         }
-
         .navbar-brand {
             float: left;
             min-height: 55px;
             padding: 0 15px 5px;
         }
-
         .navbar-inverse .navbar-nav .active a,
         .navbar-inverse .navbar-nav .active a:focus,
         .navbar-inverse .navbar-nav .active a:hover {
             color: #FFF;
             background-color: #adc7c8;
         }
-
         .navbar-inverse .navbar-nav li a {
             color: #D5D5D5;
         }
-
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-
         .row.content {
             height: 1500px
         }
-
         /* Set gray background color and 100% height */
-
         .sidenav {
             background-color: #f1f1f1;
             height: 100%;
         }
-
         footer {
             width: 100%;
             background-color: #adc7c8;
             padding: 5%;
             color: #FFF;
         }
-
         .fa {
             padding: 15px;
             font-size: 25px;
             color: #FFF;
         }
-
         .fa:hover {
             color: #D5D5D5;
             text-decoration: none;
         }
-
         .button {
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
@@ -127,52 +110,44 @@
             font-size: 15px;
             border-radius: 8px;
         }
-
         .button:hover {
             background-color: #665b53;
             /* Green */
             color: white;
         }
-
         input[type=text]:focus {
             background-color: #adc7c8;
             border: 1px solid #665b53;
             font-size: 1.0em;
             font-family: 'Catamaran', sans-serif;
         }
-
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
                 padding: 10px;
             }
-
             /* On small screens, set height to 'auto' for sidenav and grid */
             @media screen and (max-width: 767px) {
                 .sidenav {
                     height: auto;
                     padding: 15px;
                 }
-
                 .row.content {
                     height: auto;
                 }
             }
         }
-
         .div1 {
             width: 500px;
             height: 200px;
             position: center;
         }
-
         div2 {
             width: 500px;
             height: 200px;
             position: relative;
             background-color: #A5C663;
         }
-
         #budgetBox {
             display: flex;
             justify-content: center;
@@ -180,7 +155,6 @@
             text-align: center;
             height: inherit;
         }
-
         #guestBox {
             display: flex;
             justify-content: center;
@@ -188,7 +162,6 @@
             text-align: center;
             height: inherit;
         }
-
     </style>
 </head>
 
@@ -200,18 +173,6 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active">
-                    <a th:href="@{/usersite}">Home</a>
-                </li>
-                <li>
-                    <a th:href="@{/guestlist}">Guestlist</a>
-                </li>
-                <li>
-                    <a th:href="@{/budget}">Budget</a>
-                </li>
-                <li>
-                    <a th:href="@{/checklist}">Checklist</a>
-                </li>
                 <li>
                     <a th:href="@{/logout}">Logout</a>
                 </li>
@@ -222,8 +183,7 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
-            <h1>Välkommen</h1>
-            <h3 th:text="'Inloggad som ' + ${session.user}"></h3>
+            <h3 th:text="'Welcome ' + ${session.user}"></h3>
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/event">
                     <p>Event name:</p>
@@ -237,41 +197,41 @@
         <div class="col-sm-9">
             <div class="container">
                 <h2>Events</h2>
-                    <div th:each="event : ${eventlist}">
-                        <button class="colTest">
+                <div th:each="event : ${eventlist}">
+                    <button class="colTest">
                         <span th:text="${event.name}"></span>
                         <span th:text="${event.date}"></span>
-                        </button>
-                        <div class="colTestEdit">
-                            <a th:href="@{guestlist}">Guestlist</a>
-                            <a th:href="@{budget}">Budget</a>
-                            <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
-                        </div>
+                    </button>
+                    <div class="colTestEdit">
+                        <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                        <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+                        <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
                     </div>
+                </div>
             </div>
         </div>
     </div>
-<footer class="container-fluid text-center">
-    <div class="row">
-        <div class="col-sm-2">
+    <footer class="container-fluid text-center">
+        <div class="row">
+            <div class="col-sm-2">
 
+            </div>
+            <div class="col-sm-4">
+                <h3>Contact Us</h3>
+                <br/>
+                <h4>Our address and contact info here.</h4>
+            </div>
+            <div class="col-sm-4">
+                <h3>Connect</h3>
+                <a href="#" class="fa fa-facebook"></a>
+                <a href="#" class="fa fa-twitter"></a>
+                <a href="#" class="fa fa-google"></a>
+                <a href="#" class="fa fa-linkedin"></a>
+                <a href="#" class="fa fa-youtube"></a>
+            </div>
         </div>
-        <div class="col-sm-4">
-            <h3>Contact Us</h3>
-            <br/>
-            <h4>Our address and contact info here.</h4>
-        </div>
-        <div class="col-sm-4">
-            <h3>Connect</h3>
-            <a href="#" class="fa fa-facebook"></a>
-            <a href="#" class="fa fa-twitter"></a>
-            <a href="#" class="fa fa-google"></a>
-            <a href="#" class="fa fa-linkedin"></a>
-            <a href="#" class="fa fa-youtube"></a>
-        </div>
-    </div>
 
-</footer>
+    </footer>
 </div>
 <script src="guestscript.js"></script>
 </body>
