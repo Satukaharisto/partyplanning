@@ -40,24 +40,6 @@ public class PartyRepository implements Repository {
         }
     }
 
-    @Override
-    public Integer checkLogin(String username, String password) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] , [Password] FROM [dbo].[User3] WHERE ([UserName] = (?) ) ")) {
-            ps.setString(1, username);
-            ResultSet results = ps.executeQuery();
-
-            if (results.next()) {
-                String hashedPassword = results.getString("Password");
-                if (BCrypt.checkpw(password, hashedPassword)) {
-                    return results.getInt("UserId");
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in checklogin - PartyRepository", e);
-        }
-    }
 
     @Override
     public int addGuest(int eventId, String firstname, String lastname, String email, String gender) {
@@ -196,7 +178,6 @@ public class PartyRepository implements Repository {
         }
     }
 
-
     @Override
     public void updateGuest(int eventId, int id, String firstname, String lastname, String email, String gender) {
         try (Connection conn = dataSource.getConnection();
@@ -313,7 +294,6 @@ public class PartyRepository implements Repository {
 
     @Override
     public void deleteFoodPreference(int id) {
-        System.out.println("deleteFoodPreference");
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "DELETE FROM FoodPreference3 WHERE RsvpID = (?)")) {
@@ -326,7 +306,6 @@ public class PartyRepository implements Repository {
 
     @Override
     public void deleteFoodPreferenceByGuestId(int id) {
-        System.out.println("deleteFoodPreferenceByGuestId");
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "DELETE FROM FoodPreference3 WHERE Guest_ID = (?)")) {
@@ -351,7 +330,6 @@ public class PartyRepository implements Repository {
 
     @Override
     public void deleteGuestsByEventId(int id) {
-        System.out.println("deleteGuestsByEventId");
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "DELETE FROM Guest3 WHERE Event_ID = (?) ")) {
@@ -364,7 +342,6 @@ public class PartyRepository implements Repository {
 
     @Override
     public void deleteEvent(int id) {
-        System.out.println("deleteEvent");
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "DELETE FROM Event3 WHERE EventId = (?)")) {
