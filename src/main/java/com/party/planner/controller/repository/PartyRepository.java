@@ -31,10 +31,31 @@ public class PartyRepository implements Repository {
             int userId = -1;
             while (rs.next()) {
                 userId = rs.getInt(1);
+
             }
+
             return userId;
         } catch (SQLException e) {
             throw new RepositoryExceptions("something went wrong in adduser - PartyRepository", e);
+        }
+    }
+
+    @Override
+    public Integer checkLogin(String username, String password) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] , [Password] FROM [dbo].[User3] WHERE ([UserName] = (?) ) ")) {
+            ps.setString(1, username);
+            ResultSet results = ps.executeQuery();
+
+            if (results.next()) {
+                String hashedPassword = results.getString("Password");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return results.getInt("UserId");
+                }
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong in checklogin - PartyRepository", e);
         }
     }
 
@@ -155,6 +176,7 @@ public class PartyRepository implements Repository {
 
 // LOGIN
 
+
     @Override
     public Integer checkLogin(String username, String password) {
         try (Connection conn = dataSource.getConnection();
@@ -173,6 +195,7 @@ public class PartyRepository implements Repository {
             throw new RepositoryExceptions("something went wrong in checklogin - PartyRepository", e);
         }
     }
+
 
     @Override
     public void updateGuest(int eventId, int id, String firstname, String lastname, String email, String gender) {
@@ -499,5 +522,21 @@ public class PartyRepository implements Repository {
         }
     }
 
+    @Override
+   public List<Inspiration> listInspiration() {
+        try (Connection conn = dataSource.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT InspirationID, Categoty, InspirationName, InspirationText,InspirationLink, InspirationPicture FROM Inspiration3 ")) {
+            List<Inspiration> inspirationItems = new ArrayList<>();
+            while (rs.next()) inspirationItems.add(rsInspiration(rs));
+
+            return inspirationItems;
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong with Inspiration - PartyRepository", e);
+        }
+    }
+    private Inspiration rsInspiration(ResultSet rs) throws SQLException {
+        return new Inspiration (rs.getInt("InspirationID"), rs.getString("Categoty"), rs.getString("InspirationName"), rs.getString("InspirationText"), rs.getString("InspirationLink"), rs.getString("InspirationPicture"));
+    }
 }
 

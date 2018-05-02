@@ -182,16 +182,16 @@
                         <a th:href="@{/event}">My events</a>
                     </li>
                     <li>
-                        <a th:href="@{/guestlist}">Guestlist</a>
+                        <a th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
                     </li>
                     <li>
-                        <a th:href="@{/seatingarrangement}">Seating</a>
+                        <a th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
                     </li>
                     <li>
-                        <a th:href="@{/budget}">Budget</a>
+                        <a th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
                     </li>
                     <li class="active">
-                        <a th:href="@{/checklist}">Checklist</a>
+                        <a th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
                     </li>
                     <li>
                         <a th:href="@{/logout}">Logout</a>

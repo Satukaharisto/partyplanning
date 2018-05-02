@@ -4,20 +4,25 @@ import com.party.planner.controller.domain.*;
 import com.party.planner.controller.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
+
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
 public class UserController {
     @Autowired
     private Repository repository;
+
 
     @GetMapping("/")
     public ModelAndView indexpage() {
@@ -28,13 +33,18 @@ public class UserController {
     public ModelAndView getInfoFromLoginForm(
             HttpSession session,
             @RequestParam String username,
-            @RequestParam String password) {
+            @RequestParam String password,
+            String hashedPassword) {
         Integer userId = repository.checkLogin(username, password);
+
         if (userId != null) {
             session.setAttribute("user", username);
             session.setAttribute("userId", userId);
+
             return new ModelAndView("redirect:event");
+
         }
+
         return new ModelAndView("index")
                 .addObject("IncorrectPWorusername", "Password or username incorrect. Please try again.");
     }
@@ -46,6 +56,7 @@ public class UserController {
                              HttpSession session) {
         repository.addEvent(name, date,(int) session.getAttribute("userId"));
         return new ModelAndView("redirect:event");                //Ska redirect till inloggat läge
+
     }
 
     @GetMapping("/event")
@@ -93,13 +104,13 @@ public class UserController {
 
     @PostMapping("/guestlist")
     public ModelAndView createGuest(@RequestParam int eventId,
-                              @RequestParam String firstname,
-                              @RequestParam String lastname,
-                              @RequestParam String email,
-                              @RequestParam String gender,
-                              @RequestParam(required = false) String allergy,
-                              @RequestParam(required = false) String foodPreference,
-                              @RequestParam(required = false) String alcohol) {
+                                    @RequestParam String firstname,
+                                    @RequestParam String lastname,
+                                    @RequestParam String email,
+                                    @RequestParam String gender,
+                                    @RequestParam(required = false) String allergy,
+                                    @RequestParam(required = false) String foodPreference,
+                                    @RequestParam(required = false) String alcohol) {
         int guestId = repository.addGuest(eventId, firstname, lastname, email, gender);
         repository.addFoodPreference(guestId, allergy, foodPreference, alcohol);
 
@@ -109,9 +120,9 @@ public class UserController {
     @PostMapping("/food")
     public ModelAndView addFoodPreference(@RequestParam int eventId,
                                           @RequestParam int guestId,
-                                    @RequestParam String allergie,
-                                    @RequestParam String foodPreference,
-                                    @RequestParam String alcohol) {
+                                          @RequestParam String allergie,
+                                          @RequestParam String foodPreference,
+                                          @RequestParam String alcohol) {
         repository.addFoodPreference(guestId, allergie, foodPreference, alcohol);
         return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
@@ -128,14 +139,14 @@ public class UserController {
     }
 
     @GetMapping("/seatingarrangement")
-    public ModelAndView seatingarrangement(HttpSession session) {
-        List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
+    public ModelAndView seatingarrangement(@RequestParam int eventId) {
+        List<Guest> guests = repository.getGuestList(eventId);
 //        List<GuestListModel> guestList = new ArrayList<>();
 //        for (Guest guest : guests) {
 //            Food food = repository.getFoodPreference(guest.getId());
 //            guestList.add(GuestListModelMapper.map(guest, food));
 //        }
-        return new ModelAndView("seatingarrangement").addObject("guestList", guests);
+        return new ModelAndView("seatingarrangement").addObject("guestList", guests).addObject("eventId", eventId);
     }
 
     @PostMapping("/budget")
@@ -163,8 +174,8 @@ public class UserController {
 
     @PostMapping("/checklist")
     public ModelAndView createToDo(@RequestParam int eventId, @RequestParam java.sql.Date date,
-                             @RequestParam String toDo,
-                             @RequestParam(required = false) Boolean done) {
+                                   @RequestParam String toDo,
+                                   @RequestParam(required = false) Boolean done) {
         boolean b = false;
         if (done != null) {
             b = done;
@@ -207,26 +218,45 @@ public class UserController {
         return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
-    @GetMapping("/deleteBudget")
-    public ModelAndView deleteBudget(@RequestParam int eventId, @RequestParam int id) {
-        repository.deleteBudget(id);
-        return new ModelAndView("redirect:budget?eventId=" + eventId);
+    @GetMapping("/inspiration")
+    public ModelAndView listInspirationItems() {
+        return new ModelAndView("inspiration")
+                .addObject("inspirationItems", repository.listInspiration());
     }
+        @GetMapping("/deleteBudget")
+        public ModelAndView deleteBudget ( @RequestParam int eventId, @RequestParam int id){
+            repository.deleteBudget(id);
+            return new ModelAndView("redirect:budget?eventId=" + eventId);
+        }
 
-    @GetMapping("/deleteGuest")
-    public ModelAndView deleteGuest(@RequestParam int eventId, @RequestParam int guestId) {
-        Food food = repository.getFoodPreference(guestId);
-        repository.deleteFoodPreference(food.getId());
+        @GetMapping("/deleteGuest")
+        public ModelAndView deleteGuest ( @RequestParam int eventId, @RequestParam int guestId){
+            Food food = repository.getFoodPreference(guestId);
+            repository.deleteFoodPreference(food.getId());
 
-        repository.deleteGuest(guestId);
-        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
-    }
+            repository.deleteGuest(guestId);
+            return new ModelAndView("redirect:guestlist?eventId=" + eventId);
+        }
 
-    @GetMapping("/deleteChecklist")
-    public ModelAndView deleteChecklist (@RequestParam int eventId, @RequestParam int id) {
-        repository.deleteChecklist(id);
-        return new ModelAndView("redirect:checklist?eventId=" + eventId);
-    }
+        @GetMapping("/deleteChecklist")
+        public ModelAndView deleteChecklist ( @RequestParam int eventId, @RequestParam int id){
+            repository.deleteChecklist(id);
+            return new ModelAndView("redirect:checklist?eventId=" + eventId);
+        }
+
+        @PostMapping("/updateChecklist")
+        public ModelAndView updateChecklist (
+        @RequestParam int id,
+        @RequestParam Date date,
+        @RequestParam String toDo,
+        @RequestParam(required = false) Boolean done,
+        @RequestParam int eventId){
+            boolean checked = false;
+            if (done != null) {
+                checked = done;
+            }
+            repository.updateChecklist(id, eventId, date, toDo, checked);
+            return new ModelAndView("redirect:checklist?eventId=" + eventId);
 
     @GetMapping("/deleteEvent")
     public ModelAndView deleteEvent (@RequestParam int id) {
@@ -258,10 +288,7 @@ public class UserController {
         if (done != null){
             checked = done;
         }
-        repository.updateChecklist(id, eventId, date, toDo, checked);
-        return new ModelAndView("redirect:checklist?eventId=" + eventId);
     }
-
     @PostMapping("/updateEvent")
     public ModelAndView updateEvent(
             @RequestParam int eventId,

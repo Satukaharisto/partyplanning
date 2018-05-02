@@ -45,6 +45,10 @@ public interface Repository {
     List<Budget> getBudgetList(int eventId);
     List<Checklist> getChecklist(int eventId);
     List<Event> getEventList(int userId);
+
+    List<Inspiration> listInspiration();
+
+//    Guest getGuests(int eventId);
 }
 
 
