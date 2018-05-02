@@ -209,13 +209,13 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public void updateBudget(int id, int userId, String item, int price) {
+    public void updateBudget(int eventId, int id, String item, int price) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE Budget3 " +
-                             "SET user_id = (?), item = (?), price = (?) " +
+                             "SET event_id = (?), item = (?), price = (?) " +
                              "WHERE BudgetID = (?)", Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
             ps.setString(2, item);
             ps.setInt(3, price);
             ps.setInt(4, id);
@@ -226,13 +226,13 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public void updateChecklist(int id, int userId, Date date, String toDo, boolean done) {
+    public void updateChecklist(int id, int eventId, Date date, String toDo, boolean done) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE Checklist3 " +
-                             "SET user_id = (?), date = (?), todo = (?), done = (?) " +
+                             "SET Event_ID = (?), date = (?), todo = (?), done = (?) " +
                              "WHERE ChecklistID = (?)", Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
             ps.setDate(2, date);
             ps.setString(3, toDo);
             ps.setBoolean(4, done);

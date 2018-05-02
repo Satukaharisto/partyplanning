@@ -26,8 +26,8 @@ public interface Repository {
 
     void updateGuest(int eventId, int id, String firstname, String lastname, String email, String gender);
     void updateFoodPreference(int id, int guestId, String allergy, String foodPreference, String alcohol);
-    void updateBudget(int id, int userId, String item, int price);
-    void updateChecklist (int id, int userId, Date date, String toDo, boolean done);
+    void updateBudget(int eventId, int id, String item, int price);
+    void updateChecklist (int eventId, int id, Date date, String toDo, boolean done);
 
     void deleteBudget(int id);
     void deleteChecklist(int id);

@@ -205,7 +205,7 @@ public class UserController {
             @RequestParam String item,
             @RequestParam int price,
             @RequestParam int eventId) {
-        repository.updateBudget(id, price, item, eventId);
+        repository.updateBudget(eventId, id, item, price);
         return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
@@ -236,12 +236,12 @@ public class UserController {
             @RequestParam Date date,
             @RequestParam String toDo,
             @RequestParam(required = false) Boolean done,
-            HttpSession session) {
+            @RequestParam int eventId) {
         boolean checked = false;
         if (done != null){
             checked = done;
         }
-        repository.updateChecklist(id, (int) session.getAttribute("userId"), date, toDo, checked);
-        return new ModelAndView("redirect:checklist");
+        repository.updateChecklist(id, eventId, date, toDo, checked);
+        return new ModelAndView("redirect:checklist?eventId=" + eventId);
     }
 }
