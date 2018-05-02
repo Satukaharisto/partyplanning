@@ -33,13 +33,18 @@ public class UserController {
     public ModelAndView getInfoFromLoginForm(
             HttpSession session,
             @RequestParam String username,
-            @RequestParam String password) {
+            @RequestParam String password,
+            String hashedPassword) {
         Integer userId = repository.checkLogin(username, password);
+
         if (userId != null) {
             session.setAttribute("user", username);
             session.setAttribute("userId", userId);
+
             return new ModelAndView("redirect:event");
+
         }
+
         return new ModelAndView("index")
                 .addObject("IncorrectPWorusername", "Password or username incorrect. Please try again.");
     }
