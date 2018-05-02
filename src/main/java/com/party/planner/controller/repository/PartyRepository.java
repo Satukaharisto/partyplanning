@@ -247,6 +247,24 @@ public class PartyRepository implements Repository {
     }
 
     @Override
+    public void updateEvent(int eventId, String eventName, Date eventDate, int userId) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "UPDATE Event3 " +
+                             "SET EventName = (?), EventDate = (?), User_ID = (?) " +
+                             "WHERE EventID = (?) ", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, eventName);
+            ps.setDate(2, eventDate);
+            ps.setInt(3, userId);
+            ps.setInt(4, eventId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong in updateEvent - partyrepo", e);
+        }
+    }
+
+
+    @Override
     public void deleteBudget(int id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -272,9 +290,23 @@ public class PartyRepository implements Repository {
 
     @Override
     public void deleteFoodPreference(int id) {
+        System.out.println("deleteFoodPreference");
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "DELETE FROM FoodPreference3 WHERE RsvpID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteFoodPreference - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteFoodPreferenceByGuestId(int id) {
+        System.out.println("deleteFoodPreferenceByGuestId");
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM FoodPreference3 WHERE Guest_ID = (?)")) {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
@@ -293,6 +325,33 @@ public class PartyRepository implements Repository {
             throw new RepositoryExceptions("Something went wrong in deleteGuest - Partyrepo", e);
         }
     }
+
+    @Override
+    public void deleteGuestsByEventId(int id) {
+        System.out.println("deleteGuestsByEventId");
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Guest3 WHERE Event_ID = (?) ")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteGuestsByEventId - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteEvent(int id) {
+        System.out.println("deleteEvent");
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Event3 WHERE EventId = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteEvent - Partyrepo", e);
+        }
+    }
+
 
     // LISTS
     @Override
@@ -419,10 +478,11 @@ public class PartyRepository implements Repository {
             throw new RepositoryExceptions("something went wrong in addevent - PartyRepository", e);
         }
     }
+
     @Override
     public List<Event> getEventList(int userId) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT EventID, EventName, EventDate from Event3\n " +
+             PreparedStatement ps = conn.prepareStatement("SELECT EventID, EventName, EventDate from Event3 " +
                      "WHERE User_ID = (?) ")) {
             ps.setInt(1, userId);
 

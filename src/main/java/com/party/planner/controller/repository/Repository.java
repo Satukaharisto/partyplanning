@@ -14,6 +14,7 @@ public interface Repository {
     int addBudgetItem(String item, int price, int eventId);
     int addToDo(Date date, String toDo, boolean done, int userId);
     int addFoodPreference(int guestId, String allergy, String foodPreference, String alcohol);
+    int addEvent(String name, Date date, int userId);
 
 //    void changeBudgetItemPrice (int userId, String item, int price);
 
@@ -28,20 +29,22 @@ public interface Repository {
     void updateFoodPreference(int id, int guestId, String allergy, String foodPreference, String alcohol);
     void updateBudget(int eventId, int id, String item, int price);
     void updateChecklist (int eventId, int id, Date date, String toDo, boolean done);
+    void updateEvent(int eventId, String eventName, Date eventDate, int userId);
 
     void deleteBudget(int id);
     void deleteChecklist(int id);
     void deleteFoodPreference(int id);
+    void deleteFoodPreferenceByGuestId(int id);
     void deleteGuest(int id);
+    void deleteEvent(int id);
+    void deleteGuestsByEventId(int id);
+
+    Food getFoodPreference(int guestId);
 
     List<Guest> getGuestList(int eventId);
-    Food getFoodPreference(int guestId);
-  
     List<Budget> getBudgetList(int eventId);
     List<Checklist> getChecklist(int eventId);
-    int addEvent(String name, Date date, int userId);
     List<Event> getEventList(int userId);
-//    Guest getGuests(int eventId);
 }
 
 

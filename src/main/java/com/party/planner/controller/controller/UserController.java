@@ -41,11 +41,11 @@ public class UserController {
 
     /*-----------------------------------------------------------*/
     @PostMapping("/event")
-    public String createEvent(@RequestParam String name,
+    public ModelAndView createEvent(@RequestParam String name,
                              @RequestParam java.sql.Date date,
                              HttpSession session) {
         repository.addEvent(name, date,(int) session.getAttribute("userId"));
-        return "redirect:event";                //Ska redirect till inloggat läge
+        return new ModelAndView("redirect:event");                //Ska redirect till inloggat läge
     }
 
     @GetMapping("/event")
@@ -55,31 +55,29 @@ public class UserController {
     }
 
     @GetMapping("/usersite")
-    public String secret(HttpSession session) {
+    public ModelAndView secret(HttpSession session) {
         if (session.getAttribute("user") != null) {
             //session.getAttribute("user");
-            return "usersite";
+            return new ModelAndView("usersite");
         }
-        return "login";
+        return new ModelAndView("login");
     }
 
     @PostMapping("/usersite")
-    public String logoutUser() {
-        return "index";
+    public ModelAndView logoutUser() {
+        return new ModelAndView("index");
     }
 
     @GetMapping("/logout")
-    public String showLogoutSite(HttpSession session) {
+    public ModelAndView showLogoutSite(HttpSession session) {
         session.invalidate();
-        return "index";
+        return new ModelAndView("index");
     }
 
 
     @PostMapping("/register")
-
     public ModelAndView createUser(HttpSession session, @RequestParam String username,
                                    @RequestParam String password, @RequestParam String email) {
-
         if (!repository.userAlreadyExists(username)) {
             return new ModelAndView("index")
                     .addObject("InvalidInput", "Username already taken");
@@ -230,6 +228,25 @@ public class UserController {
         return new ModelAndView("redirect:checklist?eventId=" + eventId);
     }
 
+    @GetMapping("/deleteEvent")
+    public ModelAndView deleteEvent (@RequestParam int id) {
+        for (Guest guest : repository.getGuestList(id)) {
+            repository.deleteFoodPreferenceByGuestId(guest.getId());
+        }
+
+        for (Budget budget : repository.getBudgetList(id)) {
+            repository.deleteBudget(budget.getId());
+        }
+
+        for (Checklist checklist : repository.getChecklist(id)) {
+            repository.deleteChecklist(checklist.getId());
+        }
+
+        repository.deleteGuestsByEventId(id);
+        repository.deleteEvent(id);
+        return new ModelAndView("redirect:event");
+    }
+
     @PostMapping("/updateChecklist")
     public ModelAndView updateChecklist(
             @RequestParam int id,
@@ -243,5 +260,15 @@ public class UserController {
         }
         repository.updateChecklist(id, eventId, date, toDo, checked);
         return new ModelAndView("redirect:checklist?eventId=" + eventId);
+    }
+
+    @PostMapping("/updateEvent")
+    public ModelAndView updateEvent(
+            @RequestParam int eventId,
+            @RequestParam String eventName,
+            @RequestParam Date eventDate,
+            @RequestParam int userId) {
+        repository.updateEvent(eventId, eventName, eventDate, userId);
+        return new ModelAndView("redirect:event?userId=" + userId);
     }
 }
