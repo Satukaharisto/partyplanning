@@ -1,5 +1,6 @@
 package com.party.planner.controller.repository;
 
+
 import com.party.planner.controller.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,14 +38,15 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public int addGuest(int eventId, String firstname, String lastname, String gender) {
+    public int addGuest(int eventId, String firstname, String lastname, String email, String gender) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("INSERT [dbo].[Guest3]([FirstName],[LastName],[Gender], [Event_ID]) " +
-                     "VALUES (?,?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement("INSERT [dbo].[Guest3]([FirstName],[LastName],[Email], [Gender], [Event_ID]) " +
+                     "VALUES (?,?,?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, firstname);
             ps.setString(2, lastname);
-            ps.setString(3, gender);
-            ps.setInt(4, eventId);
+            ps.setString(3, email);
+            ps.setString(4, gender);
+            ps.setInt(5, eventId);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             int guestId = -1;
@@ -81,13 +83,13 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public int addBudgetItem(String item, int price, int userId) {
+    public int addBudgetItem(String item, int price, int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[Budget3]([Item],[Price],[Event_ID]) " +
                      "VALUES (?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item);
             ps.setInt(2, price);
-            ps.setInt(3, userId);
+            ps.setInt(3, eventId);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             int id = -1;
@@ -132,20 +134,20 @@ public class PartyRepository implements Repository {
                     return false;
             }
         } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in useralreadyexists - PartyRepository");
+            throw new RepositoryExceptions("something went wrong in useralreadyexists - PartyRepository", e);
         }
         return true;
     }
 
-    public boolean budgetItemAlreadyExists(String item, int userId) {
+    public boolean budgetItemAlreadyExists(String item, int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [Item] FROM [dbo].[Budget3] WHERE [item] = ? AND Event_Id = ?")) {
             ps.setString(1, item);
-            ps.setInt(2, userId);
+            ps.setInt(2, eventId);
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in budgetItemAlready exists - PartyRepository");
+            throw new RepositoryExceptions("something went wrong in budgetItemAlready exists - PartyRepository", e);
         }
     }
 
@@ -170,17 +172,18 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public void updateGuest(int id, int userId, String firstname, String lastname, String gender) {
+    public void updateGuest(int eventId, int id, String firstname, String lastname, String email, String gender) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE Guest3 " +
-                             "SET Event_ID = (?), FirstName = (?), LastName = (?), Gender = (?) " +
+                             "SET Event_ID = (?), FirstName = (?), LastName = (?), Email = (?), Gender = (?) " +
                              "WHERE GuestID = (?)", Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
             ps.setString(2, firstname);
             ps.setString(3, lastname);
-            ps.setString(4, gender);
-            ps.setInt(5, id);
+            ps.setString(4, email);
+            ps.setString(5, gender);
+            ps.setInt(6, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryExceptions("something went wrong in updateGuest - PartyRepository", e);
@@ -193,7 +196,7 @@ public class PartyRepository implements Repository {
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE FoodPreference3 " +
                              "SET Guest_ID = (?), FoodPreference = (?), Alcohol = (?), Allergie = (?) " +
-                             "WHERE FoodPreferenceID = (?)", Statement.RETURN_GENERATED_KEYS)) {
+                             "WHERE RsvpID = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, guestId);
             ps.setString(2, foodPreference);
             ps.setString(3, alcohol);
@@ -205,13 +208,96 @@ public class PartyRepository implements Repository {
         }
     }
 
+    @Override
+    public void updateBudget(int eventId, int id, String item, int price) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "UPDATE Budget3 " +
+                             "SET event_id = (?), item = (?), price = (?) " +
+                             "WHERE BudgetID = (?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, eventId);
+            ps.setString(2, item);
+            ps.setInt(3, price);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in updateBudget - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void updateChecklist(int id, int eventId, Date date, String toDo, boolean done) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "UPDATE Checklist3 " +
+                             "SET Event_ID = (?), date = (?), todo = (?), done = (?) " +
+                             "WHERE ChecklistID = (?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, eventId);
+            ps.setDate(2, date);
+            ps.setString(3, toDo);
+            ps.setBoolean(4, done);
+            ps.setInt(5, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong in updateChecklist - partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteBudget(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Budget3 WHERE BudgetID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteBudget - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteChecklist(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Checklist3 WHERE ChecklistID = (?) ")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteChecklist - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteFoodPreference(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM FoodPreference3 WHERE RsvpID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteFoodPreference - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteGuest(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Guest3 WHERE GuestID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteGuest - Partyrepo", e);
+        }
+    }
+
     // LISTS
     @Override
-    public List<Guest> getGuestList(int userId) {
+    public List<Guest> getGuestList(int eventId) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT GuestId, FirstName, lastname, gender from Guest3\n " +
+             PreparedStatement ps = conn.prepareStatement("SELECT GuestId, FirstName, lastname, email, gender from Guest3\n " +
                      "WHERE Event_ID = (?) ")) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
 
             ResultSet rs = ps.executeQuery();
             List<Guest> guests = new ArrayList<>();
@@ -219,6 +305,7 @@ public class PartyRepository implements Repository {
                 guests.add(new Guest(rs.getInt("GuestId"),
                         rs.getString("FirstName"),
                         rs.getString("lastname"),
+                        rs.getString("email"),
                         rs.getString("gender")));
             }
             return guests;
@@ -230,13 +317,13 @@ public class PartyRepository implements Repository {
     @Override
     public Food getFoodPreference(int guestId) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT FoodPreferenceID, Guest_ID, FoodPreference, Alcohol, Allergie" +
+             PreparedStatement ps = conn.prepareStatement("SELECT RsvpID, Guest_ID, FoodPreference, Alcohol, Allergie" +
                      " FROM FoodPreference3 WHERE Guest_ID = (?)")) {
             ps.setInt(1, guestId);
             ResultSet rs = ps.executeQuery();
             Food food = null;
             if (rs.next()) {
-                food = new Food(rs.getInt("id"),
+                food = new Food(rs.getInt("RsvpID"),
                         rs.getString("FoodPreference"),
                         rs.getString("Alcohol"),
                         rs.getString("Allergie"));
@@ -248,16 +335,16 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public List<Budget> getBudgetList(int userId) {
+    public List<Budget> getBudgetList(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [BudgetID], [Item], [Price] from [dbo].[Budget3]\n " +
                      "WHERE Event_ID = (?) ")) {
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
 
             ResultSet rs = ps.executeQuery();
             List<Budget> budgetList = new ArrayList<>();
             while (rs.next()) {
-                budgetList.add(new Budget(rs.getInt("ID"),
+                budgetList.add(new Budget(rs.getInt("BudgetID"),
                         rs.getString("item"),
                         rs.getInt("price")));
             }
@@ -268,16 +355,16 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public List<ToDo> getChecklist(int eventId) {
+    public List<Checklist> getChecklist(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [ChecklistID], [Date], [Todo], [Done] from [dbo].[Checklist3]\n " +
                      "WHERE Event_ID = (?) ")) {
             ps.setInt(1, eventId);
 
             ResultSet rs = ps.executeQuery();
-            List<ToDo> checklist = new ArrayList<>();
+            List<Checklist> checklist = new ArrayList<>();
             while (rs.next()) {
-                checklist.add(new ToDo(rs.getInt("ChecklistID"),
+                checklist.add(new Checklist(rs.getInt("ChecklistID"),
                         rs.getDate("Date"),
                         rs.getString("Todo"),
                         rs.getBoolean("Done")));
@@ -291,12 +378,12 @@ public class PartyRepository implements Repository {
 
 // BUDGET CALCULATOR
 
-    public int budgetSum(int userId) {
+    public int budgetSum(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [Price] from [dbo].[Budget3]\n " +
                      "WHERE Event_ID = (?) ")) {
 
-            ps.setInt(1, userId);
+            ps.setInt(1, eventId);
             ResultSet rs = ps.executeQuery();
             int total = 0;
             while (rs.next()) {
@@ -310,25 +397,6 @@ public class PartyRepository implements Repository {
         }
     }
 
-    // CHANGE VALUE
-    public void changeBudgetItemPrice(int userId, String item, int price) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("UPDATE [dbo].[Budget]\n " +
-                     "SET [Price] = (?) \n " +
-                     "WHERE Item = (?) AND User_ID = (?) ")) {
-            ps.setInt(1, userId);
-            ps.setString(2, item);
-            ps.setInt(3, price);
-            ps.executeQuery();
-//            int id = -1;
-//            while (rs.next()) {
-//                id = rs.getInt(id);
-//            }
-//            return id;
-        } catch (SQLException e) {
-            throw new RepositoryExceptions("Couldn't update");
-        }
-    }
     @Override
     public int addEvent(String name, java.sql.Date date, int userId) {
         try (Connection conn = dataSource.getConnection();

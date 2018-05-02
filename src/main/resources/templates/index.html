@@ -316,28 +316,41 @@
         <div class="item active">
             <img src="/pict.png" />
             <div class="carousel-caption">
-                <h1>Event Planner</h1>
+                <h1>Eventer makes it easy to plan your event!</h1>
                 <br/>
                 <a class="scroll" href="#scrollhere">Get started</a>
             </div>
         </div><!---End Active-->
         <div class="item">
             <img src="/pict1.png"  />
+            <div class="carousel-caption">
+                <h1>Eventer makes it easy to plan your event!</h1>
+                <br/>
+                <a class="scroll" href="#scrollhere">Get started</a>
+            </div>
         </div>
         <div class="item">
             <img src="/pict3.png"  />
+            <div class="carousel-caption">
+                <h1>Eventer makes it easy to plan your event!</h1>
+                <br/>
+                <a class="scroll" href="#scrollhere">Get started</a>
+            </div>
         </div>
     </div>
     <style>
         .scroll {
-            background: #ddd;
-            color: #444;
-            font-family: sans-serif;
-            text-align: center;
-            text-decoration: none;
-            padding: 5px;
-            width: 150px;
+            background: #adc7c8;
+            color: #FFF;
+            font-family: 'Catamaran', sans-serif;
+            text-decoration: none !important;
+            padding: 14px 25px;
             align-content: center;
+            display: inline-block;
+        }
+        .scroll:hover {
+            color: #665b53;
+            text-shadow: #665b53;
         }
 
     </style>
@@ -372,8 +385,7 @@
     <div class="row">
         <div class="col-sm-6 instructionbox">
             <div>
-
-                <img class="instructionpic" src="/checklistpic.png"  />
+                <img class="instructionpic" src="/checklist1.png"  />
             </div>
         </div>
         <div class="col-sm-6 instructionbox">
@@ -389,7 +401,31 @@
             </div>
         </div>
         <div class="col-sm-6 instructionbox">
-            <img class="instructionpic" src="/friends2.png"/>
+            <img class="instructionpic" src="/guestlist1.png"/>
+        </div>
+    </div>
+</div>
+<div class="instruction">
+    <div class="row">
+        <div class="col-sm-6 instructionbox">
+            <div>
+                <img class="instructionpic" src="/budget1.png"  />
+            </div>
+        </div>
+        <div class="col-sm-6 instructionbox">
+            <p class="instructiontext">Create a budget</p>
+        </div>
+    </div>
+</div>
+<div class="instruction">
+    <div class="row">
+        <div class="col-sm-6 instructionbox">
+            <div>
+                <p class="instructiontext">Plan seating</p>
+            </div>
+        </div>
+        <div class="col-sm-6 instructionbox">
+            <img class="instructionpic" src="/seating.png"/>
         </div>
     </div>
 </div>
@@ -400,17 +436,19 @@
 
     }
     .instructionpic {
-        opacity: 0.5;
         overflow: hidden;
-        width: 100%;
+        width: 50%;
     }
     .instructionbox {
         margin-bottom: 10px;
+        text-align: center;
     }
     .instructiontext {
         color: black;
         position: absolute;
         z-index: 1;
+        font-family: 'Catamaran', sans-serif;
+        font-size: 2em;
     }
     .row {
         margin: 0;

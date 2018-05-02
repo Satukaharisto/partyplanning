@@ -5,13 +5,17 @@ public class Guest {
     private int id;
     private String firstname;
     private String lastname;
+    private String email;
     private String gender;
 
-    public Guest(int id, String firstname, String lastname, String gender) {
+
+    public Guest(int id, String firstname, String lastname, String email,String gender) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.email = email;
         this.gender = gender;
+
     }
 
     public int getId() {
@@ -45,4 +49,7 @@ public class Guest {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    public String getEmail() { return email;}
+
+    public void setEmail(String email) { this.email = email;}
 }

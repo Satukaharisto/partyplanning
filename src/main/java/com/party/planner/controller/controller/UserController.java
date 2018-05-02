@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +51,6 @@ public class UserController {
     @GetMapping("/event")
     public ModelAndView newEventList(HttpSession session) {
         List<Event> eventlist = repository.getEventList((int) session.getAttribute("userId"));
-//        List<EventListModel> eventlist2 = new ArrayList<>();
-//        for (Event event : eventlist) {
-//            Guest guest = repository.getGuests(event.getId());
-//            eventlist2.add(EventListModelMapper.map(event, guest));
-//        }
         return new ModelAndView("event").addObject("eventlist", eventlist);
     }
 
@@ -100,41 +94,43 @@ public class UserController {
 
 
     @PostMapping("/guestlist")
-    public String createGuest(@RequestParam int eventId,
+    public ModelAndView createGuest(@RequestParam int eventId,
                               @RequestParam String firstname,
                               @RequestParam String lastname,
+                              @RequestParam String email,
                               @RequestParam String gender,
                               @RequestParam(required = false) String allergy,
                               @RequestParam(required = false) String foodPreference,
                               @RequestParam(required = false) String alcohol) {
-        int guestId = repository.addGuest(eventId, firstname, lastname, gender);
+        int guestId = repository.addGuest(eventId, firstname, lastname, email, gender);
         repository.addFoodPreference(guestId, allergy, foodPreference, alcohol);
 
-        return "redirect:guestlist";
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
     @PostMapping("/food")
-    public String addFoodPreference(@RequestParam int guestId,
+    public ModelAndView addFoodPreference(@RequestParam int eventId,
+                                          @RequestParam int guestId,
                                     @RequestParam String allergie,
                                     @RequestParam String foodPreference,
                                     @RequestParam String alcohol) {
         repository.addFoodPreference(guestId, allergie, foodPreference, alcohol);
-        return "redirect:guestlist";
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
     @GetMapping("/guestlist")
-    public ModelAndView newGuestToList(HttpSession session) {
-        List<Guest> guests = repository.getGuestList((int) session.getAttribute("eventId"));
+    public ModelAndView newGuestToList(@RequestParam int eventId) {
+        List<Guest> guests = repository.getGuestList(eventId);
         List<GuestListModel> guestList = new ArrayList<>();
         for (Guest guest : guests) {
             Food food = repository.getFoodPreference(guest.getId());
             guestList.add(GuestListModelMapper.map(guest, food));
         }
-        return new ModelAndView("guestlist").addObject("guestList", guestList);
+        return new ModelAndView("guestlist").addObject("eventId", eventId).addObject("guestList", guestList);
     }
 
     @GetMapping("/seatingarrangement")
-    public ModelAndView seatingarrangement (HttpSession session) {
+    public ModelAndView seatingarrangement(HttpSession session) {
         List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
 //        List<GuestListModel> guestList = new ArrayList<>();
 //        for (Guest guest : guests) {
@@ -145,26 +141,26 @@ public class UserController {
     }
 
     @PostMapping("/budget")
-    public ModelAndView createBudget(@RequestParam String item,
-                                     @RequestParam int price,
-                                     HttpSession session) {
-        if (repository.budgetItemAlreadyExists(item, (int) session.getAttribute("userId"))) {
-            List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-            int total = repository.budgetSum((int) session.getAttribute("userId"));
+    public ModelAndView createBudget(@RequestParam int eventId,
+                                     @RequestParam String item,
+                                     @RequestParam int price) {
+        if (repository.budgetItemAlreadyExists(item, eventId)) {
+            List<Budget> budgetList = repository.getBudgetList(eventId);
+            int total = repository.budgetSum(eventId);
             return new ModelAndView("budget").addObject("InvalidInput", "Budget item already exists")
-                    .addObject("budgetList", budgetList).addObject("total", total);
+                    .addObject("budgetList", budgetList).addObject("total", total).addObject("eventId", eventId);
         }
-        repository.addBudgetItem(item, price, (int) session.getAttribute("userId"));
+        repository.addBudgetItem(item, price, eventId);
 
-        return new ModelAndView("redirect:budget");
+        return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
     @GetMapping("/budget")
-    public ModelAndView newBudgetItemToList(HttpSession session) {
-        List<Budget> budgetList = repository.getBudgetList((int) session.getAttribute("userId"));
-        int total = repository.budgetSum((int) session.getAttribute("userId"));
+    public ModelAndView newBudgetItemToList(@RequestParam int eventId) {
+        List<Budget> budgetList = repository.getBudgetList(eventId);
+        int total = repository.budgetSum(eventId);
         return new ModelAndView("budget").addObject("budgetList", budgetList)
-                .addObject("total", total);                //Ska redirect till inloggat läge
+                .addObject("total", total).addObject("eventId", eventId);                //Ska redirect till inloggat läge
     }
 
     @PostMapping("/checklist")
@@ -181,25 +177,71 @@ public class UserController {
 
     @GetMapping("/checklist")
     public ModelAndView newToDoToList(@RequestParam int eventId) {
-        List<ToDo> checklist = repository.getChecklist(eventId);
+        List<Checklist> checklist = repository.getChecklist(eventId);
         return new ModelAndView("checklist").addObject("checklist", checklist).
                 addObject("eventId", eventId);                //Ska redirect till inloggat läge
     }
 
     @PostMapping("/updateGuest")
     public ModelAndView updateGuest(
+            @RequestParam int eventId,
             @RequestParam int guestId,
             @RequestParam String firstname,
             @RequestParam String lastname,
+            @RequestParam String email,
             @RequestParam String gender,
             @RequestParam int foodId,
             @RequestParam(required = false) String allergy,
             @RequestParam(required = false) String foodPreference,
-            @RequestParam(required = false) String alcohol,
-            HttpSession session) {
-        repository.updateGuest(guestId, (int) session.getAttribute("userId"), firstname, lastname, gender);
+            @RequestParam(required = false) String alcohol) {
+        repository.updateGuest(eventId, guestId, firstname, lastname, email, gender);
         repository.updateFoodPreference(foodId, guestId, allergy, foodPreference, alcohol);
-        return new ModelAndView("redirect:guestlist");
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
+    @PostMapping("/updateBudget")
+    public ModelAndView updateBudget(
+            @RequestParam int id,
+            @RequestParam String item,
+            @RequestParam int price,
+            @RequestParam int eventId) {
+        repository.updateBudget(eventId, id, item, price);
+        return new ModelAndView("redirect:budget?eventId=" + eventId);
+    }
+
+    @GetMapping("/deleteBudget")
+    public ModelAndView deleteBudget(@RequestParam int eventId, @RequestParam int id) {
+        repository.deleteBudget(id);
+        return new ModelAndView("redirect:budget?eventId=" + eventId);
+    }
+
+    @GetMapping("/deleteGuest")
+    public ModelAndView deleteGuest(@RequestParam int eventId, @RequestParam int guestId) {
+        Food food = repository.getFoodPreference(guestId);
+        repository.deleteFoodPreference(food.getId());
+
+        repository.deleteGuest(guestId);
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
+    }
+
+    @GetMapping("/deleteChecklist")
+    public ModelAndView deleteChecklist (@RequestParam int eventId, @RequestParam int id) {
+        repository.deleteChecklist(id);
+        return new ModelAndView("redirect:checklist?eventId=" + eventId);
+    }
+
+    @PostMapping("/updateChecklist")
+    public ModelAndView updateChecklist(
+            @RequestParam int id,
+            @RequestParam Date date,
+            @RequestParam String toDo,
+            @RequestParam(required = false) Boolean done,
+            @RequestParam int eventId) {
+        boolean checked = false;
+        if (done != null){
+            checked = done;
+        }
+        repository.updateChecklist(id, eventId, date, toDo, checked);
+        return new ModelAndView("redirect:checklist?eventId=" + eventId);
+    }
 }
