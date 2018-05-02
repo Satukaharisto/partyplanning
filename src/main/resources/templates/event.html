@@ -201,11 +201,15 @@
                     <button class="colTest">
                         <span th:text="${event.name}"></span>
                         <span th:text="${event.date}"></span>
-                    </button>
-                    <div class="colTestEdit">
-                        <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
-                        <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
-                        <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+
+                    
+                        </button>
+                        <div class="colTestEdit">
+                            <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                            <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+                            <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
