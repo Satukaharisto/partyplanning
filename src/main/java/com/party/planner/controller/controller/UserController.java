@@ -123,7 +123,7 @@ public class UserController {
 //            Food food = repository.getFoodPreference(guest.getId());
 //            guestList.add(GuestListModelMapper.map(guest, food));
 //        }
-        return new ModelAndView("seatingarrangement").addObject("guestList", guests);
+        return new ModelAndView("seatingarrangement").addObject("guestList", guests).addObject("eventId", eventId);
     }
 
     @PostMapping("/budget")
