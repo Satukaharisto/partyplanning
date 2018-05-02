@@ -11,6 +11,7 @@ public class GuestListModelMapper {
                 guest.getFirstname(),
                 guest.getLastname(),
                 guest.getGender(),
+                guest.getEmail(),
                 food == null ? null : food.getAllergy(),
                 food == null ? null : food.getAlcohol(),
                 food == null ? null : food.getFoodPreference());

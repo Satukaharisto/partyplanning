@@ -1,20 +1,17 @@
 package com.party.planner.controller.repository;
 
-import com.party.planner.controller.domain.Budget;
-import com.party.planner.controller.domain.Food;
-import com.party.planner.controller.domain.Guest;
-import com.party.planner.controller.domain.Checklist;
-
+import com.party.planner.controller.domain.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface Repository {
 
-    int addGuest(String firstname, String lastname, String gender, int userId);
+    int addGuest(int userId, String firstname, String lastname, String email, String gender);
 
 
     int addUser(String username, String password, String email);
-    int addBudgetItem(String item, int price, int userId);
+    int addBudgetItem(String item, int price, int eventId);
     int addToDo(Date date, String toDo, boolean done, int userId);
     int addFoodPreference(int guestId, String allergy, String foodPreference, String alcohol);
 
@@ -25,9 +22,9 @@ public interface Repository {
     boolean userAlreadyExists(String username);
     boolean budgetItemAlreadyExists(String item, int userId);
 
-    int budgetSum(int userId);
+    int budgetSum(int eventId);
 
-    void updateGuest(int id, int userId, String firstname, String lastname, String gender);
+    void updateGuest(int eventId, int id, String firstname, String lastname, String email, String gender);
     void updateFoodPreference(int id, int guestId, String allergy, String foodPreference, String alcohol);
     void updateBudget(int id, int userId, String item, int price);
     void updateChecklist (int id, int userId, Date date, String toDo, boolean done);
@@ -37,11 +34,14 @@ public interface Repository {
     void deleteFoodPreference(int id);
     void deleteGuest(int id);
 
-    List<Guest> getGuestList(int userId);
+    List<Guest> getGuestList(int eventId);
     Food getFoodPreference(int guestId);
-    List<Budget> getBudgetList(int userId);
-    List<Checklist> getChecklist(int userId);
-
+  
+    List<Budget> getBudgetList(int eventId);
+    List<Checklist> getChecklist(int eventId);
+    int addEvent(String name, Date date, int userId);
+    List<Event> getEventList(int userId);
+//    Guest getGuests(int eventId);
 }
 
 

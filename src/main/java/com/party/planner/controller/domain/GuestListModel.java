@@ -6,16 +6,20 @@ public class GuestListModel {
     private Integer foodId;
     private String firstname;
     private String lastname;
+    private String email;
     private String gender;
     private String allergy;
     private String alcohol;
     private String foodPreference;
 
-    public GuestListModel(int id, Integer foodId, String firstname, String lastname, String gender, String allergy, String alcohol, String foodPreference) {
+
+
+    public GuestListModel(int id, Integer foodId, String firstname, String lastname, String email, String gender, String allergy, String alcohol, String foodPreference) {
         this.id = id;
         this.foodId = foodId;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.email = email;
         this.gender = gender;
         this.allergy = allergy;
         this.alcohol = alcohol;
@@ -85,4 +89,8 @@ public class GuestListModel {
     public void setFoodPreference(String foodPreference) {
         this.foodPreference = foodPreference;
     }
+
+    public String getEmail() { return email;}
+
+    public void setEmail(String email) { this.email = email;}
 }

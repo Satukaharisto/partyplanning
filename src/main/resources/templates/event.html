@@ -15,7 +15,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
             integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
-    <script src="guestscript.js"></script>
     <style>
         .colTest {
             background-color: #adc7c8;
@@ -202,22 +201,6 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a th:href="@{/event}">My events</a>
-                </li>
-                <li class="active">
-                    <a th:href="@{/guestlist}">Guestlist</a>
-                </li>
-                <li>
-                    <a th:href="@{/seatingarrangement}">Seating</a>
-                </li>
-                <li>
-                    <a th:href="@{/budget}">Budget</a>
-                </li>
-                <li>
-                    <a th:href="@{/checklist}">Checklist</a>
-                </li>
-
-                <li>
                     <a th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
@@ -227,98 +210,34 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
-            <h1>Välkommen</h1>
-            <h3 th:text="'Inloggad som ' + ${session.user}"></h3>
+            <h3 th:text="'Welcome ' + ${session.user}"></h3>
             <ul class="nav nav-pills nav-stacked">
-                <form method="post" action="/guestlist">
-                    <input type="hidden" name="eventId" th:value="${eventId}"/>
-                    <p>Firstname:</p>
-                    <input type="text" name="firstname" placeholder="Firstname.."/>
-                    <p>Lastname: </p>
-                    <input type="text" name="lastname" placeholder="Lastname.."/>
-                    <p>Email: </p>
-                    <input type="text" name="email" placeholder="Email.."/>
-                    <p>Gender: </p>
-                    <select name="gender">
-                        <option th:text="Other"></option>
-                        <option th:text="Female"></option>
-                        <option th:text="Male"></option>
-                    </select>
-                    <p></p>
-                    <p>Allergy: </p>
-                    <input type="text" name="allergy" placeholder="allergy.."/>
-                    <p>Foodpref: </p>
-                    <input type="text" name="foodPreference" placeholder="foodpref.."/>
-                    <p>Alcohol: </p>
-                    <select name="alcohol">
-                        <option th:text="No"></option>
-                        <option th:text="Yes"></option>
-                    </select>
-                    <p></p>
-                    <input class="button" type="submit" value="Add new guest"/>
+                <form method="post" action="/event">
+                    <p>Event name:</p>
+                    <input type="text" name="name" placeholder="EventName.."/>
+                    <p>Date: </p>
+                    <input type="date"  name="date" placeholder="EventDate.."/>
+                    <input class="button" type="submit" value="Add new event"/>
                 </form>
             </ul>
         </div>
         <div class="col-sm-9">
             <div class="container">
-                <h2>Guestlist</h2>
-                <p></p>
-
-                <div th:each="guest : ${guestList}">                <!-- Ska snyggas till i designen -->
-                    <button class="colTest">
-
-                        <span th:text="${guest.firstname}"></span>
-                        <span th:text="${guest.lastname}"></span>
-                        <span th:text="${guest.email}"></span>
-                        <span th:text="${guest.gender}"></span>
-                        <span th:text="${guest.foodPreference}"></span>
-                        <span th:text="${guest.allergy}"></span>
-                        <span th:text="${guest.alcohol}"></span>
-                    </button>
-                    <div class="colTestEdit">
-                        <form method="post" action="/updateGuest">          <!-- Ska snyggas till i designen -->
-                            <input type="hidden" name="eventId" th:value="${eventId}"/>
-                            <input type="hidden" name="guestId" th:value="${guest.id}"/>
-                            <p>Firstname:
-                            <input type="text" name="firstname" placeholder="Firstname.."/></p>
-                            <p>Lastname:
-                            <input type="text" name="lastname" placeholder="Lastname.."/></p>
-                            <p>Email:
-                            <input type="text" name="email" placeholder="Email.."/></p>
-                            <p>Gender:</p>
-                            <select name="gender">
-                                <option th:text="Other"></option>
-                                <option th:text="Female"></option>
-                                <option th:text="Male"></option>
-                            </select>
-                            <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
-                            <p></p>
-                            <p>Allergy:
-                            <input type="text" name="allergy" placeholder="Allergy.."/></p>
-                            <p>Foodpreference:
-                            <input type="text" name="foodPreference" placeholder="Food preference.."/></p>
-                            <p>Alcohol:</p>
-                            <select name="alcohol">
-                                <option th:text="No"></option>
-                                <option th:text="Yes"></option>
-                            </select>
-                            <p></p>
-                            <input class="button" type="submit" value="Edit Guest"/>
-                            <p></p>
-                        </form>
-
-                        <form method="get" action="/deleteGuest">
-                            <input type="hidden" name="guestId" th:value="${guest.id}"/>
-                            <input class="button" type="submit" value="Delete Guest"/>
-                        </form>
+                <h2>Events</h2>
+                    <div th:each="event : ${eventlist}">
+                        <button class="colTest">
+                        <span th:text="${event.name}"></span>
+                        <span th:text="${event.date}"></span>
+                        </button>
+                        <div class="colTestEdit">
+                            <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                            <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+                            <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+                        </div>
                     </div>
-
-                </div>
             </div>
         </div>
     </div>
-</div>
-
 <footer class="container-fluid text-center">
     <div class="row">
         <div class="col-sm-2">
@@ -337,9 +256,10 @@
             <a href="#" class="fa fa-linkedin"></a>
             <a href="#" class="fa fa-youtube"></a>
         </div>
-
     </div>
+
 </footer>
+</div>
 <script src="guestscript.js"></script>
 </body>
 </html>
