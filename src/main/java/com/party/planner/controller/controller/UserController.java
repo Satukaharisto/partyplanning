@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +130,7 @@ public class UserController {
     }
 
     @GetMapping("/seatingarrangement")
-    public ModelAndView seatingarrangement (HttpSession session) {
+    public ModelAndView seatingarrangement(HttpSession session) {
         List<Guest> guests = repository.getGuestList((int) session.getAttribute("userId"));
 //        List<GuestListModel> guestList = new ArrayList<>();
 //        for (Guest guest : guests) {
@@ -178,7 +177,7 @@ public class UserController {
 
     @GetMapping("/checklist")
     public ModelAndView newToDoToList(@RequestParam int eventId) {
-        List<ToDo> checklist = repository.getChecklist(eventId);
+        List<Checklist> checklist = repository.getChecklist(eventId);
         return new ModelAndView("checklist").addObject("checklist", checklist).
                 addObject("eventId", eventId);                //Ska redirect till inloggat läge
     }
@@ -200,4 +199,49 @@ public class UserController {
         return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
+    @PostMapping("/updateBudget")
+    public ModelAndView updateBudget(
+            @RequestParam int id,
+            @RequestParam String item,
+            @RequestParam int price,
+            @RequestParam int eventId) {
+        repository.updateBudget(id, eventId);
+        return new ModelAndView("redirect:budget?eventId=" + eventId");
+    }
+
+    @GetMapping("/deleteBudget")
+    public ModelAndView deleteBudget(@RequestParam int id) {
+        repository.deleteBudget(id);
+        return new ModelAndView("redirect:budget");
+    }
+
+    @GetMapping("/deleteGuest")
+    public ModelAndView deleteGuest(@RequestParam int guestId) {
+        Food food = repository.getFoodPreference(guestId);
+        repository.deleteFoodPreference(food.getId());
+
+        repository.deleteGuest(guestId);
+        return new ModelAndView("redirect:guestlist");
+    }
+
+    @GetMapping("/deleteChecklist")
+    public ModelAndView deleteChecklist (@RequestParam int id) {
+        repository.deleteChecklist(id);
+        return new ModelAndView("redirect:checklist");
+    }
+
+    @PostMapping("/updateChecklist")
+    public ModelAndView updateChecklist(
+            @RequestParam int id,
+            @RequestParam Date date,
+            @RequestParam String toDo,
+            @RequestParam(required = false) Boolean done,
+            HttpSession session) {
+        boolean checked = false;
+        if (done != null){
+            checked = done;
+        }
+        repository.updateChecklist(id, (int) session.getAttribute("userId"), date, toDo, checked);
+        return new ModelAndView("redirect:checklist");
+    }
 }

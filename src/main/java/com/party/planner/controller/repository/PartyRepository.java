@@ -1,5 +1,6 @@
 package com.party.planner.controller.repository;
 
+
 import com.party.planner.controller.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -133,7 +134,7 @@ public class PartyRepository implements Repository {
                     return false;
             }
         } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in useralreadyexists - PartyRepository");
+            throw new RepositoryExceptions("something went wrong in useralreadyexists - PartyRepository", e);
         }
         return true;
     }
@@ -146,7 +147,7 @@ public class PartyRepository implements Repository {
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in budgetItemAlready exists - PartyRepository");
+            throw new RepositoryExceptions("something went wrong in budgetItemAlready exists - PartyRepository", e);
         }
     }
 
@@ -204,6 +205,89 @@ public class PartyRepository implements Repository {
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryExceptions("something went wrong in updateGuest - PartyRepository", e);
+        }
+    }
+
+    @Override
+    public void updateBudget(int id, int userId, String item, int price) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "UPDATE Budget " +
+                             "SET user_id = (?), item = (?), price = (?) " +
+                             "WHERE id = (?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, userId);
+            ps.setString(2, item);
+            ps.setInt(3, price);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in updateBudget - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void updateChecklist(int id, int userId, Date date, String toDo, boolean done) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "UPDATE Checklist " +
+                             "SET user_id = (?), date = (?), todo = (?), done = (?) " +
+                             "WHERE id = (?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, userId);
+            ps.setDate(2, date);
+            ps.setString(3, toDo);
+            ps.setBoolean(4, done);
+            ps.setInt(5, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong in updateChecklist - partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteBudget(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Budget WHERE ID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteBudget - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteChecklist(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Checklist WHERE ID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteChecklist - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteFoodPreference(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM FoodPreferences WHERE ID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteFoodPreference - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteGuest(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Guests WHERE GuestID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteChecklist - Partyrepo", e);
         }
     }
 
@@ -271,16 +355,16 @@ public class PartyRepository implements Repository {
     }
 
     @Override
-    public List<ToDo> getChecklist(int eventId) {
+    public List<Checklist> getChecklist(int eventId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT [ChecklistID], [Date], [Todo], [Done] from [dbo].[Checklist3]\n " +
                      "WHERE Event_ID = (?) ")) {
             ps.setInt(1, eventId);
 
             ResultSet rs = ps.executeQuery();
-            List<ToDo> checklist = new ArrayList<>();
+            List<Checklist> checklist = new ArrayList<>();
             while (rs.next()) {
-                checklist.add(new ToDo(rs.getInt("ChecklistID"),
+                checklist.add(new Checklist(rs.getInt("ChecklistID"),
                         rs.getDate("Date"),
                         rs.getString("Todo"),
                         rs.getBoolean("Done")));
@@ -313,25 +397,6 @@ public class PartyRepository implements Repository {
         }
     }
 
-    // CHANGE VALUE
-    public void changeBudgetItemPrice(int userId, String item, int price) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("UPDATE [dbo].[Budget]\n " +
-                     "SET [Price] = (?) \n " +
-                     "WHERE Item = (?) AND User_ID = (?) ")) {
-            ps.setInt(1, userId);
-            ps.setString(2, item);
-            ps.setInt(3, price);
-            ps.executeQuery();
-//            int id = -1;
-//            while (rs.next()) {
-//                id = rs.getInt(id);
-//            }
-//            return id;
-        } catch (SQLException e) {
-            throw new RepositoryExceptions("Couldn't update");
-        }
-    }
     @Override
     public int addEvent(String name, java.sql.Date date, int userId) {
         try (Connection conn = dataSource.getConnection();
