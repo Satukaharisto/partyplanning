@@ -259,6 +259,7 @@
                     </button>
                     <div class="colTestEdit">
                         <form method="post" action="/updateBudget">          <!-- Ska snyggas till i designen -->
+                            <input type="hidden" name="eventId" th:value="${eventId}"/>
                             <input type="hidden" name="id" th:value="${item.id}"/>
                             <p>Edit item:
                                 <input type="text" name="item" placeholder="item.."/></p>
@@ -269,6 +270,7 @@
                             <p></p>
                         </form>
                         <form method="get" action="/deleteBudget">
+                            <input type="hidden" name="eventId" th:value="${eventId}"/>
                             <input type="hidden" name="id" th:value="${item.id}"/>
                             <input class="button" type="submit" value="Delete item"/>
                         </form>

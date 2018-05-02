@@ -308,7 +308,9 @@
                         </form>
 
                         <form method="get" action="/deleteGuest">
+                            <input type="hidden" name="eventId" th:value="${eventId}"/>
                             <input type="hidden" name="guestId" th:value="${guest.id}"/>
+                            <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
                             <input class="button" type="submit" value="Delete Guest"/>
                         </form>
                     </div>

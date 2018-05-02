@@ -205,29 +205,29 @@ public class UserController {
             @RequestParam String item,
             @RequestParam int price,
             @RequestParam int eventId) {
-        repository.updateBudget(id, eventId);
-        return new ModelAndView("redirect:budget?eventId=" + eventId");
+        repository.updateBudget(id, price, item, eventId);
+        return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
     @GetMapping("/deleteBudget")
-    public ModelAndView deleteBudget(@RequestParam int id) {
+    public ModelAndView deleteBudget(@RequestParam int eventId, @RequestParam int id) {
         repository.deleteBudget(id);
-        return new ModelAndView("redirect:budget");
+        return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
     @GetMapping("/deleteGuest")
-    public ModelAndView deleteGuest(@RequestParam int guestId) {
+    public ModelAndView deleteGuest(@RequestParam int eventId, @RequestParam int guestId) {
         Food food = repository.getFoodPreference(guestId);
         repository.deleteFoodPreference(food.getId());
 
         repository.deleteGuest(guestId);
-        return new ModelAndView("redirect:guestlist");
+        return new ModelAndView("redirect:guestlist?eventId=" + eventId);
     }
 
     @GetMapping("/deleteChecklist")
-    public ModelAndView deleteChecklist (@RequestParam int id) {
+    public ModelAndView deleteChecklist (@RequestParam int eventId, @RequestParam int id) {
         repository.deleteChecklist(id);
-        return new ModelAndView("redirect:checklist");
+        return new ModelAndView("redirect:checklist?eventId=" + eventId);
     }
 
     @PostMapping("/updateChecklist")

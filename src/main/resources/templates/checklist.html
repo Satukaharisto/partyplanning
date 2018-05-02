@@ -258,7 +258,8 @@
                         <span th:text="${toDo.toDo}"> </span>
                     </button>
                     <div class="colTestEdit">
-                        <form method="post" action="/updateChecklist">          <!-- Ska snyggas till i designen -->
+                        <form method="post" action="/updateChecklist">
+                            <input type="hidden" name="eventId" th:value="${eventId}"/><!-- Ska snyggas till i designen -->
                             <input type="hidden" name="id" th:value="${toDo.id}"/>
                             <p>Edit Todo:
                                 <input type="date" name="date" placeholder="date.."/></p>
@@ -269,6 +270,7 @@
                             <p></p>
                         </form>
                         <form method="get" action="/deleteChecklist">
+                            <input type="hidden" name="eventId" th:value="${eventId}"/>
                             <input type="hidden" name="id" th:value="${toDo.id}"/>
                             <input class="button" type="submit" value="Delete item"/>
                         </form>

@@ -212,9 +212,9 @@ public class PartyRepository implements Repository {
     public void updateBudget(int id, int userId, String item, int price) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "UPDATE Budget " +
+                     "UPDATE Budget3 " +
                              "SET user_id = (?), item = (?), price = (?) " +
-                             "WHERE id = (?)", Statement.RETURN_GENERATED_KEYS)) {
+                             "WHERE BudgetID = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, userId);
             ps.setString(2, item);
             ps.setInt(3, price);
@@ -229,9 +229,9 @@ public class PartyRepository implements Repository {
     public void updateChecklist(int id, int userId, Date date, String toDo, boolean done) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "UPDATE Checklist " +
+                     "UPDATE Checklist3 " +
                              "SET user_id = (?), date = (?), todo = (?), done = (?) " +
-                             "WHERE id = (?)", Statement.RETURN_GENERATED_KEYS)) {
+                             "WHERE ChecklistID = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, userId);
             ps.setDate(2, date);
             ps.setString(3, toDo);
@@ -247,7 +247,7 @@ public class PartyRepository implements Repository {
     public void deleteBudget(int id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "DELETE FROM Budget WHERE ID = (?)")) {
+                     "DELETE FROM Budget3 WHERE BudgetID = (?)")) {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
@@ -259,7 +259,7 @@ public class PartyRepository implements Repository {
     public void deleteChecklist(int id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "DELETE FROM Checklist WHERE ID = (?)")) {
+                     "DELETE FROM Checklist3 WHERE ChecklistID = (?) ")) {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
@@ -271,7 +271,7 @@ public class PartyRepository implements Repository {
     public void deleteFoodPreference(int id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "DELETE FROM FoodPreferences WHERE ID = (?)")) {
+                     "DELETE FROM FoodPreference3 WHERE RsvpID = (?)")) {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
@@ -283,11 +283,11 @@ public class PartyRepository implements Repository {
     public void deleteGuest(int id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "DELETE FROM Guests WHERE GuestID = (?)")) {
+                     "DELETE FROM Guest3 WHERE GuestID = (?)")) {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
-            throw new RepositoryExceptions("Something went wrong in deleteChecklist - Partyrepo", e);
+            throw new RepositoryExceptions("Something went wrong in deleteGuest - Partyrepo", e);
         }
     }
 
