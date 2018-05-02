@@ -186,6 +186,7 @@
             <h3 th:text="'Welcome ' + ${session.user}"></h3>
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/event">
+                    <input type="hidden" name="userId" th:value="${userId}"/>
                     <p>Event name:</p>
                     <input type="text" name="name" placeholder="EventName.."/>
                     <p>Date: </p>

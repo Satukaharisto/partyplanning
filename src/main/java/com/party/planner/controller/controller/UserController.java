@@ -73,8 +73,8 @@ public class UserController {
 
     @PostMapping("/register")
 
-    public ModelAndView createUser(HttpSession session, @RequestParam String username,
-                                   @RequestParam String password, @RequestParam String email) {
+    public ModelAndView createUser(HttpSession session, @RequestParam String username, @RequestParam String email,
+                                   @RequestParam String password) {
 
         if (!repository.userAlreadyExists(username)) {
             return new ModelAndView("index")
@@ -82,8 +82,8 @@ public class UserController {
         }
         int userId = repository.addUser(username, password, email);
         session.setAttribute("userId", userId);
-        session.setAttribute("user", username);
         session.setAttribute("user", email);
+        session.setAttribute("user", username);
 
         return new ModelAndView("redirect:event");
     }
