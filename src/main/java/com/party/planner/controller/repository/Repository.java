@@ -41,6 +41,8 @@ public interface Repository {
     List<Checklist> getChecklist(int eventId);
     int addEvent(String name, Date date, int userId);
     List<Event> getEventList(int userId);
+    List<Inspiration> listInspiration();
+
 //    Guest getGuests(int eventId);
 }
 
