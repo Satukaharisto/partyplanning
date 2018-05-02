@@ -2,6 +2,7 @@ package com.party.planner.controller.repository;
 
 
 import com.party.planner.controller.domain.*;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class PartyRepository implements Repository {
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[User3]([UserName], [Password], [Email]) " +
                      "VALUES (?,?,?) ", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, userName);
-            ps.setString(2, password);
+            ps.setString(2, BCrypt.hashpw(password, BCrypt.gensalt())); //krypterar lösenordet i databasen
             ps.setString(3, email);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -157,13 +158,15 @@ public class PartyRepository implements Repository {
     @Override
     public Integer checkLogin(String username, String password) {
         try (Connection conn = dataSource.getConnection();
-
-             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] FROM [dbo].[User3] WHERE ([UserName] = (?) AND [Password] = (?)) ")) {
+             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] , [Password] FROM [dbo].[User3] WHERE ([UserName] = (?) ) ")) {
             ps.setString(1, username);
-            ps.setString(2, password);
             ResultSet results = ps.executeQuery();
+
             if (results.next()) {
-                return results.getInt("UserId");
+                String hashedPassword = results.getString("Password");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return results.getInt("UserId");
+                }
             }
             return null;
         } catch (SQLException e) {
