@@ -225,9 +225,6 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="headerlinks" th:href="@{/event}">My events</a>
-                </li>
-                <li>
                     <a class="headerlinks" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
@@ -238,7 +235,7 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
-            <h3 th:text="'Welcome ' + ${session.user}"></h3>
+            <h3 th:text="'Welcome ' + ${session.user} + '!'"></h3>
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/event">
                     <table width="320">
@@ -247,12 +244,12 @@
                             <td>&nbsp;</td>
                         </tr>
                         <tr height="30">
-                            <td>Event type:</td>
-                            <td><input type="text" name="name" required="3" placeholder="EventName.."/></td>
+                            <td>Event name</td>
+                            <td><input type="text" name="name" required="3" placeholder="Event name.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Event date</td>
-                            <td><input type="date" required="required" name="date" placeholder="EventDate.."/></td>
+                            <td><input type="date" required="required" name="date" placeholder="Event date.."/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -260,7 +257,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input class="button" type="submit" value="add new event" /></td>
+                            <td><input class="button" type="submit" value="Add new event" /></td>
                         </tr>
                     </table>
                 </form>
@@ -268,15 +265,15 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
-                <h2>Your Events</h2>
+                <h2>Your events</h2>
                 <p></p>
                 <div class="container" width="90%">
                     <div class="panel-group" id="accordion">
                         <div class="panel-heading" id="collapseheader">
                             <table class="collapsetable">
                                 <tr>
-                                    <td class="collapsetd">Event Date</td>
-                                    <td class="collapsetd">Event Name</td>
+                                    <td class="collapsetd">Event date</td>
+                                    <td class="collapsetd">Event name</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
@@ -322,11 +319,11 @@
                                                     <a class="button" th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
                                                 </td>
                                                 <td width="212">
-                                                    Edit eventname</td>
+                                                    Change event name</td>
                                                 <td>
                                                     <input type="hidden" name="eventId" th:value="${event.id}"/>
                                                     <input type="hidden" name="userId" th:value="${session.userId}"/>
-                                                    <input type="text" required="3" name="eventName" placeholder="Edit event name.."/>
+                                                    <input type="text" required="3" name="eventName" th:value="${event.name}"/>
                                                 </td>
                                                 <td>&nbsp;</td>
                                             </tr>
@@ -335,9 +332,9 @@
                                                     <a class="button" th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
                                                 </td>
                                                 <td width="212">
-                                                    Edit date</td>
+                                                    Change date</td>
                                                 <td>
-                                                    <input type="date" required="required" name="eventDate" placeholder="Change date.."/>
+                                                    <input type="date" required="required" name="eventDate"/>
                                                 </td>
                                                 <td>&nbsp;</td>
 
@@ -359,7 +356,7 @@
                                                 <td align="center" height="60">
                                                     <form method="post" action="/updateEvent">
                                                         <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                                        <input class="button" type="submit" value="edit todo" style="float: left"/>
+                                                        <input class="button" type="submit" value="Edit event" style="float: left"/>
                                                     </form>
                                                 </td>
                                                 <td align="center" height="60">
