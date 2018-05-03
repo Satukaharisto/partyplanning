@@ -10,7 +10,7 @@ public interface Repository {
     int addGuest(int userId, String firstname, String lastname, String email, String gender);
 
 
-    int addUser(String username, String password, String email);
+    int addUser(String username, String email, String password);
     int addBudgetItem(String item, int price, int eventId);
     int addToDo(Date date, String toDo, boolean done, int userId);
     int addFoodPreference(int guestId, String allergy, String foodPreference, String alcohol);
