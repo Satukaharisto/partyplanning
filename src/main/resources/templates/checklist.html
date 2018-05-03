@@ -33,6 +33,7 @@
         }
         .headerlinks:hover {
             text-decoration: none;
+            background-color: #adc7c8 !important;
             color: #D9E5E5 !important;
         }
 
@@ -113,6 +114,7 @@
 
         .navbar-inverse .navbar-nav li a {
             color: #D5D5D5;
+
         }
 
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
@@ -257,11 +259,21 @@
         }
 
 
+
+        .whatever {
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #mNavbar{
+            position: sticky;
+        }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-light navbar-fixed-top bg-light" id="mNavbar">
+
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
@@ -271,29 +283,29 @@
             </button>
             <img src="eventerlogga.png"/>
         </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="headerlinks" th:href="@{/event}">My events</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
-                    </li>
-                    <li class="active">
-                        <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{/logout}">Logout</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="headerlinks" th:href="@{/event}">My events</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
+                </li>
+                <li class="active">
+                    <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
         </div>
+    </div>
 </nav>
 <!--NAV SLUTAR-->
 <div class="container-fluid">
@@ -302,7 +314,7 @@
 
         <div class="col-sm-3 sidenav">
             <ul class="nav nav-pills nav-stacked">
-                 <form method="post" action="/checklist">
+                <form method="post" action="/checklist">
                     <table width="320">
                         <tr class="paddingtoimput">
                             <td><input type="hidden" name="eventId" th:value="${eventId}"/></td>
@@ -329,7 +341,7 @@
             </ul>
         </div>
         <div class="col-sm-9">
-            <body class="whatever" background="background.png">  </body>
+            <body class="whatever" background="background1.png">  </body>
             <div class="container">
 
                 <h2>Your event checklist</h2>
@@ -353,17 +365,18 @@
                         <div class="panel panel-default" th:each="toDo : ${checklist}">
                             <div class="panel-heading">
                                 <h4>
-                        <a class="collapselinks" data-toggle="collapse" th:href="'#' + ${toDo.Id}">
-                            <table class="collapsetable">
-                                <tr>
-                                    <td class="collapsetd" th:text="${toDo.date}"></td>
-                                    <td class="collapsetd" th:text="${toDo.toDo}"></td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetdedit"><b>EDIT</b></td>
+                                    <a class="collapselinks" data-toggle="collapse" th:href="'#' + ${toDo.Id}">
+                                        <table class="collapsetable">
+                                            <tr>
+                                                <td class="collapsetd" th:text="${toDo.date}"></td>
+                                                <td class="collapsetd" th:text="${toDo.toDo}"></td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
+
+                                                <td class="collapsetdedit"><b>EDIT</b></td>
                                             </tr>
                                         </table>
                                     </a>
@@ -385,7 +398,9 @@
                                             <tr>
                                                 <td>Date</td>
                                                 <td colspan="2">
+
                                                     <input type="date" name="date" required="required"/></td>
+
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
@@ -398,6 +413,7 @@
                                                         <input class="button" type="submit" value="Edit task"/>
                                                         <input type="hidden"/>
                                                         <input type="hidden"/>
+
                                                     </form>
                                                 </td>
                                                 <td align="top" height="60" valign="top">

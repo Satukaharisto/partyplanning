@@ -17,10 +17,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
     <style>
-        .pricecolor{
-            color: #f0ad97;
-        }
-
         .headerlinks {
             text-decoration: none;
             color: #665b53 !important;
@@ -31,42 +27,27 @@
         }
         .headerlinks:hover {
             text-decoration: none;
+            background-color: #adc7c8 !important;
             color: #D9E5E5 !important;
         }
-
-        {
-
-
-        }
         #collapseheader {
-
             background: #f0ad97 !important;
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
             font-size: 18px;
             line-height: 1.42857143;
             color: #665b53 !important;
         }
-
-
         .whatever {
-
             opacity: 0.95;
             background-repeat: no-repeat;
             background-attachment: fixed;
-
-
-
         }
         .panel-heading {
-
-
             background: #D9E5E5 !important;
         }
-
         .collapseedit{
             width: 15%;
         }
-
         .collapsetable{
             width: 100% !important
         }
@@ -76,12 +57,42 @@
         .collapsetdedit{
             width: 16% !important;
         }
-
-        .collapselinks{
+        .collapselinks {
             text-decoration: none !important;
             color: #665b53 !important;
         }
-
+        .colTest {
+            background-color: #adc7c8;
+            color: black;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+        .active,
+        .colTest:hover {
+            background-color: #f0ad97;
+        }
+        .colTest:after {
+            colTestEdit: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+        .active:after {
+            colTestEdit: "\2212";
+        }
+        .colTestEdit {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
@@ -91,54 +102,51 @@
             font-size: 20px;
             border: 0;
         }
-
         .navbar-nav>li>a {
             padding-top: 35px;
             padding-bottom: 10px;
             line-height: 20px;
         }
-
         .navbar-nav {
             flex-direction: row !important
         }
-
+        .navbar-nav {
+            flex-direction: row !important
+        }
+        .navbar-brand {
+            float: left;
+            min-height: 55px;
+            padding: 0 15px 5px;
+        }
         .navbar-inverse .navbar-nav .active a,
         .navbar-inverse .navbar-nav .active a:focus,
         .navbar-inverse .navbar-nav .active a:hover {
             color: #FFF;
             background-color: #adc7c8;
         }
-
         .navbar-inverse .navbar-nav li a {
             color: #D5D5D5;
         }
-
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-
         .row.content {
             height: 1500px
         }
-
         /* Set gray background color and 100% height */
-
         .sidenav {
             background-color: #f1f1f1;
             height: 100%;
         }
-
         footer {
             width: 100%;
             background-color: #adc7c8;
             padding: 5%;
             color: #FFF;
         }
-
         .fa {
             padding: 15px;
             font-size: 25px;
             color: #FFF;
         }
-
         .fa:hover {
             color: #D5D5D5;
             text-decoration: none;
@@ -156,84 +164,28 @@
             font-size: 15px;
             border-radius: 8px;
         }
-
         .button:hover {
             background-color: #665b53;
+            /* Green */
             color: white;
         }
-
-        input[type=date]{
-            border: 1px solid #665b53;
-            border-radius: 5px;
-            padding: 2px;
-            margin: 3px 0;
-            font-family: 'Catamaran', sans-serif;
-            font-size: 1.0em;
-
-            display: inline-block;
-            box-sizing: border-box;
-        }
-
-        input[type=date]:focus {
-            border: 1px solid #665b53;
-            border-radius: 5px;
-            padding: 2px;
-            margin: 3px 0;
-            font-family: 'Catamaran', sans-serif;
-            font-size: 1.0em;
-
-            background-color: #adc7c8;
-        }
-
-        input[type=text], select {
-            border: 1px solid #665b53;
-            border-radius: 5px;
-            padding: 2px;
-            margin: 3px 0;
-            font-family: 'Catamaran', sans-serif;
-            font-size: 1.0em;
-
-            display: inline-block;
-            box-sizing: border-box;
-        }
-
-        input[type=submit] {
-            border: 1px solid #665b53;
-            border-radius: 5px;
-            padding: 5px;
-            margin: 3px 0;
-            font-family: 'Catamaran', sans-serif;
-            font-size: 1.0em;
-
-            background-color: #adc7c8;
-            color: black;
-            cursor: pointer;
-        }
-
         input[type=text]:focus {
-            border: 1px solid #665b53;
-            border-radius: 5px;
-            padding: 2px;
-            margin: 3px 0;
-            font-family: 'Catamaran', sans-serif;
-            font-size: 1.0em;
-
             background-color: #adc7c8;
+            border: 1px solid #665b53;
+            font-size: 1.0em;
+            font-family: 'Catamaran', sans-serif;
         }
-
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
                 padding: 10px;
             }
-
             /* On small screens, set height to 'auto' for sidenav and grid */
             @media screen and (max-width: 767px) {
                 .sidenav {
                     height: auto;
                     padding: 15px;
                 }
-
                 .row.content {
                     height: auto;
                 }
@@ -243,23 +195,41 @@
                     padding-top: 35px;
                     padding-bottom: 15px;
                 }
-
             }
         }
-
+        .div1 {
+            width: 500px;
+            height: 200px;
+            position: center;
+        }
         div2 {
             width: 500px;
             height: 200px;
             position: relative;
             background-color: #A5C663;
         }
-
-
+        #mNavbar {
+            position: sticky;
+        }
+        #budgetBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+        #guestBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-light navbar-fixed-top bg-light" id="mNavbar">
     <div class="container-fluid">
         <div class="navbar-header logga">
             <img class="logga" src="eventerlogga.png" />

@@ -25,10 +25,11 @@
         }
         .headerlinks:visited {
             text-decoration: none;
-            color: green;
+            /*color: green;*/
         }
         .headerlinks:hover {
             text-decoration: none;
+            background-color: #adc7c8 !important;
             color: #D9E5E5 !important;
         }
 
@@ -124,6 +125,7 @@
             background-color: #665b53;
             color: white;
             text-decoration: none;
+
         }
 
         .button2{
@@ -258,11 +260,21 @@
             position: relative;
             background-color: #A5C663;
         }
+                .whatever {
+
+                    opacity: 0.95;
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+
+                }
+        #mNavbar{
+            position: sticky;
+        }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-light navbar-fixed-top bg-light" id="mNavbar">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
@@ -284,7 +296,6 @@
 <!--NAV SLUTAR-->
 <div class="container-fluid">
     <div class="row content">
-        <body class="whatever" background="background1.png">  </body>
         <div class="col-sm-3 sidenav">
             <h3 th:text="'Welcome ' + ${session.user} + '!'"></h3>
             <ul class="nav nav-pills nav-stacked">
@@ -301,6 +312,7 @@
                         <tr height="30">
                             <td>Event date</td>
                             <td><input type="date" required="required" name="date" placeholder="Event date.."/></td>
+
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -316,7 +328,10 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
+
+                <body class="whatever" background="background1.png">  </body>
                 <h2>Your events</h2>
+
                 <p></p>
                 <div class="container" width="90%">
                     <div class="panel-group" id="accordion">
@@ -358,6 +373,7 @@
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                cellpadding="0">
                                             <tr>
+
                                                 <td class="collapseedit" width="48%" align="center">
                                                     <a class="button2" th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a></td>
                                                 <td width="12%">
@@ -380,8 +396,10 @@
                                                     <input type="hidden" name="userId" th:value="${session.userId}"/>
                                                     <input type="text" required="3" name="eventName" th:value="${event.name}"/>
                                                 </td>
+                                                <td>&nbsp;</td>
                                             </tr>
                                             <tr>
+
                                                 <td width="48%" align="center">
                                                     <a class="button2" th:href="@{'seatingarrangement?eventId=' + ${event.id}}">Seatingplan</a></td>
                                                 <td width="12%">
@@ -427,6 +445,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--brytkommentar-->
                 </div>
                 <!--brytkommentar-->
             </div>
