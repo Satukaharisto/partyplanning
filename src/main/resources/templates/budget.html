@@ -19,37 +19,46 @@
     <script src="guestscript.js"></script>
 
     <style>
+        .headerlinks {
+            text-decoration: none;
+            color: #665b53 !important;
+        }
+        .headerlinks:visited {
+            text-decoration: none;
+            color: green;
+        }
+        .headerlinks:hover {
+            text-decoration: none;
+            color: #D9E5E5 !important;
+        }
 
 
-        #collapseheader {
+        #collapseheader{
             background: #f0ad97 !important;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
             font-size: 18px;
             line-height: 1.42857143;
             color: #665b53;
         }
-
-        .panel-heading {
+        .panel-heading{
             background: #D9E5E5 !important;
         }
 
-        .collapseedit {
+        .collapseedit{
             width: 15%;
         }
 
-        .collapsetable {
+        .collapsetable{
             width: 100% !important
         }
-
-        .collapsetd {
+        .collapsetd{
             width: 14% !important;
         }
-
-        .collapsetdedit {
+        .collapsetdedit{
             width: 16% !important;
         }
 
-        .collapselinks {
+        .collapselinks{
             text-decoration: none !important;
             color: #665b53 !important;
         }
@@ -109,7 +118,6 @@
             color: #D5D5D5;
             text-decoration: none;
         }
-
         .button {
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
@@ -126,15 +134,66 @@
 
         .button:hover {
             background-color: #665b53;
-            /* Green */
             color: white;
         }
 
-        input[type=text]:focus {
-            background-color: #adc7c8;
+        input[type=date]{
             border: 1px solid #665b53;
-            font-size: 1.0em;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
             font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        input[type=date]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+        }
+
+        input[type=text], select {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+            color: black;
+            cursor: pointer;
+        }
+
+        input[type=text]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
         }
 
         @media (max-width: 900px) {
@@ -156,6 +215,7 @@
             }
         }
 
+
         div2 {
             width: 500px;
             height: 200px;
@@ -166,6 +226,7 @@
 
     </style>
 </head>
+
 
 <body>
 <nav class="navbar navbar-inverse">
@@ -181,23 +242,22 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a th:href="@{/event}">My events</a>
+                    <a class="headerlinks" th:href="@{/event}">My events</a>
                 </li>
                 <li>
-                    <a th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
+                    <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
                 </li>
                 <li>
-                    <a th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
+                    <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
                 </li>
                 <li class="active">
-                    <a th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
+                    <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
                 </li>
                 <li>
-                    <a th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
+                    <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
                 </li>
-
                 <li>
-                    <a th:href="@{/logout}">Logout</a>
+                    <a class="headerlinks" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>
@@ -272,7 +332,6 @@
                                     </a>
                                 </h4>
                             </div>
-
                             <div th:id="${item.id}" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <form method="post" action="/updateBudget">
