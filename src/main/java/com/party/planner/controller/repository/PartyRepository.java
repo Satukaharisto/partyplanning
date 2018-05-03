@@ -40,24 +40,6 @@ public class PartyRepository implements Repository {
         }
     }
 
-    @Override
-    public Integer checkLogin(String username, String password) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] , [Password] FROM [dbo].[User3] WHERE ([UserName] = (?) ) ")) {
-            ps.setString(1, username);
-            ResultSet results = ps.executeQuery();
-
-            if (results.next()) {
-                String hashedPassword = results.getString("Password");
-                if (BCrypt.checkpw(password, hashedPassword)) {
-                    return results.getInt("UserId");
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in checklogin - PartyRepository", e);
-        }
-    }
 
     @Override
     public int addGuest(int eventId, String firstname, String lastname, String email, String gender) {
@@ -196,7 +178,6 @@ public class PartyRepository implements Repository {
         }
     }
 
-
     @Override
     public void updateGuest(int eventId, int id, String firstname, String lastname, String email, String gender) {
         try (Connection conn = dataSource.getConnection();
@@ -270,6 +251,24 @@ public class PartyRepository implements Repository {
     }
 
     @Override
+    public void updateEvent(int eventId, String eventName, Date eventDate, int userId) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "UPDATE Event3 " +
+                             "SET EventName = (?), EventDate = (?), User_ID = (?) " +
+                             "WHERE EventID = (?) ", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, eventName);
+            ps.setDate(2, eventDate);
+            ps.setInt(3, userId);
+            ps.setInt(4, eventId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong in updateEvent - partyrepo", e);
+        }
+    }
+
+
+    @Override
     public void deleteBudget(int id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -306,6 +305,18 @@ public class PartyRepository implements Repository {
     }
 
     @Override
+    public void deleteFoodPreferenceByGuestId(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM FoodPreference3 WHERE Guest_ID = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteFoodPreference - Partyrepo", e);
+        }
+    }
+
+    @Override
     public void deleteGuest(int id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -316,6 +327,31 @@ public class PartyRepository implements Repository {
             throw new RepositoryExceptions("Something went wrong in deleteGuest - Partyrepo", e);
         }
     }
+
+    @Override
+    public void deleteGuestsByEventId(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Guest3 WHERE Event_ID = (?) ")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteGuestsByEventId - Partyrepo", e);
+        }
+    }
+
+    @Override
+    public void deleteEvent(int id) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM Event3 WHERE EventId = (?)")) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("Something went wrong in deleteEvent - Partyrepo", e);
+        }
+    }
+
 
     // LISTS
     @Override
@@ -446,7 +482,7 @@ public class PartyRepository implements Repository {
     @Override
     public List<Event> getEventList(int userId) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT EventID, EventName, EventDate from Event3\n " +
+             PreparedStatement ps = conn.prepareStatement("SELECT EventID, EventName, EventDate from Event3 " +
                      "WHERE User_ID = (?) ")) {
             ps.setInt(1, userId);
 
