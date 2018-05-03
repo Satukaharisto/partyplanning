@@ -5,7 +5,7 @@ let dragMoveListener = window.dragMoveListener = function (e) {
         x = (parseFloat(target.getAttribute('data-x')) || 0) + e.dx,
         y = (parseFloat(target.getAttribute('data-y')) || 0) + e.dy;
 
-    target.style.zIndex = 10; // bring dragged element to front
+    target.style.zIndex = 1000; // bring dragged element to front
 
     target.style.webkitTransform =
         target.style.transform =
@@ -14,6 +14,10 @@ let dragMoveListener = window.dragMoveListener = function (e) {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 };
+
+let add = function (node){
+    node.appendTo('.roundTable');
+}
 
 let cleanNode = function (node) {
     node.removeAttribute('data-x');
