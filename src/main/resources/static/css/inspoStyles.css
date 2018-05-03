@@ -207,9 +207,9 @@ footer {
 }
 
 .button:hover {
-    background-color: #665b53;
+
     /* Green */
-    color: white;
+
 }
 
 input[type=text]:focus {
