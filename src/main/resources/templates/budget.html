@@ -19,6 +19,10 @@
     <script src="guestscript.js"></script>
 
     <style>
+        .pricecolor{
+            color: #f0ad97;
+        }
+        
         .headerlinks {
             text-decoration: none;
             color: #665b53 !important;
@@ -32,10 +36,6 @@
             color: #D9E5E5 !important;
         }
 
-{
-
-
-}
         #collapseheader {
 
             background: #f0ad97 !important;
@@ -44,27 +44,17 @@
             line-height: 1.42857143;
             color: #665b53 !important;
         }
-
-
-.whatever {
-    
-    opacity: 0.95;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
-
-
-}
+        .whatever {
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
         .panel-heading {
-
-     
             background: #D9E5E5 !important;
         }
-
         .collapseedit{
             width: 15%;
         }
-
         .collapsetable{
             width: 100% !important
         }
@@ -86,8 +76,14 @@
             background-color: #adc7c8;
             color: #FFF;
             padding: 1% 0;
-            font-size: 1.2em;
+            font-size: 20px;
             border: 0;
+        }
+
+        .navbar-nav>li>a {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            line-height: 20px;
         }
 
         .navbar-nav {
@@ -230,8 +226,14 @@
                     height: auto;
                 }
             }
-        }
+            @media (min-width: 768px) {
+                .navbar-nav > li > a {
+                    padding-top: 35px;
+                    padding-bottom: 15px;
+                }
 
+            }
+        }
 
         div2 {
             width: 500px;
@@ -255,8 +257,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <img src="eventerlogga.png"/>
-        </div>
+            <img src="EVENTERLOGGA.png"/></div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -316,10 +317,7 @@
         <div class= "col-sm-9 unik" >
 
             <div class="container">
-
-                <!--<img src="pict3.png"/>-->
-                <h2>Your event budget</h2>
-                <p></p>
+                <h2>Your budget  -  Your current total is <span class="pricecolor" th:text="${total}"/></h2>
                 <div class="container" width="90%">
                     <div class="panel-group" id="accordion">
                         <div class="panel-heading" id="collapseheader">
@@ -400,7 +398,6 @@
                                 </div>
                             </div>
                         </div>
-                        <p><b>Total: <span th:text="${total}"/></b></p>
                     </div>
                 </div>
 

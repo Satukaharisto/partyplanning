@@ -28,7 +28,50 @@
         .headerlinks:hover {
             text-decoration: none;
             color: #D9E5E5 !important;
+
         }
+        #collapseheader {
+
+            background: #f0ad97 !important;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 18px;
+            line-height: 1.42857143;
+            color: #665b53 !important;
+        }
+
+
+        .whatever {
+
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+
+        }
+        .panel-heading {
+
+
+            background: #D9E5E5 !important;
+        }
+
+        .collapseedit{
+            width: 15%;
+        }
+
+        .collapsetable{
+            width: 100% !important
+        }
+        .collapsetd{
+            width: 14% !important;
+        }
+        .collapsetdedit{
+            width: 16% !important;
+        }
+
+        .collapselinks{
+            text-decoration: none !important;
+            color: #665b53 !important;
         .colTest {
             background-color: #adc7c8;
             color: black;
@@ -60,6 +103,7 @@
             overflow: hidden;
             transition: max-height 0.2s ease-out;
             background-color: #f1f1f1;
+
         }
         .navbar {
             margin-bottom: 0;
@@ -67,9 +111,17 @@
             background-color: #adc7c8;
             color: #FFF;
             padding: 1% 0;
-            font-size: 1.2em;
+            font-size: 20px;
             border: 0;
         }
+        .navbar-nav>li>a {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            line-height: 20px;
+        }
+
+        .navbar-nav {
+            flex-direction: row !important
         .navbar-nav {
             flex-direction: row !important
         }
@@ -135,6 +187,7 @@
             font-size: 1.0em;
             font-family: 'Catamaran', sans-serif;
         }
+
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
@@ -150,6 +203,14 @@
                     height: auto;
                 }
             }
+            @media (min-width: 768px) {
+                .navbar-nav > li > a {
+                    padding-top: 35px;
+                    padding-bottom: 15px;
+                }
+
+            }
+        }
         }
         .div1 {
             width: 500px;
