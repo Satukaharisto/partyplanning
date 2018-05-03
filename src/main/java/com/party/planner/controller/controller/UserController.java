@@ -64,19 +64,12 @@ public class UserController {
         List<Event> eventlist = repository.getEventList((int) session.getAttribute("userId"));
         return new ModelAndView("event").addObject("eventlist", eventlist);
     }
+    @GetMapping("/inspiration")
+    public ModelAndView listInspirationItems() {
 
-    @GetMapping("/usersite")
-    public ModelAndView secret(HttpSession session) {
-        if (session.getAttribute("user") != null) {
-            //session.getAttribute("user");
-            return new ModelAndView("usersite");
-        }
-        return new ModelAndView("login");
-    }
 
-    @PostMapping("/usersite")
-    public ModelAndView logoutUser() {
-        return new ModelAndView("index");
+        return new ModelAndView("inspiration")
+                .addObject("inspirationItems", repository.listInspiration());
     }
 
     @GetMapping("/logout")
@@ -219,11 +212,7 @@ public class UserController {
         return new ModelAndView("redirect:budget?eventId=" + eventId);
     }
 
-    @GetMapping("/inspiration")
-    public ModelAndView listInspirationItems() {
-        return new ModelAndView("inspiration")
-                .addObject("inspirationItems", repository.listInspiration());
-    }
+
 
     @GetMapping("/deleteBudget")
     public ModelAndView deleteBudget(@RequestParam int eventId, @RequestParam int id) {
