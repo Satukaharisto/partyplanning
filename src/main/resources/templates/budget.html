@@ -276,11 +276,11 @@
                         </tr>
                         <tr height="30">
                             <td>Item:</td>
-                            <td><input type="text" name="item" placeholder="item.."/></td>
+                            <td><input type="text" required="3" name="item" placeholder="item.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Price</td>
-                            <td><input type="text" name="price" placeholder="100...."/></td>
+                            <td><input type="text" required="1" name="price" placeholder="100...."/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -342,13 +342,13 @@
                                                 <td colspan="2">
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                     <input type="hidden" name="id" th:value="${item.Id}"/>
-                                                    <input type="text" name="item" placeholder="item.."/>
+                                                    <input type="text" required="2" name="item" placeholder="item.."/>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Price</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="price" placeholder="price.."/></td>
+                                                    <input type="text" required="3" name="price" placeholder="price.."/></td>
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>

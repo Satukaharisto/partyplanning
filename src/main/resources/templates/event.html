@@ -248,11 +248,11 @@
                         </tr>
                         <tr height="30">
                             <td>Event type:</td>
-                            <td><input type="text" name="name" placeholder="EventName.."/></td>
+                            <td><input type="text" name="name" required="3" placeholder="EventName.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Event date</td>
-                            <td><input type="date"  name="date" placeholder="EventDate.."/></td>
+                            <td><input type="date" required="required" name="date" placeholder="EventDate.."/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -326,7 +326,7 @@
                                                    <td>
                                                        <input type="hidden" name="eventId" th:value="${event.id}"/>
                                                        <input type="hidden" name="userId" th:value="${session.userId}"/>
-                                                       <input type="text" name="eventName" placeholder="Edit event name.."/>
+                                                       <input type="text" required="3" name="eventName" placeholder="Edit event name.."/>
                                                    </td>
                                                    <td>&nbsp;</td>
                                                </tr>
@@ -337,7 +337,7 @@
                                                    <td width="212">
                                                        Edit date</td>
                                                    <td>
-                                                       <input type="date" name="eventDate" placeholder="Change date.."/>
+                                                       <input type="date" required="required" name="eventDate" placeholder="Change date.."/>
                                                    </td>
                                                    <td>&nbsp;</td>
 
