@@ -32,15 +32,32 @@
             color: #D9E5E5 !important;
         }
 
+{
 
-        #collapseheader{
+
+}
+        #collapseheader {
+
             background: #f0ad97 !important;
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
             font-size: 18px;
             line-height: 1.42857143;
-            color: #665b53;
+            color: #665b53 !important;
         }
-        .panel-heading{
+
+
+.whatever {
+    
+    opacity: 0.95;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+
+
+}
+        .panel-heading {
+
+     
             background: #D9E5E5 !important;
         }
 
@@ -224,11 +241,12 @@
         }
 
 
-    </style>
+       </style>
 </head>
 
 
 <body>
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -266,6 +284,7 @@
 <!--NAV SLUTAR-->
 <div class="container-fluid">
     <div class="row content">
+        <body class="whatever" background="background.png">  </body>
         <div class="col-sm-3 sidenav">
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/budget">
@@ -294,8 +313,11 @@
                 </form>
             </ul>
         </div>
-        <div class="col-sm-9">
+        <div class= "col-sm-9 unik" >
+
             <div class="container">
+
+                <!--<img src="pict3.png"/>-->
                 <h2>Your event budget</h2>
                 <p></p>
                 <div class="container" width="90%">
@@ -334,6 +356,7 @@
                             </div>
                             <div th:id="${item.id}" class="panel-collapse collapse">
                                 <div class="panel-body">
+
                                     <form method="post" action="/updateBudget">
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                cellpadding="0">
@@ -380,6 +403,7 @@
                         <p><b>Total: <span th:text="${total}"/></b></p>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

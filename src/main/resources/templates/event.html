@@ -208,6 +208,28 @@
             position: relative;
             background-color: #A5C663;
         }
+
+        #budgetBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+        #guestBox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: inherit;
+        }
+        .whatever{
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+
     </style>
 </head>
 
@@ -268,6 +290,21 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
+
+                <body class="whatever" background="background.png">  </body>
+                <h2>Events</h2>
+                <div th:each="event : ${eventlist}">
+                    <button class="colTest">
+                        <span th:text="${event.name}"></span>
+                        <span th:text="${event.date}"></span>
+
+                    
+                        </button>
+                        <div class="colTestEdit">
+                            <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                            <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+                            <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+
                 <h2>Your Events</h2>
                 <p></p>
                 <div class="container" width="90%">
@@ -284,6 +321,7 @@
                                     <td class="collapsetdedit">&nbsp;</td>
                                 </tr>
                             </table>
+
                         </div>
                         <div class="panel panel-default" th:each="event : ${eventlist}">
                             <div class="panel-heading">
