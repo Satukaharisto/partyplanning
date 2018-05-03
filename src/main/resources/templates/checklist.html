@@ -19,6 +19,10 @@
     <script src="guestscript.js"></script>
 
     <style>
+        .pricecolor{
+            color: #f0ad97;
+        }
+
         .headerlinks {
             text-decoration: none;
             color: #665b53 !important;
@@ -33,15 +37,32 @@
             color: #D9E5E5 !important;
         }
 
+        {
 
-        #collapseheader{
+
+        }
+        #collapseheader {
+
             background: #f0ad97 !important;
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
             font-size: 18px;
             line-height: 1.42857143;
-            color: #665b53;
+            color: #665b53 !important;
         }
-        .panel-heading{
+
+
+        .whatever {
+
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+
+        }
+        .panel-heading {
+
+
             background: #D9E5E5 !important;
         }
 
@@ -70,8 +91,14 @@
             background-color: #adc7c8;
             color: #FFF;
             padding: 1% 0;
-            font-size: 1.2em;
+            font-size: 20px;
             border: 0;
+        }
+
+        .navbar-nav>li>a {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            line-height: 20px;
         }
 
         .navbar-nav {
@@ -197,6 +224,7 @@
 
             background-color: #adc7c8;
         }
+
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
@@ -214,8 +242,14 @@
                     height: auto;
                 }
             }
-        }
+            @media (min-width: 768px) {
+                .navbar-nav > li > a {
+                    padding-top: 35px;
+                    padding-bottom: 15px;
+                }
 
+            }
+        }
 
         div2 {
             width: 500px;
@@ -225,14 +259,15 @@
         }
 
 
+
         .whatever {
             opacity: 0.95;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
-#mNavbar{
-    position: sticky;
-}
+        #mNavbar{
+            position: sticky;
+        }
     </style>
 </head>
 
@@ -248,50 +283,50 @@
             </button>
             <img src="eventerlogga.png"/>
         </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="headerlinks" th:href="@{/event}">My events</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
-                    </li>
-                    <li class="active">
-                        <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
-                    </li>
-                    <li>
-                        <a class="headerlinks" th:href="@{/logout}">Logout</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="headerlinks" th:href="@{/event}">My events</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
+                </li>
+                <li class="active">
+                    <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
+                </li>
+                <li>
+                    <a class="headerlinks" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
         </div>
+    </div>
 </nav>
 <!--NAV SLUTAR-->
 <div class="container-fluid">
     <div class="row content">
-
+        <body class="whatever" background="background1.png">  </body>
 
         <div class="col-sm-3 sidenav">
             <ul class="nav nav-pills nav-stacked">
-                 <form method="post" action="/checklist">
+                <form method="post" action="/checklist">
                     <table width="320">
                         <tr class="paddingtoimput">
                             <td><input type="hidden" name="eventId" th:value="${eventId}"/></td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr height="30">
-                            <td>Add todo:</td>
-                            <td><input type="text" name="toDo" placeholder="Todo.."/></td>
+                            <td>Add task</td>
+                            <td><input type="text" required="2" name="toDo" placeholder="Task.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Due date</td>
-                            <td><input type="date" name="date"/></td>
+                            <td><input type="date" required="required" name="date"/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -299,7 +334,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input class="button" type="submit" value="add new todo" /></td>
+                            <td><input class="button" type="submit" value="Add new task" /></td>
                         </tr>
                     </table>
                 </form>
@@ -309,11 +344,7 @@
             <body class="whatever" background="background1.png">  </body>
             <div class="container">
 
-
-                <h2>Checklist</h2>
-                <p></p>
-
-                <h2>Your event Checklist</h2>
+                <h2>Your event checklist</h2>
 
                 <p></p>
                 <div class="container" width="90%">
@@ -321,8 +352,8 @@
                         <div class="panel-heading" id="collapseheader">
                             <table class="collapsetable">
                                 <tr>
-                                    <td class="collapsetd">Due Date</td>
-                                    <td class="collapsetd">Todo</td>
+                                    <td class="collapsetd">Due date</td>
+                                    <td class="collapsetd">Things to do</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
@@ -334,18 +365,18 @@
                         <div class="panel panel-default" th:each="toDo : ${checklist}">
                             <div class="panel-heading">
                                 <h4>
-                        <a class="collapselinks" data-toggle="collapse" th:href="'#' + ${toDo.Id}">
-                            <table class="collapsetable">
-                                <tr>
-                                    <td class="collapsetd" th:text="${toDo.date}"></td>
-                                    <td class="collapsetd" th:text="${toDo.toDo}"></td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
-                                    <td class="collapsetd">&nbsp;</td>
+                                    <a class="collapselinks" data-toggle="collapse" th:href="'#' + ${toDo.Id}">
+                                        <table class="collapsetable">
+                                            <tr>
+                                                <td class="collapsetd" th:text="${toDo.date}"></td>
+                                                <td class="collapsetd" th:text="${toDo.toDo}"></td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
+                                                <td class="collapsetd">&nbsp;</td>
 
-                                    <td class="collapsetdedit"><b>EDIT</b></td>
+                                                <td class="collapsetdedit"><b>EDIT</b></td>
                                             </tr>
                                         </table>
                                     </a>
@@ -357,19 +388,18 @@
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                cellpadding="0">
                                             <tr>
-                                                <td class="collapseedit">ToDo</td>
+                                                <td class="collapseedit">Task</td>
                                                 <td colspan="2">
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                     <input type="hidden" name="id" th:value="${toDo.Id}"/>
-                                                    <input type="text" name="toDo" placeholder="toDo.."/>
-
+                                                    <input type="text" required="2" name="toDo" th:value="${toDo.toDo}"/>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
                                                 <td colspan="2">
-                                                    <input type="date" name="date" placeholder="Change date.."/></td>
 
+                                                    <input type="date" name="date" required="required"/></td>
 
                                             </tr>
                                             <tr>
@@ -377,21 +407,23 @@
                                                 <td colspan="2">&nbsp;</td>
                                             </tr>
                                             <!--HÄR ÄR EDIT OCH DELETE-->
-                                            <tr height="50">
-                                                <td align="top">
+                                            <tr height="60">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="post" action="/updateChecklist">
+                                                        <input class="button" type="submit" value="Edit task"/>
+                                                        <input type="hidden"/>
+                                                        <input type="hidden"/>
 
-                                                        <input class="button" type="submit" value="edit todo"/>
                                                     </form>
                                                 </td>
-
-                                                <td align="top">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="get" action="/deleteChecklist">
-                                                        <input class="button" type="submit" value="Delete item"/>
+                                                        <input class="button" type="submit" value="Delete task"/>
                                                         <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                         <input type="hidden" name="id" th:value="${toDo.id}"/>
                                                     </form>
                                                 </td>
+                                                <td width="70%" height="60">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </form>

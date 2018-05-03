@@ -19,6 +19,10 @@
     <script src="guestscript.js"></script>
 
     <style>
+        .pricecolor{
+            color: #f0ad97;
+        }
+
         .headerlinks {
             text-decoration: none;
             color: #665b53 !important;
@@ -33,14 +37,32 @@
             color: #D9E5E5 !important;
         }
 
-        #collapseheader{
+        {
+
+
+        }
+        #collapseheader {
+
             background: #f0ad97 !important;
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
             font-size: 18px;
             line-height: 1.42857143;
-            color: #665b53;
+            color: #665b53 !important;
         }
-        .panel-heading{
+
+
+        .whatever {
+
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+
+        }
+        .panel-heading {
+
+
             background: #D9E5E5 !important;
         }
 
@@ -69,8 +91,14 @@
             background-color: #adc7c8;
             color: #FFF;
             padding: 1% 0;
-            font-size: 1.2em;
+            font-size: 20px;
             border: 0;
+        }
+
+        .navbar-nav>li>a {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            line-height: 20px;
         }
 
         .navbar-nav {
@@ -195,6 +223,7 @@
 
             background-color: #adc7c8;
         }
+
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
@@ -212,8 +241,14 @@
                     height: auto;
                 }
             }
-        }
+            @media (min-width: 768px) {
+                .navbar-nav > li > a {
+                    padding-top: 35px;
+                    padding-bottom: 15px;
+                }
 
+            }
+        }
 
         div2 {
             width: 500px;
@@ -221,13 +256,8 @@
             position: relative;
             background-color: #A5C663;
         }
-        .whatever {
 
-            opacity: 0.95;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-
-        }
+        
         #mNavbar{
             position: sticky;
         }
@@ -266,23 +296,24 @@
 </nav>
 <div class="container-fluid">
     <div class="row content">
+        <body class="whatever" background="background1.png">  </body>
         <div class="col-sm-3 sidenav">
             <ul class="nav nav-pills nav-stacked">
 
 
                 <form method="post" action="/guestlist">
-                    <table width="320">
+                    <table width="350">
                         <tr class="paddingtoimput">
                             <td><input type="hidden" name="eventId" th:value="${eventId}"/></td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr height="30">
-                            <td>Firstname:</td>
-                            <td><input type="text" name="firstname" placeholder="Firstname.."/></td>
+                            <td>First name</td>
+                            <td><input type="text" required="2" name="firstname" placeholder="First name.."/></td>
                         </tr>
                         <tr height="30">
-                            <td>Lastname</td>
-                            <td><input type="text" name="lastname" placeholder="Lastname.."/></td>
+                            <td>Last name</td>
+                            <td><input type="text" required="2" name="lastname" placeholder="Last name.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Email</td>
@@ -304,11 +335,11 @@
                         </tr>
                         <tr height="30">
                             <td>Allergy</td>
-                            <td><input type="text" name="allergy" placeholder="allergy.."/></td>
+                            <td><input type="text" name="allergy" placeholder="Allergy.."/></td>
                         </tr>
                         <tr height="30">
-                            <td>Foodpref</td>
-                            <td><input type="text" name="foodPreference" placeholder="foodpref.."/></td>
+                            <td>Food preference</td>
+                            <td><input type="text" name="foodPreference" placeholder="Food preference.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Alcohol</td>
@@ -344,9 +375,9 @@
                                     <td class="collapsetd">First name</td>
                                     <td class="collapsetd">Last name</td>
                                     <td class="collapsetd">Gender</td>
-                                    <td class="collapsetd">FoodPreference</td>
+                                    <td class="collapsetd">Food preference</td>
                                     <td class="collapsetd">Allergies</td>
-                                    <td class="collapsetd">Drinks Alcohol</td>
+                                    <td class="collapsetd">Drinks alcohol</td>
                                     <td class="collapsetdedit">&nbsp;</td>
                                 </tr>
                             </table>
@@ -376,21 +407,21 @@
                                         <p th:text="${guest.email}"></p>
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1" cellpadding="0">
                                             <tr>
-                                                <td class="collapseedit">Firstname</td>
+                                                <td class="collapseedit">First name</td>
                                                 <td colspan="2">
                                                     <input type="hidden" name="guestId" th:value="${guest.id}"/>
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
-                                                    <input type="text" name="firstname" placeholder="Firstname.."/></td>
+                                                    <input type="text" required="3" name="firstname" th:value="${guest.firstname}"/></td>
                                             </tr>
                                             <tr>
-                                                <td>Lastname</td>
+                                                <td>Last name</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="lastname" placeholder="Lastname.."/></td>
+                                                    <input type="text" required="3" name="lastname" th:value="${guest.lastname}"/></td>
                                             </tr>
                                             <tr>
                                                 <td>Email</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="email" placeholder="Email.."/>
+                                                    <input type="text" name="email" th:value="${guest.email}"/>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -410,13 +441,13 @@
                                             <tr>
                                                 <td>Allergy</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="allergy" placeholder="Gluten.."/></td>
+                                                    <input type="text" name="allergy" th:value="${guest.allergy}"/></td>
                                             </tr>
                                             <tr>
-                                                <td>Foodpreference</td>
+                                                <td>Food preference</td>
                                                 <td colspan="2">
                                                     <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
-                                                    <input type="text" name="foodPreference" placeholder="Vegan.."/></td>
+                                                    <input type="text" name="foodPreference" th:value="${guest.foodPreference}"/></td>
                                             </tr>
                                             <tr>
                                                 <td>Alcohol</td>
@@ -433,14 +464,15 @@
 
                                             <td>&nbsp;</td>
                                             <td colspan="2">&nbsp;</td>
-                                            <tr height="50">
-                                                <td align="top">
+                                            <tr height="60">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="get" action="/updateGuest">
                                                         <input class="button" type="submit" value="Edit Guest"/>
+                                                        <input type="hidden"/>
+                                                        <input type="hidden"/>
                                                     </form>
-                                                    <p></p>
                                                 </td>
-                                                <td align="top">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="get" action="/deleteGuest">
                                                         <input class="button" type="submit" value="Delete Guest"/>
                                                         <input type="hidden" name="eventId" th:value="${eventId}"/>
@@ -448,7 +480,7 @@
                                                         <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
                                                     </form>
                                                 </td>
-                                                <td width="70%">&nbsp;</td>
+                                                <td width="70%" height="60">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </form>

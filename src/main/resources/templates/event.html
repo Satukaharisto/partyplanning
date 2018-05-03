@@ -33,7 +33,6 @@
             color: #D9E5E5 !important;
         }
 
-
         #collapseheader{
             background: #f0ad97 !important;
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -126,8 +125,33 @@
             background-color: #665b53;
             color: white;
             text-decoration: none;
+
         }
 
+        .button2{
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            background-color: #adc7c8;
+            color: black;
+            text-align: center;
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 5px;
+            font-weight: 400;
+            width: 80%;
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            font-family: 'Catamaran', sans-serif;
+            cursor: pointer;
+            text-decoration: none !important;
+            position: center;
+        }
+
+        .button2:hover{
+            background-color: #665b53;
+            color: white;
+            text-decoration: none;
+        }
         input[type=date]{
             border: 1px solid #665b53;
             border-radius: 5px;
@@ -186,20 +210,47 @@
 
             background-color: #adc7c8;
         }
+
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: #adc7c8;
+            color: #FFF;
+            padding: 1% 0;
+            font-size: 20px;
+            border: 0;
+        }
+
+        .navbar-nav>li>a {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            line-height: 20px;
+        }
+
+
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
                 padding: 10px;
             }
+
             /* On small screens, set height to 'auto' for sidenav and grid */
             @media screen and (max-width: 767px) {
                 .sidenav {
                     height: auto;
                     padding: 15px;
                 }
+
                 .row.content {
                     height: auto;
                 }
+            }
+            @media (min-width: 768px) {
+                .navbar-nav > li > a {
+                    padding-top: 35px;
+                    padding-bottom: 15px;
+                }
+
             }
         }
 
@@ -209,13 +260,13 @@
             position: relative;
             background-color: #A5C663;
         }
-        .whatever {
+                .whatever {
 
-            opacity: 0.95;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+                    opacity: 0.95;
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
 
-        }
+                }
         #mNavbar{
             position: sticky;
         }
@@ -236,9 +287,6 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="headerlinks" th:href="@{/event}">My events</a>
-                </li>
-                <li>
                     <a class="headerlinks" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
@@ -249,7 +297,7 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
-            <h3 th:text="'Welcome ' + ${session.user}"></h3>
+            <h3 th:text="'Welcome ' + ${session.user} + '!'"></h3>
             <ul class="nav nav-pills nav-stacked">
                 <form method="post" action="/event">
                     <table width="320">
@@ -258,12 +306,13 @@
                             <td>&nbsp;</td>
                         </tr>
                         <tr height="30">
-                            <td>Event type:</td>
-                            <td><input type="text" name="name" required="3" placeholder="EventName.."/></td>
+                            <td>Event name</td>
+                            <td><input type="text" name="name" required="3" placeholder="Event name.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Event date</td>
-                            <td><input type="date" required="required" name="date" placeholder="EventDate.."/></td>
+                            <td><input type="date" required="required" name="date" placeholder="Event date.."/></td>
+
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -271,7 +320,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input class="button" type="submit" value="add new event" /></td>
+                            <td><input class="button" type="submit" value="Add new event" /></td>
                         </tr>
                     </table>
                 </form>
@@ -279,16 +328,18 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
+
                 <body class="whatever" background="background1.png">  </body>
-                <h2>Your Events</h2>
+                <h2>Your events</h2>
+
                 <p></p>
                 <div class="container" width="90%">
                     <div class="panel-group" id="accordion">
                         <div class="panel-heading" id="collapseheader">
                             <table class="collapsetable">
                                 <tr>
-                                    <td class="collapsetd">Event Date</td>
-                                    <td class="collapsetd">Event Name</td>
+                                    <td class="collapsetd">Event date</td>
+                                    <td class="collapsetd">Event name</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
@@ -322,64 +373,71 @@
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                cellpadding="0">
                                             <tr>
-                                                <td class="collapseedit" width="50%">&nbsp;</td>
-                                                <td width="212">
+
+                                                <td class="collapseedit" width="48%" align="center">
+                                                    <a class="button2" th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a></td>
+                                                <td width="12%">
                                                     &nbsp;</td>
-                                                <td>
+                                                <td colspan="2">
                                                     &nbsp;</td>
-                                                <td>&nbsp;</td>
+                                                <td width="15%">&nbsp;</td>
                                             </tr>
                                             <tr>
-                                                <td class="collapseedit" width="50%">
-                                                    <a class="button" th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                                                <td class="collapseedit" width="48%" align="center">
+                                                    <a class="button2" th:href="@{'budget?eventId=' + ${event.id}}">Budget</a></td>
+                                                <td width="12%">
+                                                    &nbsp;
                                                 </td>
-                                                <td width="212">
-                                                    Edit eventname</td>
-                                                <td>
+                                                <td colspan="2">
+                                                    Edit eventname
+                                                </td>
+                                                <td width="15%">
                                                     <input type="hidden" name="eventId" th:value="${event.id}"/>
                                                     <input type="hidden" name="userId" th:value="${session.userId}"/>
-                                                    <input type="text" required="3" name="eventName" placeholder="Edit event name.."/>
+                                                    <input type="text" required="3" name="eventName" th:value="${event.name}"/>
                                                 </td>
                                                 <td>&nbsp;</td>
                                             </tr>
                                             <tr>
-                                                <td width="50%">
-                                                    <a class="button" th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+
+                                                <td width="48%" align="center">
+                                                    <a class="button2" th:href="@{'seatingarrangement?eventId=' + ${event.id}}">Seatingplan</a></td>
+                                                <td width="12%">
+                                                    &nbsp;
                                                 </td>
-                                                <td width="212">
-                                                    Edit date</td>
-                                                <td>
+                                                <td colspan="2">
+                                                    Edit date
+                                                </td>
+                                                <td width="15%">
                                                     <input type="date" required="required" name="eventDate" placeholder="Change date.."/>
                                                 </td>
-                                                <td>&nbsp;</td>
 
                                             </tr>
                                             <tr>
-                                                <td width="50%">
-                                                    <a class="button" th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+                                                <td width="48%" align="center">
+                                                    <a class="button2" th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
                                                 </td>
-                                                <td width="212">&nbsp;</td>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
-                                            </tr>
-                                            <!--HÄR ÄR EDIT OCH DELETE-->
-                                            <tr height="50">
-                                                <td align="top" width="50%">
-                                                    &nbsp;</td>
-
-                                                <td align="top" width="212">&nbsp;</td>
-                                                <td align="center" height="60">
+                                                <td width="12%">&nbsp;</td>
+                                                <td rowspan="2" width="12%">&nbsp;
+                                                </td>
+                                                <td rowspan="2" width="10%">
                                                     <form method="post" action="/updateEvent">
                                                         <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                                        <input class="button" type="submit" value="edit todo" style="float: left"/>
+                                                        <input class="button" type="submit" value="Edit event" style="float: left"/>
                                                     </form>
                                                 </td>
-                                                <td align="center" height="60">
+                                                <td width="15%" rowspan="2">
                                                     <form method="get" action="/deleteEvent">
                                                         <input type="hidden" name="id" th:value="${event.id}"/>
                                                         <input class="button" type="submit" value="Delete event" style="float: left"/>
                                                     </form>
                                                 </td>
+                                            </tr>
+                                            <!--HÄR ÄR EDIT OCH DELETE-->
+                                            <tr height="50">
+                                                <td align="center" width="48%" height="25">
+                                                    &nbsp;</td>
+                                                <td align="top" width="12%" height="25">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </form>
@@ -389,6 +447,7 @@
                     </div>
                     <!--brytkommentar-->
                 </div>
+                <!--brytkommentar-->
             </div>
         </div>
     </div>
