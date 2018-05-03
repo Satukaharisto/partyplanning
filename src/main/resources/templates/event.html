@@ -49,7 +49,7 @@
         }
 
         .collapsetable{
-            width: 100% !important
+            width: 90% !important
         }
         .collapsetd{
             width: 14% !important;
@@ -62,7 +62,6 @@
             text-decoration: none !important;
             color: #665b53 !important;
         }
-
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
@@ -72,53 +71,42 @@
             font-size: 1.2em;
             border: 0;
         }
-
         .navbar-nav {
             flex-direction: row !important
         }
-
         .navbar-inverse .navbar-nav .active a,
         .navbar-inverse .navbar-nav .active a:focus,
         .navbar-inverse .navbar-nav .active a:hover {
             color: #FFF;
             background-color: #adc7c8;
         }
-
         .navbar-inverse .navbar-nav li a {
             color: #D5D5D5;
         }
-
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-
         .row.content {
             height: 1500px
         }
-
         /* Set gray background color and 100% height */
-
         .sidenav {
             background-color: #f1f1f1;
             height: 100%;
         }
-
         footer {
             width: 100%;
             background-color: #adc7c8;
             padding: 5%;
             color: #FFF;
         }
-
         .fa {
             padding: 15px;
             font-size: 25px;
             color: #FFF;
         }
-
         .fa:hover {
             color: #D5D5D5;
             text-decoration: none;
         }
-
         .button {
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
@@ -132,51 +120,46 @@
             font-size: 15px;
             border-radius: 8px;
         }
-
         .button:hover {
             background-color: #665b53;
             /* Green */
             color: white;
         }
-
         input[type=text]:focus {
             background-color: #adc7c8;
             border: 1px solid #665b53;
             font-size: 1.0em;
             font-family: 'Catamaran', sans-serif;
         }
-
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
                 padding: 10px;
             }
-
             /* On small screens, set height to 'auto' for sidenav and grid */
             @media screen and (max-width: 767px) {
                 .sidenav {
                     height: auto;
                     padding: 15px;
                 }
-
                 .row.content {
                     height: auto;
                 }
             }
         }
-
-
+        .div1 {
+            width: 500px;
+            height: 200px;
+            position: center;
+        }
         div2 {
             width: 500px;
             height: 200px;
             position: relative;
             background-color: #A5C663;
         }
-
-
     </style>
 </head>
-
 
 <body>
 <nav class="navbar navbar-inverse">
@@ -195,18 +178,6 @@
                     <a class="headerlinks" th:href="@{/event}">My events</a>
                 </li>
                 <li>
-                    <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
-                </li>
-                <li>
-                    <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
-                </li>
-                <li class="active">
-                    <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
-                </li>
-                <li>
-                    <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
-                </li>
-                <li>
                     <a class="headerlinks" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
@@ -216,21 +187,26 @@
 <!--NAV SLUTAR-->
 <div class="container-fluid">
     <div class="row content">
+
+
         <div class="col-sm-3 sidenav">
+            <h3 th:text="'Welcome ' + ${session.user}"></h3>
             <ul class="nav nav-pills nav-stacked">
-                <form method="post" action="/budget">
+
+
+                <form method="post" action="/event">
                     <table width="320">
                         <tr class="paddingtoimput">
-                            <td><input type="hidden" name="eventId" th:value="${eventId}"/></td>
+                            <td><input type="hidden" name="userId"/></td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr height="30">
-                            <td>Item:</td>
-                            <td><input type="text" name="item" placeholder="item.."/></td>
+                            <td>Event type:</td>
+                            <td><input type="text" name="name" placeholder="EventName.."/></td>
                         </tr>
                         <tr height="30">
-                            <td>Price</td>
-                            <td><input type="text" name="price" placeholder="100...."/></td>
+                            <td>Event date</td>
+                            <td><input type="date"  name="date" placeholder="EventDate.."/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -238,7 +214,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input class="button" type="submit" value="Add new item"/></td>
+                            <td><input class="button" type="submit" value="add new event" /></td>
                         </tr>
                     </table>
                 </form>
@@ -246,15 +222,15 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
-                <h2>Your event budget</h2>
+                <h2>Your Events</h2>
                 <p></p>
                 <div class="container" width="90%">
                     <div class="panel-group" id="accordion">
                         <div class="panel-heading" id="collapseheader">
                             <table class="collapsetable">
                                 <tr>
-                                    <td class="collapsetd">Item</td>
-                                    <td class="collapsetd">Budget</td>
+                                    <td class="collapsetd">Event Date</td>
+                                    <td class="collapsetd">Event Name</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
@@ -263,14 +239,14 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="panel panel-default" th:each="item : ${budgetList}">
+                        <div class="panel panel-default" th:each="event : ${eventlist}">
                             <div class="panel-heading">
                                 <h4>
-                                    <a class="collapselinks" data-toggle="collapse" th:href="'#' + ${item.id}">
+                                    <a class="collapselinks" data-toggle="collapse" th:href="'#' + ${event.Id}">
                                         <table class="collapsetable">
                                             <tr>
-                                                <td class="collapsetd" th:text="${item.item}"></td>
-                                                <td class="collapsetd" th:text="${item.price}"></td>
+                                                <td class="collapsetd" th:text="${event.date}"></td>
+                                                <td class="collapsetd" th:text="${event.name}"></td>
                                                 <td class="collapsetd">&nbsp;</td>
                                                 <td class="collapsetd">&nbsp;</td>
                                                 <td class="collapsetd">&nbsp;</td>
@@ -282,50 +258,55 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div th:id="${item.id}" class="panel-collapse collapse">
+                            <div th:id="${event.id}" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <form method="post" action="/updateBudget">
+                                    <form method="post" action="/updateEvent">
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                cellpadding="0">
                                             <tr>
-                                                <td class="collapseedit">Item</td>
+                                                <td class="collapseedit">Event</td>
                                                 <td colspan="2">
-                                                    <input type="hidden" name="eventId" th:value="${eventId}"/>
-                                                    <input type="hidden" name="id" th:value="${item.Id}"/>
-                                                    <input type="text" name="item" placeholder="item.."/>
+                                                    <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                                    <input type="hidden" name="userId" th:value="${session.userId}"/>
+                                                    <input type="text" name="eventName" placeholder="Edit event name.."/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Price</td>
+                                                <td>Date</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="price" placeholder="price.."/></td>
+                                                    <input type="date" name="eventDate" placeholder="Change date.."/></td>
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td colspan="2">&nbsp;</td>
                                             </tr>
-                                <!--HÄR ÄR EDIT OCH DELETE-->
-    <tr height="50">
-    <td align="top">
-        <form method="post" action="/updateBudget">
-        <input class="button" type="submit" value="edit item"/>
-        </form>
-        </td>
+                                            <!--HÄR ÄR EDIT OCH DELETE-->
+                                            <tr height="50">
+                                                <td align="top">
+                                                    <form method="post" action="/updateEvent">
+                                                        <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                                        <input class="button" type="submit" value="edit todo"/>
+                                                    </form>
+                                                </td>
 
-             <td align="top">
-                 <form method="get" action="/deleteBudget">
-                     <input class="button" type="submit" value="Delete item"/>
-                     <input type="hidden" name="eventId" th:value="${eventId}"/>
-                     <input type="hidden" name="id" th:value="${item.id}"/>
-                 </form>
-             </td>
+                                                <td align="top">
+                                                    <form method="get" action="/deleteEvent">
+                                                        <input class="button" type="submit" value="Delete event"/>
+                                                        <input type="hidden" name="id" th:value="${event.id}"/>
+                                                    </form>
+                                                </td>
                                             </tr>
                                         </table>
                                     </form>
                                 </div>
+                                <div class="colTestEdit">
+                                    <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                                    <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+                                    <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+                                </div>
                             </div>
                         </div>
-                        <p><b>Total: <span th:text="${total}"/></b></p>
+                        <!--brytkommentar-->
                     </div>
                 </div>
             </div>
@@ -333,26 +314,25 @@
     </div>
 </div>
 
-<footer class="container-fluid text-center">
-    <div class="row">
-        <div class="col-sm-2">
+    <footer class="container-fluid text-center">
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-4">
+                <h3>Contact Us</h3>
+                <br/>
+                <h4>Our address and contact info here.</h4>
+            </div>
+            <div class="col-sm-4">
+                <h3>Connect</h3>
+                <a href="#" class="fa fa-facebook"></a>
+                <a href="#" class="fa fa-twitter"></a>
+                <a href="#" class="fa fa-google"></a>
+                <a href="#" class="fa fa-linkedin"></a>
+                <a href="#" class="fa fa-youtube"></a>
+            </div>
+        </div>
+    </footer>
 
-        </div>
-        <div class="col-sm-4">
-            <h3>Contact Us</h3>
-            <br/>
-            <h4>Our address and contact info here.</h4>
-        </div>
-        <div class="col-sm-4">
-            <h3>Connect</h3>
-            <a href="#" class="fa fa-facebook"></a>
-            <a href="#" class="fa fa-twitter"></a>
-            <a href="#" class="fa fa-google"></a>
-            <a href="#" class="fa fa-linkedin"></a>
-            <a href="#" class="fa fa-youtube"></a>
-        </div>
-
-    </div>
-</footer>
 </body>
 </html>

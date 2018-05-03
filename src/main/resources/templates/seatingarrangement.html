@@ -17,6 +17,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
     <style>
+
+        .headerlinks {
+            text-decoration: none;
+            color: #665b53 !important;
+        }
+        .headerlinks:visited {
+            text-decoration: none;
+            color: green;
+        }
+        .headerlinks:hover {
+            text-decoration: none;
+            color: #D9E5E5 !important;
+        }
+
         .colTest {
             background-color: #adc7c8;
             color: black;
@@ -202,22 +216,22 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a th:href="@{/usersite}">Home</a>
+                    <a class="headerlinks" th:href="@{/event}">My events</a>
                 </li>
                 <li>
-                    <a th:href="@{/guestlist}">Guestlist</a>
+                    <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
                 </li>
                 <li class="active">
-                    <a th:href="@{/seatingarrangement}">Seating</a>
+                    <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
                 </li>
                 <li>
-                    <a th:href="@{/budget}">Budget</a>
+                    <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
                 </li>
                 <li>
-                    <a th:href="@{/checklist}">Checklist</a>
+                    <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
                 </li>
                 <li>
-                    <a th:href="@{/logout}">Logout</a>
+                    <a class="headerlinks" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>

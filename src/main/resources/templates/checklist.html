@@ -1,17 +1,68 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
-
-<body lang="en">
-
 <head>
     <title>Event planner</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <meta charset="utf-8" colTestEdit="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="guestscript.js"></script>
+
     <style>
+        .headerlinks {
+            text-decoration: none;
+            color: #665b53 !important;
+        }
+        .headerlinks:visited {
+            text-decoration: none;
+            color: green;
+        }
+        .headerlinks:hover {
+            text-decoration: none;
+            color: #D9E5E5 !important;
+        }
+
+
+        #collapseheader{
+            background: #f0ad97 !important;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 18px;
+            line-height: 1.42857143;
+            color: #665b53;
+        }
+        .panel-heading{
+            background: #D9E5E5 !important;
+        }
+
+        .collapseedit{
+            width: 15%;
+        }
+
+        .collapsetable{
+            width: 100% !important
+        }
+        .collapsetd{
+            width: 14% !important;
+        }
+        .collapsetdedit{
+            width: 16% !important;
+        }
+
+        .collapselinks{
+            text-decoration: none !important;
+            color: #665b53 !important;
+        }
+
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
@@ -22,10 +73,8 @@
             border: 0;
         }
 
-        .navbar-brand {
-            float: left;
-            min-height: 55px;
-            padding: 0 15px 5px;
+        .navbar-nav {
+            flex-direction: row !important
         }
 
         .navbar-inverse .navbar-nav .active a,
@@ -97,7 +146,6 @@
             font-family: 'Catamaran', sans-serif;
         }
 
-
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
@@ -110,11 +158,22 @@
                     height: auto;
                     padding: 15px;
                 }
+
                 .row.content {
                     height: auto;
                 }
             }
         }
+
+
+        div2 {
+            width: 500px;
+            height: 200px;
+            position: relative;
+            background-color: #A5C663;
+        }
+
+
     </style>
 </head>
 
@@ -132,22 +191,22 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a th:href="@{/usersite}">Home</a>
+                        <a class="headerlinks" th:href="@{/event}">My events</a>
                     </li>
                     <li>
-                        <a th:href="@{/guestlist}">Guestlist</a>
+                        <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
                     </li>
                     <li>
-                        <a th:href="@{/seatingarrangement}">Seating</a>
+                        <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
                     </li>
                     <li>
-                        <a th:href="@{/budget}">Budget</a>
+                        <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
                     </li>
                     <li class="active">
-                        <a th:href="@{/checklist}">Checklist</a>
+                        <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
                     </li>
                     <li>
-                        <a th:href="@{/logout}">Logout</a>
+                        <a class="headerlinks" th:href="@{/logout}">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -156,46 +215,125 @@
 <!--NAV SLUTAR-->
 <div class="container-fluid">
     <div class="row content">
+
+
         <div class="col-sm-3 sidenav">
             <ul class="nav nav-pills nav-stacked">
-                <form method="post" action="/checklist">
-                    <p>Add todo: </p>
-                    <input type="date" name="date"/>
-                    <p>Todo: </p>
-                    <input type="text" name="toDo" placeholder="Todo.."/>
-                    <p>Done: </p>
-                    <input type="checkbox" name="done" class="form-check-input" id="exampleCheck1"/>
-                    <p></p>
-                    <input class="button" type="submit" value="add new todo" />
+                 <form method="post" action="/checklist">
+                    <table width="320">
+                        <tr class="paddingtoimput">
+                            <td><input type="hidden" name="eventId" th:value="${eventId}"/></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr height="30">
+                            <td>Add todo:</td>
+                            <td><input type="text" name="toDo" placeholder="Todo.."/></td>
+                        </tr>
+                        <tr height="30">
+                            <td>Due date</td>
+                            <td><input type="date" name="date"/></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input class="button" type="submit" value="add new todo" /></td>
+                        </tr>
+                    </table>
                 </form>
             </ul>
         </div>
         <div class="col-sm-9">
             <div class="container">
-                <h2>Todo</h2>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Due date</th>
-                        <th>Todo</th>
-                        <!--<th>Done</th>-->
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="toDo : ${checklist}">
-                        <td th:text="${toDo.date}"></td>
-                        <td th:text="${toDo.toDo}"></td>
-                        <!--<td th:text="${toDo.done}"></td>-->
-                    </tr>
-                    </tbody>
-                </table>
+                <h2>Your event Checklist</h2>
+                <p></p>
+                <div class="container" width="90%">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel-heading" id="collapseheader">
+                            <table class="collapsetable">
+                                <tr>
+                                    <td class="collapsetd">Due Date</td>
+                                    <td class="collapsetd">Todo</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetdedit">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="panel panel-default" th:each="toDo : ${checklist}">
+                            <div class="panel-heading">
+                                <h4>
+                        <a class="collapselinks" data-toggle="collapse" th:href="'#' + ${toDo.Id}">
+                            <table class="collapsetable">
+                                <tr>
+                                    <td class="collapsetd" th:text="${toDo.date}"></td>
+                                    <td class="collapsetd" th:text="${toDo.toDo}"></td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetd">&nbsp;</td>
+                                    <td class="collapsetdedit"><b>EDIT</b></td>
+                                            </tr>
+                                        </table>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div th:id="${toDo.id}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <form method="post" action="/updateChecklist">
+                                        <table border="0" class="collapsetable" width="100%" cellspacing="1"
+                                               cellpadding="0">
+                                            <tr>
+                                                <td class="collapseedit">Item</td>
+                                                <td colspan="2">
+                                                    <input type="hidden" name="eventId" th:value="${eventId}"/>
+                                                    <input type="hidden" name="id" th:value="${toDo.Id}"/>
+                                                    <input type="text" name="toDo" placeholder="toDo.."/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Price</td>
+                                                <td colspan="2">
+                                                    <input type="date" name="date" placeholder="Change date.."/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td colspan="2">&nbsp;</td>
+                                            </tr>
+                                            <!--HÄR ÄR EDIT OCH DELETE-->
+                                            <tr height="50">
+                                                <td align="top">
+                                                    <form method="post" action="/updateChecklist">
+                                                        <input class="button" type="submit" value="edit todo"/>
+                                                    </form>
+                                                </td>
 
+                                                <td align="top">
+                                                    <form method="get" action="/deleteChecklist">
+                                                        <input class="button" type="submit" value="Delete item"/>
+                                                        <input type="hidden" name="eventId" th:value="${eventId}"/>
+                                                        <input type="hidden" name="id" th:value="${toDo.id}"/>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--brytkommentar-->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-</body>
 <footer class="container-fluid text-center">
     <div class="row">
         <div class="col-sm-2">
@@ -218,5 +356,4 @@
     </div>
 </footer>
 </body>
-
 </html>
