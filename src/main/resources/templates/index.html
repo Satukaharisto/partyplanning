@@ -49,20 +49,85 @@
             transform: translateY(-50%);
             text-transform: uppercase;
         }
-        .btn {
-            font-size: 18px;
-            color: #FFF;
-            padding: 12px 22px;
-            background-color: #adc7c8 ;
-            border: 2px solid #FFF;
+
+        .button {
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            background-color: #adc7c8;
+            border: none;
+            color: black;
+            padding: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            border-radius: 8px;
         }
-        .container{
-            margin: 4% auto;
+
+        .button:hover {
+            background-color: #665b53;
+            /* Green */
+            color: white;
         }
-        #icon {
-            max-width: 200px;
-            margin: 1% auto;
+
+        input[type=text], select {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
         }
+
+        input[type=date]{
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        input[type=date]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+        }
+
+        input[type=submit] {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: lightgrey;
+            color: black;
+            cursor: pointer;
+        }
+        input[type=text]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+        }
+
         footer{
             width: 100%;
             background-color: #adc7c8 ;
