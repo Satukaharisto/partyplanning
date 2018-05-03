@@ -25,10 +25,11 @@
         }
         .headerlinks:visited {
             text-decoration: none;
-            color: green;
+            /*color: green;*/
         }
         .headerlinks:hover {
             text-decoration: none;
+            background-color: #adc7c8 !important;
             color: #D9E5E5 !important;
         }
 
@@ -208,11 +209,21 @@
             position: relative;
             background-color: #A5C663;
         }
+        .whatever {
+
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+        #mNavbar{
+            position: sticky;
+        }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-light navbar-fixed-top bg-light" id="mNavbar">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
@@ -268,6 +279,7 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
+                <body class="whatever" background="background1.png">  </body>
                 <h2>Your Events</h2>
                 <p></p>
                 <div class="container" width="90%">

@@ -29,6 +29,7 @@
         }
         .headerlinks:hover {
             text-decoration: none;
+            background-color: #adc7c8 !important;
             color: #D9E5E5 !important;
         }
 
@@ -128,7 +129,7 @@
             text-decoration: none;
             display: inline-block;
             font-size: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .button:hover {
@@ -227,11 +228,14 @@
             background-attachment: fixed;
 
         }
+        #mNavbar{
+            position: sticky;
+        }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-light navbar-fixed-top bg-light" id="mNavbar">
     <div class="container-fluid">
         <div class="navbar-header logga">
             <img class="logga" src="eventerlogga.png"/>

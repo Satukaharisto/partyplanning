@@ -29,6 +29,7 @@
         }
         .headerlinks:hover {
             text-decoration: none;
+            background-color: #adc7c8 !important;
             color: #D9E5E5 !important;
         }
 
@@ -86,6 +87,7 @@
 
         .navbar-inverse .navbar-nav li a {
             color: #D5D5D5;
+
         }
 
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
@@ -228,12 +230,15 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
-
+#mNavbar{
+    position: sticky;
+}
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-light navbar-fixed-top bg-light" id="mNavbar">
+
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#MyNavbar">
@@ -339,6 +344,7 @@
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
+
                                     <td class="collapsetdedit"><b>EDIT</b></td>
                                             </tr>
                                         </table>
@@ -351,17 +357,20 @@
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                cellpadding="0">
                                             <tr>
-                                                <td class="collapseedit">Item</td>
+                                                <td class="collapseedit">ToDo</td>
                                                 <td colspan="2">
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                     <input type="hidden" name="id" th:value="${toDo.Id}"/>
                                                     <input type="text" name="toDo" placeholder="toDo.."/>
+
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Price</td>
+                                                <td>Date</td>
                                                 <td colspan="2">
                                                     <input type="date" name="date" placeholder="Change date.."/></td>
+
+
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
@@ -371,6 +380,7 @@
                                             <tr height="50">
                                                 <td align="top">
                                                     <form method="post" action="/updateChecklist">
+
                                                         <input class="button" type="submit" value="edit todo"/>
                                                     </form>
                                                 </td>
