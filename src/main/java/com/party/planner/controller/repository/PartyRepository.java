@@ -177,24 +177,7 @@ public class PartyRepository implements Repository {
 // LOGIN
 
 
-    @Override
-    public Integer checkLogin(String username, String password) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] , [Password] FROM [dbo].[User3] WHERE ([UserName] = (?) ) ")) {
-            ps.setString(1, username);
-            ResultSet results = ps.executeQuery();
 
-            if (results.next()) {
-                String hashedPassword = results.getString("Password");
-                if (BCrypt.checkpw(password, hashedPassword)) {
-                    return results.getInt("UserId");
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RepositoryExceptions("something went wrong in checklogin - PartyRepository", e);
-        }
-    }
 
 
     @Override
@@ -467,7 +450,7 @@ public class PartyRepository implements Repository {
    public List<Inspiration> listInspiration() {
         try (Connection conn = dataSource.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT InspirationID, Categoty, InspirationName, InspirationText,InspirationLink, InspirationPicture FROM Inspiration3 ")) {
+             ResultSet rs = stmt.executeQuery("SELECT InspirationID, Category, InspirationName, InspirationText,InspirationLink, InspirationPicture FROM Inspiration3 " )) {
             List<Inspiration> inspirationItems = new ArrayList<>();
             while (rs.next()) inspirationItems.add(rsInspiration(rs));
 
@@ -477,7 +460,7 @@ public class PartyRepository implements Repository {
         }
     }
     private Inspiration rsInspiration(ResultSet rs) throws SQLException {
-        return new Inspiration (rs.getInt("InspirationID"), rs.getString("Categoty"), rs.getString("InspirationName"), rs.getString("InspirationText"), rs.getString("InspirationLink"), rs.getString("InspirationPicture"));
+        return new Inspiration (rs.getInt("InspirationID"), rs.getString("Category"), rs.getString("InspirationName"), rs.getString("InspirationText"), rs.getString("InspirationLink"), rs.getString("InspirationPicture"));
     }
 }
 
