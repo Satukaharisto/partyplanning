@@ -127,6 +127,35 @@
             text-decoration: none;
         }
 
+        .button2{
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            background-color: #adc7c8;
+            color: black;
+            text-align: center;
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 5;
+            font-size: 25px;
+            font-weight: 400;
+            width: 80%;
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            font-family: 'Catamaran', sans-serif;
+            cursor: pointer;
+            text-decoration: none !important;
+            position: center;
+        }
+
+        .button2:hover{
+            background-color: #665b53;
+            color: white;
+            text-decoration: none;
+        }
+
+
+
+
         input[type=date]{
             border: 1px solid #665b53;
             border-radius: 5px;
@@ -310,64 +339,69 @@
                                            <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                   cellpadding="0">
                                                <tr>
-                                                   <td class="collapseedit" width="50%">&nbsp;</td>
-                                                   <td width="212">
+                                                   <td class="collapseedit" width="48%" align="center">
+                                                       <a class="button2" th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a></td>
+                                                   <td width="12%">
                                                        &nbsp;</td>
-                                                   <td>
+                                                   <td colspan="2">
                                                        &nbsp;</td>
-                                                   <td>&nbsp;</td>
+                                                   <td width="15%">&nbsp;</td>
                                                </tr>
                                                <tr>
-                                                   <td class="collapseedit" width="50%">
-                                                       <a class="button" th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                                                   <td class="collapseedit" width="48%" align="center">
+                                                       <a class="button2" th:href="@{'budget?eventId=' + ${event.id}}">Budget</a></td>
+                                                   <td width="12%">
+                                                       &nbsp;
                                                    </td>
-                                                   <td width="212">
-                                                       Edit eventname</td>
-                                                   <td>
+                                                   <td colspan="2">
+                                                       Edit eventname
+                                                   </td>
+                                                   <td width="15%">
                                                        <input type="hidden" name="eventId" th:value="${event.id}"/>
                                                        <input type="hidden" name="userId" th:value="${session.userId}"/>
                                                        <input type="text" required="3" name="eventName" placeholder="Edit event name.."/>
                                                    </td>
-                                                   <td>&nbsp;</td>
                                                </tr>
                                                <tr>
-                                                   <td width="50%">
-                                                       <a class="button" th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+                                                   <td width="48%" align="center">
+                                                       <a class="button2" th:href="@{'seatingarrangement?eventId=' + ${event.id}}">Seatingplan</a></td>
+                                                   <td width="12%">
+                                                       &nbsp;
                                                    </td>
-                                                   <td width="212">
-                                                       Edit date</td>
-                                                   <td>
+                                                   <td colspan="2">
+                                                       Edit date
+                                                   </td>
+                                                   <td width="15%">
                                                        <input type="date" required="required" name="eventDate" placeholder="Change date.."/>
                                                    </td>
-                                                   <td>&nbsp;</td>
 
                                                </tr>
                                                <tr>
-                                                   <td width="50%">
-                                                       <a class="button" th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+                                                   <td width="48%" align="center">
+                                                       <a class="button2" th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
                                                    </td>
-                                                   <td width="212">&nbsp;</td>
-                                                   <td>&nbsp;</td>
-                                                   <td>&nbsp;</td>
-                                               </tr>
-                                               <!--HÄR ÄR EDIT OCH DELETE-->
-                                               <tr height="50">
-                                                   <td align="top" width="50%">
-                                                       &nbsp;</td>
-
-                                                   <td align="top" width="212">&nbsp;</td>
-                                                   <td align="center" height="60">
+                                                   <td width="12%">&nbsp;</td>
+                                                   <td rowspan="2" width="12%">&nbsp;
+                                                   </td>
+                                                   <td rowspan="2" width="10%">
                                                        <form method="post" action="/updateEvent">
                                                            <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                                           <input class="button" type="submit" value="edit todo" style="float: left"/>
+                                                           <input class="button" type="submit" value="Edit event" style="float: left"/>
                                                        </form>
                                                    </td>
-                                                   <td align="center" height="60">
+                                                   <td width="15%" rowspan="2">
                                                        <form method="get" action="/deleteEvent">
                                                            <input type="hidden" name="id" th:value="${event.id}"/>
                                                            <input class="button" type="submit" value="Delete event" style="float: left"/>
                                                        </form>
                                                    </td>
+                                               </tr>
+                                               <!--HÄR ÄR EDIT OCH DELETE-->
+                                               <tr height="50">
+                                                   <td align="center" width="48%" height="25">
+                                                       &nbsp;</td>
+
+                                                   <td align="top" width="12%" height="25">&nbsp;</td>
                                                </tr>
                                            </table>
                                        </form>
