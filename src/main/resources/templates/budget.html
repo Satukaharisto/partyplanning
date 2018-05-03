@@ -118,7 +118,6 @@
             color: #D5D5D5;
             text-decoration: none;
         }
-
         .button {
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
@@ -135,15 +134,66 @@
 
         .button:hover {
             background-color: #665b53;
-            /* Green */
             color: white;
         }
 
-        input[type=text]:focus {
-            background-color: #adc7c8;
+        input[type=date]{
             border: 1px solid #665b53;
-            font-size: 1.0em;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
             font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        input[type=date]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+        }
+
+        input[type=text], select {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+            color: black;
+            cursor: pointer;
+        }
+
+        input[type=text]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
         }
 
         @media (max-width: 900px) {
