@@ -268,10 +268,11 @@
 </nav>
 <div class="container-fluid">
     <div class="row content">
+        <body class="whatever" background="background1.png">  </body>
         <div class="col-sm-3 sidenav">
             <h3>Your guests</h3>
             <ul class="nav nav-pills nav-stacked" th:each="guest : ${guestList}">
-                <p class=" guest draggable">
+                <p class=" guest draggable" >
                     <span th:text="${guest.firstname}"></span>
                     <span th:text="${guest.lastname}"></span>
                 </p>
@@ -349,6 +350,21 @@
                     <div class="chair blueprint" style="width: 50px; height: 50px; border-radius: 50%; right: 20px; bottom: 400px;">
                         <div></div>
                     </div>
+                </div>
+
+                <div class="horizontalTable blueprint draggable drag-drop">
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: -2px; bottom: 52px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 58px; bottom: 102px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 118px; bottom: 152px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 178px; bottom: 202px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: -2px; bottom: 85px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 58px; bottom: 135px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 118px; bottom: 185px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 178px; bottom: 235px"></div>
+                </div>
+
+
+
 
                 </div>
 
@@ -357,7 +373,7 @@
 
         </div>
     </div>
-</div>
+
 
 <footer class="container-fluid text-center">
     <div class="row">

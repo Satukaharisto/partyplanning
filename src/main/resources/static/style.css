@@ -5,9 +5,9 @@
     background-color: rgb(245,245,245);
     border: dashed 4px transparent;
     border-radius: 4px;
-    margin: 10px auto 30px;
+   /* margin: 10px auto 30px;*/
     padding: 10px;
-    width: 80%;
+    width: 101%;
     transition: background-color 0.3s;
     /* position: absolute;*/
     z-index: -2;
@@ -66,13 +66,14 @@
     flex-direction: column;
     text-align: center;
     height: inherit;
+    z-index: 1;
 }
 .roundTable{
     color: #000;
     width: 120px;
     height: 120px;
-    right: 200px;
-    top: 100px;
+    right: 65px;
+    top: 152px;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
@@ -94,8 +95,8 @@
     color: #000;
     width: 3cm;
     height: 6cm;
-    right: 500px;
-    top: 65px;
+    right: 345px;
+    top: 107px;
     border-color: black;
     background-color: rgb(102, 98, 92);
     position: absolute;
@@ -111,8 +112,8 @@
     color: #000;
     width: 4cm;
     height: 4cm;
-    right: 780px;
-    top: 65px;
+    right: 623px;
+    top: 140px;
     border-color: black;
     background-color: rgb(121, 119, 118);
     position: absolute;
@@ -124,6 +125,18 @@
     flex-direction: column;
     text-align: center;
     height: inherit;
+}
+
+.horizontalTable{
+    color: #000;
+    width: 6cm;
+    height: 3cm;
+    right: 878px;
+    top: 167px;
+    border-color: black;
+    background-color: rgb(102, 98, 92);
+    position: absolute;
+
 }
 
 body {
