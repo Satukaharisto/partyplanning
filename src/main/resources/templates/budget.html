@@ -294,12 +294,12 @@
                             <td>&nbsp;</td>
                         </tr>
                         <tr height="30">
-                            <td>Item:</td>
-                            <td><input type="text" required="3" name="item" placeholder="item.."/></td>
+                            <td>Item</td>
+                            <td><input type="text" required="3" name="item" placeholder="Item.."/></td>
                         </tr>
                         <tr height="30">
-                            <td>Price</td>
-                            <td><input type="text" required="1" name="price" placeholder="100...."/></td>
+                            <td>Budget</td>
+                            <td><input type="text" required="1" name="price" placeholder="Budget.."/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -365,13 +365,13 @@
                                                 <td colspan="2">
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                     <input type="hidden" name="id" th:value="${item.Id}"/>
-                                                    <input type="text" required="2" name="item" placeholder="item.."/>
+                                                    <input type="text" required="2" name="item" th:value="${item.item}"/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Price</td>
+                                                <td>Budget</td>
                                                 <td colspan="2">
-                                                    <input type="text" required="3" name="price" placeholder="price.."/></td>
+                                                    <input type="text" required="2" name="price" th:value="${item.price}"/></td>
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
@@ -381,7 +381,7 @@
                                             <tr height="60">
                                                 <td align="top" height="60" valign="top">
                                                     <form method="post" action="/updateBudget">
-                                                        <input class="button" type="submit" value="edit item"/>
+                                                        <input class="button" type="submit" value="Edit item"/>
                                                         <input type="hidden"/>
                                                         <input type="hidden"/>
                                                     </form>

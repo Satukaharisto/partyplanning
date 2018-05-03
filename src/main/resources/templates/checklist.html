@@ -281,8 +281,8 @@
                             <td>&nbsp;</td>
                         </tr>
                         <tr height="30">
-                            <td>Add todo:</td>
-                            <td><input type="text" required="2" name="toDo" placeholder="Todo.."/></td>
+                            <td>Add task</td>
+                            <td><input type="text" required="2" name="toDo" placeholder="Task.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Due date</td>
@@ -294,7 +294,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input class="button" type="submit" value="add new todo" /></td>
+                            <td><input class="button" type="submit" value="Add new task" /></td>
                         </tr>
                     </table>
                 </form>
@@ -304,11 +304,7 @@
             <body class="whatever" background="background.png">  </body>
             <div class="container">
 
-
-                <h2>Checklist</h2>
-                <p></p>
-
-                <h2>Your event Checklist</h2>
+                <h2>Your event checklist</h2>
 
                 <p></p>
                 <div class="container" width="90%">
@@ -316,8 +312,8 @@
                         <div class="panel-heading" id="collapseheader">
                             <table class="collapsetable">
                                 <tr>
-                                    <td class="collapsetd">Due Date</td>
-                                    <td class="collapsetd">Todo</td>
+                                    <td class="collapsetd">Due date</td>
+                                    <td class="collapsetd">Things to do</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
                                     <td class="collapsetd">&nbsp;</td>
@@ -351,17 +347,17 @@
                                         <table border="0" class="collapsetable" width="100%" cellspacing="1"
                                                cellpadding="0">
                                             <tr>
-                                                <td class="collapseedit">Item</td>
+                                                <td class="collapseedit">Task</td>
                                                 <td colspan="2">
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                     <input type="hidden" name="id" th:value="${toDo.Id}"/>
-                                                    <input type="text" required="2" name="toDo" placeholder="toDo.."/>
+                                                    <input type="text" required="2" name="toDo" th:value="${toDo.toDo}"/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Price</td>
+                                                <td>Date</td>
                                                 <td colspan="2">
-                                                    <input type="date" name="date" required="required" placeholder="Change date.."/></td>
+                                                    <input type="date" name="date" required="required"/></td>
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
@@ -371,14 +367,14 @@
                                             <tr height="60">
                                                 <td align="top" height="60" valign="top">
                                                     <form method="post" action="/updateChecklist">
-                                                        <input class="button" type="submit" value="edit todo"/>
+                                                        <input class="button" type="submit" value="Edit task"/>
                                                         <input type="hidden"/>
                                                         <input type="hidden"/>
                                                     </form>
                                                 </td>
                                                 <td align="top" height="60" valign="top">
                                                     <form method="get" action="/deleteChecklist">
-                                                        <input class="button" type="submit" value="Delete item"/>
+                                                        <input class="button" type="submit" value="Delete task"/>
                                                         <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                         <input type="hidden" name="id" th:value="${toDo.id}"/>
                                                     </form>
