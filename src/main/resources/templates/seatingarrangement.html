@@ -17,6 +17,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
     <style>
+        .pricecolor{
+            color: #f0ad97;
+        }
 
         .headerlinks {
             text-decoration: none;
@@ -31,41 +34,52 @@
             color: #D9E5E5 !important;
         }
 
-        .colTest {
-            background-color: #adc7c8;
-            color: black;
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 15px;
+        {
+
+
+        }
+        #collapseheader {
+
+            background: #f0ad97 !important;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 18px;
+            line-height: 1.42857143;
+            color: #665b53 !important;
         }
 
-        .active,
-        .colTest:hover {
-            background-color: #f0ad97;
+
+        .whatever {
+
+            opacity: 0.95;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+
+        }
+        .panel-heading {
+
+
+            background: #D9E5E5 !important;
         }
 
-        .colTest:after {
-            colTestEdit: '\002B';
-            color: white;
-            font-weight: bold;
-            float: right;
-            margin-left: 5px;
+        .collapseedit{
+            width: 15%;
         }
 
-        .active:after {
-            colTestEdit: "\2212";
+        .collapsetable{
+            width: 100% !important
+        }
+        .collapsetd{
+            width: 14% !important;
+        }
+        .collapsetdedit{
+            width: 16% !important;
         }
 
-        .colTestEdit {
-            padding: 0 18px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-            background-color: #f1f1f1;
+        .collapselinks{
+            text-decoration: none !important;
+            color: #665b53 !important;
         }
 
         .navbar {
@@ -74,18 +88,18 @@
             background-color: #adc7c8;
             color: #FFF;
             padding: 1% 0;
-            font-size: 1.2em;
+            font-size: 20px;
             border: 0;
+        }
+
+        .navbar-nav>li>a {
+            padding-top: 35px;
+            padding-bottom: 10px;
+            line-height: 20px;
         }
 
         .navbar-nav {
             flex-direction: row !important
-        }
-
-        .navbar-brand {
-            float: left;
-            min-height: 55px;
-            padding: 0 15px 5px;
         }
 
         .navbar-inverse .navbar-nav .active a,
@@ -206,6 +220,7 @@
 
             background-color: #adc7c8;
         }
+
         @media (max-width: 900px) {
             .fa {
                 font-size: 20px;
@@ -223,8 +238,14 @@
                     height: auto;
                 }
             }
-        }
+            @media (min-width: 768px) {
+                .navbar-nav > li > a {
+                    padding-top: 35px;
+                    padding-bottom: 15px;
+                }
 
+            }
+        }
 
         div2 {
             width: 500px;
@@ -232,6 +253,7 @@
             position: relative;
             background-color: #A5C663;
         }
+
 
     </style>
 </head>
@@ -268,10 +290,11 @@
 </nav>
 <div class="container-fluid">
     <div class="row content">
+        <body class="whatever" background="background1.png">  </body>
         <div class="col-sm-3 sidenav">
             <h3>Your guests</h3>
             <ul class="nav nav-pills nav-stacked" th:each="guest : ${guestList}">
-                <p class=" guest draggable">
+                <p class=" guest draggable" >
                     <span th:text="${guest.firstname}"></span>
                     <span th:text="${guest.lastname}"></span>
                 </p>
@@ -349,6 +372,21 @@
                     <div class="chair blueprint" style="width: 50px; height: 50px; border-radius: 50%; right: 20px; bottom: 400px;">
                         <div></div>
                     </div>
+                </div>
+
+                <div class="horizontalTable blueprint draggable drag-drop">
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: -2px; bottom: 52px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 58px; bottom: 102px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 118px; bottom: 152px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 178px; bottom: 202px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: -2px; bottom: 85px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 58px; bottom: 135px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 118px; bottom: 185px"></div>
+                        <div class="chair blueprint" style=" width: 50px; height: 50px; border-radius: 50%; left: 178px; bottom: 235px"></div>
+                </div>
+
+
+
 
                 </div>
 
@@ -357,7 +395,7 @@
 
         </div>
     </div>
-</div>
+
 
 <footer class="container-fluid text-center">
     <div class="row">
