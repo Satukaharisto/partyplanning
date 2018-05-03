@@ -269,11 +269,11 @@
                         </tr>
                         <tr height="30">
                             <td>Firstname:</td>
-                            <td><input type="text" name="firstname" placeholder="Firstname.."/></td>
+                            <td><input type="text" required="3" name="firstname" placeholder="Firstname.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Lastname</td>
-                            <td><input type="text" name="lastname" placeholder="Lastname.."/></td>
+                            <td><input type="text" required="3" name="lastname" placeholder="Lastname.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Email</td>
@@ -370,12 +370,12 @@
                                                 <td colspan="2">
                                                     <input type="hidden" name="guestId" th:value="${guest.id}"/>
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
-                                                    <input type="text" name="firstname" placeholder="Firstname.."/></td>
+                                                    <input type="text" required="3" name="firstname" placeholder="Firstname.."/></td>
                                             </tr>
                                             <tr>
                                                 <td>Lastname</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="lastname" placeholder="Lastname.."/></td>
+                                                    <input type="text" required="3" name="lastname" placeholder="Lastname.."/></td>
                                             </tr>
                                             <tr>
                                                 <td>Email</td>
@@ -423,14 +423,15 @@
 
                                             <td>&nbsp;</td>
                                             <td colspan="2">&nbsp;</td>
-                                            <tr height="50">
-                                                <td align="top">
+                                            <tr height="60">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="get" action="/updateGuest">
                                                         <input class="button" type="submit" value="Edit Guest"/>
+                                                        <input type="hidden"/>
+                                                        <input type="hidden"/>
                                                     </form>
-                                                    <p></p>
                                                 </td>
-                                                <td align="top">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="get" action="/deleteGuest">
                                                         <input class="button" type="submit" value="Delete Guest"/>
                                                         <input type="hidden" name="eventId" th:value="${eventId}"/>
@@ -438,7 +439,7 @@
                                                         <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
                                                     </form>
                                                 </td>
-                                                <td width="70%">&nbsp;</td>
+                                                <td width="70%" height="60">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </form>

@@ -276,11 +276,11 @@
                         </tr>
                         <tr height="30">
                             <td>Add todo:</td>
-                            <td><input type="text" name="toDo" placeholder="Todo.."/></td>
+                            <td><input type="text" required="2" name="toDo" placeholder="Todo.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Due date</td>
-                            <td><input type="date" name="date"/></td>
+                            <td><input type="date" required="required" name="date"/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -342,33 +342,35 @@
                                                 <td colspan="2">
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                     <input type="hidden" name="id" th:value="${toDo.Id}"/>
-                                                    <input type="text" name="toDo" placeholder="toDo.."/>
+                                                    <input type="text" required="2" name="toDo" placeholder="toDo.."/>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Price</td>
                                                 <td colspan="2">
-                                                    <input type="date" name="date" placeholder="Change date.."/></td>
+                                                    <input type="date" name="date" required="required" placeholder="Change date.."/></td>
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td colspan="2">&nbsp;</td>
                                             </tr>
                                             <!--HÄR ÄR EDIT OCH DELETE-->
-                                            <tr height="50">
-                                                <td align="top">
+                                            <tr height="60">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="post" action="/updateChecklist">
                                                         <input class="button" type="submit" value="edit todo"/>
+                                                        <input type="hidden"/>
+                                                        <input type="hidden"/>
                                                     </form>
                                                 </td>
-
-                                                <td align="top">
+                                                <td align="top" height="60" valign="top">
                                                     <form method="get" action="/deleteChecklist">
                                                         <input class="button" type="submit" value="Delete item"/>
                                                         <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                         <input type="hidden" name="id" th:value="${toDo.id}"/>
                                                     </form>
                                                 </td>
+                                                <td width="70%" height="60">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </form>

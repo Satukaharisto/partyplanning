@@ -276,11 +276,11 @@
                         </tr>
                         <tr height="30">
                             <td>Item:</td>
-                            <td><input type="text" name="item" placeholder="item.."/></td>
+                            <td><input type="text" required="3" name="item" placeholder="item.."/></td>
                         </tr>
                         <tr height="30">
                             <td>Price</td>
-                            <td><input type="text" name="price" placeholder="100...."/></td>
+                            <td><input type="text" required="1" name="price" placeholder="100...."/></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -342,33 +342,35 @@
                                                 <td colspan="2">
                                                     <input type="hidden" name="eventId" th:value="${eventId}"/>
                                                     <input type="hidden" name="id" th:value="${item.Id}"/>
-                                                    <input type="text" name="item" placeholder="item.."/>
+                                                    <input type="text" required="2" name="item" placeholder="item.."/>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Price</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="price" placeholder="price.."/></td>
+                                                    <input type="text" required="3" name="price" placeholder="price.."/></td>
                                             </tr>
                                             <tr>
                                                 <td>&nbsp;</td>
                                                 <td colspan="2">&nbsp;</td>
                                             </tr>
                                 <!--HÄR ÄR EDIT OCH DELETE-->
-    <tr height="50">
-    <td align="top">
-        <form method="post" action="/updateBudget">
-        <input class="button" type="submit" value="edit item"/>
-        </form>
-        </td>
-
-             <td align="top">
-                 <form method="get" action="/deleteBudget">
-                     <input class="button" type="submit" value="Delete item"/>
-                     <input type="hidden" name="eventId" th:value="${eventId}"/>
-                     <input type="hidden" name="id" th:value="${item.id}"/>
-                 </form>
-             </td>
+                                            <tr height="60">
+                                                <td align="top" height="60" valign="top">
+                                                    <form method="post" action="/updateBudget">
+                                                        <input class="button" type="submit" value="edit item"/>
+                                                        <input type="hidden"/>
+                                                        <input type="hidden"/>
+                                                    </form>
+                                                </td>
+                                                <td align="top" height="60" valign="top">
+                                                    <form method="get" action="/deleteBudget">
+                                                        <input class="button" type="submit" value="Delete item"/>
+                                                        <input type="hidden" name="eventId" th:value="${eventId}"/>
+                                                        <input type="hidden" name="id" th:value="${item.id}"/>
+                                                    </form>
+                                                </td>
+                                                <td width="70%" height="60">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </form>
