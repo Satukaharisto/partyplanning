@@ -19,6 +19,19 @@
     <script src="guestscript.js"></script>
 
     <style>
+        .headerlinks {
+            text-decoration: none;
+            color: #665b53 !important;
+        }
+        .headerlinks:visited {
+            text-decoration: none;
+            color: green;
+        }
+        .headerlinks:hover {
+            text-decoration: none;
+            color: #D9E5E5 !important;
+        }
+
 
         #collapseheader{
             background: #f0ad97 !important;
@@ -36,7 +49,7 @@
         }
 
         .collapsetable{
-            width: 100% !important
+            width: 90% !important
         }
         .collapsetd{
             width: 14% !important;
@@ -162,22 +175,10 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a th:href="@{/event}">My events</a>
+                    <a class="headerlinks" th:href="@{/event}">My events</a>
                 </li>
                 <li>
-                    <a th:href="@{/guestlist}">Guestlist</a>
-                </li>
-                <li>
-                    <a th:href="@{/seatingarrangement}">Seating</a>
-                </li>
-                <li>
-                    <a th:href="@{/budget}">Budget</a>
-                </li>
-                <li class="active">
-                    <a th:href="@{/checklist}">Checklist</a>
-                </li>
-                <li>
-                    <a th:href="@{/logout}">Logout</a>
+                    <a class="headerlinks" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>

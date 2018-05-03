@@ -19,6 +19,18 @@
     <script src="guestscript.js"></script>
 
     <style>
+        .headerlinks {
+            text-decoration: none;
+            color: #665b53 !important;
+        }
+        .headerlinks:visited {
+            text-decoration: none;
+            color: green;
+        }
+        .headerlinks:hover {
+            text-decoration: none;
+            color: #D9E5E5 !important;
+        }
 
 
         #collapseheader{
@@ -180,23 +192,22 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a th:href="@{/event}">My events</a>
+                    <a class="headerlinks" th:href="@{/event}">My events</a>
                 </li>
                 <li>
-                    <a th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
+                    <a class="headerlinks" th:href="@{'/guestlist?eventId=' + ${eventId}}">Guestlist</a>
                 </li>
                 <li>
-                    <a th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
+                    <a class="headerlinks" th:href="@{'/seatingarrangement?eventId=' + ${eventId}}">Seating</a>
                 </li>
                 <li class="active">
-                    <a th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
+                    <a class="headerlinks" th:href="@{'/budget?eventId=' + ${eventId}}">Budget</a>
                 </li>
                 <li>
-                    <a th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
+                    <a class="headerlinks" th:href="@{'/checklist?eventId=' + ${eventId}}">Checklist</a>
                 </li>
-
                 <li>
-                    <a th:href="@{/logout}">Logout</a>
+                    <a class="headerlinks" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>
