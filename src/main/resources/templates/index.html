@@ -11,6 +11,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <style>
+        .headerlinks {
+            text-decoration: none;
+            color: #665b53 !important;
+        }
+        .headerlinks:visited {
+            text-decoration: none;
+            color: green;
+        }
+        .headerlinks:hover {
+            text-decoration: none;
+            color: #D9E5E5 !important;
+        }
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
@@ -37,19 +49,82 @@
             transform: translateY(-50%);
             text-transform: uppercase;
         }
-        .btn {
-            font-size: 18px;
-            color: #FFF;
-            padding: 12px 22px;
-            background-color: #adc7c8 ;
-            border: 2px solid #FFF;
+        .button {
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            background-color: #adc7c8;
+            border: none;
+            color: black;
+            padding: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            border-radius: 8px;
         }
-        .container{
-            margin: 4% auto;
+
+        .button:hover {
+            background-color: #665b53;
+            color: white;
         }
-        #icon {
-            max-width: 200px;
-            margin: 1% auto;
+
+        input[type=date]{
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        input[type=date]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+        }
+
+        input[type=text], select {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
+            color: black;
+            cursor: pointer;
+        }
+
+        input[type=text]:focus {
+            border: 1px solid #665b53;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px 0;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.0em;
+
+            background-color: #adc7c8;
         }
         footer{
             width: 100%;
@@ -85,12 +160,18 @@
         }
         /*######################## LOGIN/SIGNUP PAGE START ##################################*/
 
-
-        .at-login-form .btn-lgin
-        {
+        .at-login-form .btn-lgin:hover {
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
             display: inline-block;
             padding: 18px 20px;
             margin-bottom: 0;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #665b53;
+            width: 100%;
+            margin-top: 10px;
+            color:#fff;
             font-size: 14px;
             font-weight: 400;
             line-height: 1.42857143;
@@ -104,13 +185,33 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            background-image: none;
+        }
+
+        .at-login-form .btn-lgin {
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            display: inline-block;
+            padding: 18px 20px;
+            margin-bottom: 0;
             border: 1px solid #eee;
-            border-radius: 0px;
+            border-radius: 5px;
             background-color: #adc7c8;
             width: 100%;
             margin-top: 10px;
             color:#fff;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
 
@@ -209,8 +310,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href = "#" data-toggle="modal" data-target="#at-login">Login</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#at-signup">Register</a></li>
+                <li><a class="headerlinks" href = "#" data-toggle="modal" data-target="#at-login">Login</a></li>
+                <li><a class="headerlinks" href="#" data-toggle="modal" data-target="#at-signup">Register</a></li>
             </ul>
         </div>
     </div>
@@ -385,7 +486,7 @@
     <div class="row">
         <div class="col-sm-6 instructionbox">
             <div>
-                <img class="instructionpic" src="/checklist1.png"  />
+                <img class="instructionpic" src="/checklist2.png"  />
             </div>
         </div>
         <div class="col-sm-6 instructionbox">
@@ -409,7 +510,7 @@
     <div class="row">
         <div class="col-sm-6 instructionbox">
             <div>
-                <img class="instructionpic" src="/budget1.png"  />
+                <img class="instructionpic" src="/budget2.png"  />
             </div>
         </div>
         <div class="col-sm-6 instructionbox">
@@ -425,7 +526,7 @@
             </div>
         </div>
         <div class="col-sm-6 instructionbox">
-            <img class="instructionpic" src="/seating.png"/>
+            <img class="instructionpic" src="/seating2.png"/>
         </div>
     </div>
 </div>
@@ -437,7 +538,7 @@
     }
     .instructionpic {
         overflow: hidden;
-        width: 50%;
+        width: 20%;
     }
     .instructionbox {
         margin-bottom: 10px;
@@ -445,10 +546,10 @@
     }
     .instructiontext {
         color: black;
-        position: absolute;
         z-index: 1;
         font-family: 'Catamaran', sans-serif;
         font-size: 2em;
+        text-align: center;
     }
     .row {
         margin: 0;
@@ -464,7 +565,7 @@
 
         </div>
         <div class="col-sm-4">
-            <h3>Contact Us</h3>
+            <h3><a th:href="@{/inspiration}">Inspiration</a></h3>
             <br/>
             <h4>Our address and contact info here.</h4>
         </div>
