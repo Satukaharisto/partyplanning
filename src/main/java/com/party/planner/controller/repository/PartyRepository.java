@@ -19,6 +19,24 @@ public class PartyRepository implements Repository {
 
     // ADD
     @Override
+    public Integer checkLogin(String username, String password) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT [UserID] , [Password] FROM [dbo].[User3] WHERE ([UserName] = (?) ) ")) {
+            ps.setString(1, username);
+            ResultSet results = ps.executeQuery();
+
+            if (results.next()) {
+                String hashedPassword = results.getString("Password");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return results.getInt("UserId");
+                }
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RepositoryExceptions("something went wrong in checklogin - PartyRepository", e);
+        }
+    }
+    @Override
     public int addUser(String userName, String password, String email) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO [dbo].[User3]([UserName], [Password], [Email]) " +
