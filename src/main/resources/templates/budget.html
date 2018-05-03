@@ -19,6 +19,10 @@
     <script src="guestscript.js"></script>
 
     <style>
+        .pricecolor{
+            color: #f0ad97;
+        }
+        
         .headerlinks {
             text-decoration: none;
             color: #665b53 !important;
@@ -296,7 +300,7 @@
         </div>
         <div class="col-sm-9">
             <div class="container">
-                <h2>Your event budget</h2>
+                <h2>Your budget  -  Your current total is <span class="pricecolor" th:text="${total}"/></h2>
                 <p></p>
                 <div class="container" width="90%">
                     <div class="panel-group" id="accordion">
@@ -377,7 +381,6 @@
                                 </div>
                             </div>
                         </div>
-                        <p><b>Total: <span th:text="${total}"/></b></p>
                     </div>
                 </div>
             </div>
