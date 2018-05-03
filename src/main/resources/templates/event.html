@@ -124,6 +124,7 @@
         .button:hover {
             background-color: #665b53;
             color: white;
+            text-decoration: none;
         }
 
         input[type=date]{
@@ -236,13 +237,9 @@
 <!--NAV SLUTAR-->
 <div class="container-fluid">
     <div class="row content">
-
-
         <div class="col-sm-3 sidenav">
             <h3 th:text="'Welcome ' + ${session.user}"></h3>
             <ul class="nav nav-pills nav-stacked">
-
-
                 <form method="post" action="/event">
                     <table width="320">
                         <tr class="paddingtoimput">
@@ -301,57 +298,80 @@
                                                 <td class="collapsetd">&nbsp;</td>
                                                 <td class="collapsetd">&nbsp;</td>
                                                 <td class="collapsetd">&nbsp;</td>
-                                                <td class="collapsetdedit"><b>EDIT</b></td>
+                                                <td class="collapsetdedit"><b>DETAILS</b></td>
                                             </tr>
                                         </table>
                                     </a>
                                 </h4>
                             </div>
-                            <div th:id="${event.id}" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <form method="post" action="/updateEvent">
-                                        <table border="0" class="collapsetable" width="100%" cellspacing="1"
-                                               cellpadding="0">
-                                            <tr>
-                                                <td class="collapseedit">Event</td>
-                                                <td colspan="2">
-                                                    <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                                    <input type="hidden" name="userId" th:value="${session.userId}"/>
-                                                    <input type="text" name="eventName" placeholder="Edit event name.."/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td colspan="2">
-                                                    <input type="date" name="eventDate" placeholder="Change date.."/></td>
-                                            </tr>
-                                            <tr>
-                                                <td>&nbsp;</td>
-                                                <td colspan="2">&nbsp;</td>
-                                            </tr>
-                                            <!--HÄR ÄR EDIT OCH DELETE-->
-                                            <tr height="50">
-                                                <td align="top">
-                                                    <form method="post" action="/updateEvent">
-                                                        <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                                        <input class="button" type="submit" value="edit todo"/>
-                                                    </form>
-                                                </td>
+                                <div th:id="${event.id}" class="panel-collapse collapse">
+                                   <div class="panel-body">
+                                       <form method="post" action="/updateEvent">
+                                           <table border="0" class="collapsetable" width="100%" cellspacing="1"
+                                                  cellpadding="0">
+                                               <tr>
+                                                   <td class="collapseedit" width="50%">&nbsp;</td>
+                                                   <td width="212">
+                                                       &nbsp;</td>
+                                                   <td>
+                                                       &nbsp;</td>
+                                                   <td>&nbsp;</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="collapseedit" width="50%">
+                                                       <a class="button" th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
+                                                   </td>
+                                                   <td width="212">
+                                                       Edit eventname</td>
+                                                   <td>
+                                                       <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                                       <input type="hidden" name="userId" th:value="${session.userId}"/>
+                                                       <input type="text" name="eventName" placeholder="Edit event name.."/>
+                                                   </td>
+                                                   <td>&nbsp;</td>
+                                               </tr>
+                                               <tr>
+                                                   <td width="50%">
+                                                       <a class="button" th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
+                                                   </td>
+                                                   <td width="212">
+                                                       Edit date</td>
+                                                   <td>
+                                                       <input type="date" name="eventDate" placeholder="Change date.."/>
+                                                   </td>
+                                                   <td>&nbsp;</td>
 
-                                                <td align="top">
-                                                    <form method="get" action="/deleteEvent">
-                                                        <input class="button" type="submit" value="Delete event"/>
-                                                        <input type="hidden" name="id" th:value="${event.id}"/>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </form>
-                                </div>
-                                <div class="colTestEdit">
-                                    <a th:href="@{'guestlist?eventId=' + ${event.id}}">Guestlist</a>
-                                    <a th:href="@{'budget?eventId=' + ${event.id}}">Budget</a>
-                                    <a th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+                                               </tr>
+                                               <tr>
+                                                   <td width="50%">
+                                                       <a class="button" th:href="@{'checklist?eventId=' + ${event.id}}">Checklist</a>
+                                                   </td>
+                                                   <td width="212">&nbsp;</td>
+                                                   <td>&nbsp;</td>
+                                                   <td>&nbsp;</td>
+                                               </tr>
+                                               <!--HÄR ÄR EDIT OCH DELETE-->
+                                               <tr height="50">
+                                                   <td align="top" width="50%">
+                                                       &nbsp;</td>
+
+                                                   <td align="top" width="212">&nbsp;</td>
+                                                   <td align="center" height="60">
+                                                       <form method="post" action="/updateEvent">
+                                                           <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                                           <input class="button" type="submit" value="edit todo" style="float: left"/>
+                                                       </form>
+                                                   </td>
+                                                   <td align="center" height="60">
+                                                       <form method="get" action="/deleteEvent">
+                                                           <input type="hidden" name="id" th:value="${event.id}"/>
+                                                           <input class="button" type="submit" value="Delete event" style="float: left"/>
+                                                       </form>
+                                                   </td>
+                                               </tr>
+                                           </table>
+                                       </form>
+                                   </div>
                                 </div>
                             </div>
                         </div>
@@ -361,7 +381,6 @@
             </div>
         </div>
     </div>
-</div>
 
     <footer class="container-fluid text-center">
         <div class="row">

@@ -355,20 +355,22 @@
                                                 <td colspan="2">&nbsp;</td>
                                             </tr>
                                 <!--HÄR ÄR EDIT OCH DELETE-->
-    <tr height="50">
-    <td align="top">
-        <form method="post" action="/updateBudget">
-        <input class="button" type="submit" value="edit item"/>
-        </form>
-        </td>
-
-             <td align="top">
-                 <form method="get" action="/deleteBudget">
-                     <input class="button" type="submit" value="Delete item"/>
-                     <input type="hidden" name="eventId" th:value="${eventId}"/>
-                     <input type="hidden" name="id" th:value="${item.id}"/>
-                 </form>
-             </td>
+                                            <tr height="60">
+                                                <td align="top" height="60" valign="top">
+                                                    <form method="post" action="/updateBudget">
+                                                        <input class="button" type="submit" value="edit item"/>
+                                                        <input type="hidden"/>
+                                                        <input type="hidden"/>
+                                                    </form>
+                                                </td>
+                                                <td align="top" height="60" valign="top">
+                                                    <form method="get" action="/deleteBudget">
+                                                        <input class="button" type="submit" value="Delete item"/>
+                                                        <input type="hidden" name="eventId" th:value="${eventId}"/>
+                                                        <input type="hidden" name="id" th:value="${item.id}"/>
+                                                    </form>
+                                                </td>
+                                                <td width="70%" height="60">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </form>
