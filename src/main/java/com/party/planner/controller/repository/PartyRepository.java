@@ -155,7 +155,6 @@ public class PartyRepository implements Repository {
         }
     }
 
-
 // LOGIN
 
 
