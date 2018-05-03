@@ -1,5 +1,3 @@
-
-
 let dragMoveListener = window.dragMoveListener = function (e) {
     let target = e.target,
         x = (parseFloat(target.getAttribute('data-x')) || 0) + e.dx,
@@ -43,4 +41,3 @@ interact('.draggable').draggable({
     onmove: dragMoveListener,
     onend: handleEnd
 });
-  
