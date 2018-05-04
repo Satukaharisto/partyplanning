@@ -1,6 +1,12 @@
 #outer-dropzone {
     height: 1200px;
 }
+
+.headerlinks {
+    text-decoration: none;
+    background-color: #adc7c8 !important;
+    color: #D9E5E5 !important;
+}
 .dropzone {
     background-color: rgb(245,245,245);
     border: dashed 4px transparent;
