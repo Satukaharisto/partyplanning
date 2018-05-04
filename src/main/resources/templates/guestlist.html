@@ -125,7 +125,7 @@
         /* Set gray background color and 100% height */
 
         .sidenav {
-            background-color: #f1f1f1;
+            background-color: #eff0e9;
             height: 100%;
         }
 
@@ -361,6 +361,7 @@
                     </table>
                 </form>
             </ul>
+            <img src="serpentin.jpeg" height="200" width="350"/>
         </div>
         <div class="col-sm-9">
             <div class="container">
@@ -375,8 +376,8 @@
                                     <td class="collapsetd">First name</td>
                                     <td class="collapsetd">Last name</td>
                                     <td class="collapsetd">Gender</td>
-                                    <td class="collapsetd">Food preference</td>
                                     <td class="collapsetd">Allergies</td>
+                                    <td class="collapsetd">Food preference</td>
                                     <td class="collapsetd">Drinks alcohol</td>
                                     <td class="collapsetdedit">&nbsp;</td>
                                 </tr>
@@ -441,13 +442,13 @@
                                             <tr>
                                                 <td>Allergy</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="allergy" th:value="${guest.allergy}"/></td>
+                                                    <input type="text" name="allergy" th:value="${guest.foodPreference}"/></td>
                                             </tr>
                                             <tr>
                                                 <td>Food preference</td>
                                                 <td colspan="2">
                                                     <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
-                                                    <input type="text" name="foodPreference" th:value="${guest.foodPreference}"/></td>
+                                                    <input type="text" name="foodPreference" th:value="${guest.allergy}"/></td>
                                             </tr>
                                             <tr>
                                                 <td>Alcohol</td>
