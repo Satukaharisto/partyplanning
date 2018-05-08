@@ -14,7 +14,7 @@ public class GuestListModel {
 
 
 
-    public GuestListModel(int id, Integer foodId, String firstname, String lastname, String email, String gender, String allergy, String alcohol, String foodPreference) {
+    public GuestListModel(int id, Integer foodId, String firstname, String lastname, String email, String gender, String allergy, String foodPreference, String alcohol) {
         this.id = id;
         this.foodId = foodId;
         this.firstname = firstname;
@@ -22,8 +22,8 @@ public class GuestListModel {
         this.email = email;
         this.gender = gender;
         this.allergy = allergy;
-        this.alcohol = alcohol;
         this.foodPreference = foodPreference;
+        this.alcohol = alcohol;
     }
 
     public int getId() {

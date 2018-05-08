@@ -392,8 +392,8 @@
                                                 <td class="collapsetd" th:text="${guest.firstname}"></td>
                                                 <td class="collapsetd" th:text="${guest.lastname}"></td>
                                                 <td class="collapsetd" th:text="${guest.gender}"></td>
-                                                <td class="collapsetd" th:text="${guest.foodPreference}"></td>
                                                 <td class="collapsetd" th:text="${guest.allergy}"></td>
+                                                <td class="collapsetd" th:text="${guest.foodPreference}"></td>
                                                 <td class="collapsetd" th:text="${guest.alcohol}"></td>
                                                 <td class="collapsetdedit"><b>EDIT</b></td>
                                             </tr>
@@ -442,13 +442,13 @@
                                             <tr>
                                                 <td>Allergy</td>
                                                 <td colspan="2">
-                                                    <input type="text" name="allergy" th:value="${guest.foodPreference}"/></td>
+                                                    <input type="text" name="allergy" th:value="${guest.allergy}"/></td>
                                             </tr>
                                             <tr>
                                                 <td>Food preference</td>
                                                 <td colspan="2">
                                                     <input type="hidden" name="foodId" th:value="${guest.foodId}"/>
-                                                    <input type="text" name="foodPreference" th:value="${guest.allergy}"/></td>
+                                                    <input type="text" name="foodPreference" th:value="${guest.foodPreference}"/></td>
                                             </tr>
                                             <tr>
                                                 <td>Alcohol</td>

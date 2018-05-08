@@ -13,7 +13,7 @@ public class GuestListModelMapper {
                 guest.getEmail(),
                 guest.getGender(),
                 food == null ? null : food.getAllergy(),
-                food == null ? null : food.getAlcohol(),
-                food == null ? null : food.getFoodPreference());
+                food == null ? null : food.getFoodPreference(),
+                food == null ? null : food.getAlcohol());
     }
 }

@@ -7,11 +7,12 @@ public class Food {
     private String alcohol;            // yes or no
     private String foodPreference;      // vegetarian, vegan, no fish?
 
-    public Food(int id, String allergy, String alcohol, String foodPreference) {
+    public Food(int id, String allergy, String foodPreference, String alcohol) {
         this.id = id;
         this.allergy = allergy;
-        this.alcohol = alcohol;
         this.foodPreference = foodPreference;
+        this.alcohol = alcohol;
+
     }
 
     public int getId() {

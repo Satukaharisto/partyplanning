@@ -202,12 +202,12 @@ public class PartyRepository implements Repository {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE FoodPreference3 " +
-                             "SET Guest_ID = (?), FoodPreference = (?), Alcohol = (?), Allergie = (?) " +
+                             "SET Guest_ID = (?), Allergie = (?), FoodPreference = (?), Alcohol = (?) " +
                              "WHERE RsvpID = (?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, guestId);
-            ps.setString(2, foodPreference);
-            ps.setString(3, alcohol);
-            ps.setString(4, allergy);
+            ps.setString(2, allergy);
+            ps.setString(3, foodPreference);
+            ps.setString(4, alcohol);
             ps.setInt(5, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -379,16 +379,16 @@ public class PartyRepository implements Repository {
     @Override
     public Food getFoodPreference(int guestId) {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT RsvpID, Guest_ID, FoodPreference, Alcohol, Allergie" +
+             PreparedStatement ps = conn.prepareStatement("SELECT RsvpID, Guest_ID, Allergie, FoodPreference, Alcohol" +
                      " FROM FoodPreference3 WHERE Guest_ID = (?)")) {
             ps.setInt(1, guestId);
             ResultSet rs = ps.executeQuery();
             Food food = null;
             if (rs.next()) {
                 food = new Food(rs.getInt("RsvpID"),
+                        rs.getString("Allergie"),
                         rs.getString("FoodPreference"),
-                        rs.getString("Alcohol"),
-                        rs.getString("Allergie"));
+                        rs.getString("Alcohol"));
             }
             return food;
         } catch (SQLException e) {
